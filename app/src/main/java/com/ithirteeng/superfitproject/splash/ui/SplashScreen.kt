@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -15,27 +16,32 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.androidx.AndroidScreen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
+import com.ithirteeng.superfitproject.signin.ui.SignInScreen
+import com.ithirteeng.superfitproject.splash.presentation.SplashEvent
 import com.ithirteeng.superfitproject.splash.presentation.SplashScreenViewModel
+import com.ithirteeng.superfitproject.splash.presentation.SplashState
 import org.koin.androidx.compose.koinViewModel
 
 class SplashScreen : AndroidScreen() {
-
     @Composable
     override fun Content() {
         val viewModel: SplashScreenViewModel = koinViewModel()
-        Splash(viewModel = viewModel)
+        Screen()
+        viewModel.accept(SplashEvent.CheckDataEvent)
+        ObserveData(viewModel = viewModel)
     }
 
     @Composable
-    fun Splash(viewModel: SplashScreenViewModel) {
+    private fun Screen() {
         Box(
             modifier = Modifier
                 .fillMaxSize()
         ) {
             BackgroundImage()
             HeaderText(message = stringResource(id = R.string.super_fit))
-
         }
     }
 
@@ -63,5 +69,14 @@ class SplashScreen : AndroidScreen() {
         )
     }
 
+    @Composable
+    private fun ObserveData(viewModel: SplashScreenViewModel) {
+        when (viewModel.state.observeAsState().value) {
+            is SplashState.CompleteCheck -> LocalNavigator.currentOrThrow.replace(SignInScreen())
+            is SplashState.Error -> {}
+            SplashState.Loading -> {}
+            null -> {}
+        }
+    }
 
 }

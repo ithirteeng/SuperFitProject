@@ -21,14 +21,11 @@ class SplashScreenViewModel : ViewModel() {
     }
 
     private fun checkUserData() {
-        _state.postValue(SplashState.CompleteCheck)
-    }
-
-    private fun testLoading() {
         _state.postValue(SplashState.Loading)
         viewModelScope.launch {
-            delay(5000)
-            _state.postValue(SplashState.CompleteLoading)
+            delay(1000)
+            _state.postValue(SplashState.CompleteCheck)
         }
+
     }
 }

@@ -6,5 +6,4 @@ sealed class SplashState {
     object Loading : SplashState()
     object CompleteCheck : SplashState()
     class Error(errorEntity: ErrorEntity) : SplashState()
-    object CompleteLoading : SplashState()
 }
