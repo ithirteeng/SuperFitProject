@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SuperFitProject</string>
+    <string name="background_content_description">this is background</string>
+    <string name="super_fit">SuperFit</string>
 </resources>
