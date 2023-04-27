@@ -1,9 +1,10 @@
-package com.ithirteeng.superfitproject.common
+package com.ithirteeng.superfitproject
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
@@ -19,7 +20,9 @@ class MainActivity : ComponentActivity() {
         setContent {
             SuperFitProjectTheme {
                 Surface(
-                    modifier = Modifier.fillMaxSize(),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .navigationBarsPadding(),
                     color = MaterialTheme.colors.background
                 ) {
                     Navigator(screen = SplashScreen())

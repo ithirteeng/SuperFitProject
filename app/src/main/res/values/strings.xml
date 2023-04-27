@@ -1,5 +1,11 @@
 <resources>
     <string name="app_name">SuperFitProject</string>
     <string name="background_content_description">this is background</string>
+    <string name="arrow_content_description">this is arrow</string>
+
     <string name="super_fit">SuperFit</string>
+
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="username">UserName</string>
 </resources>

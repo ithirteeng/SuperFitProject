@@ -1,6 +1,7 @@
 package com.ithirteeng.superfitproject
 
 import android.app.Application
+import com.ithirteeng.superfitproject.signin.di.signInModule
 import com.ithirteeng.superfitproject.splash.di.splashModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -16,7 +17,8 @@ class App : Application() {
             androidContext(this@App)
 
             modules(
-                splashModule
+                splashModule,
+                signInModule
             )
         }
     }

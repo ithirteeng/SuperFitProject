@@ -62,7 +62,7 @@ class SplashScreen : AndroidScreen() {
         Text(
             modifier = Modifier
                 .align(Alignment.TopCenter)
-                .padding(top = 115.dp),
+                .padding(top = 140.dp),
             text = message,
             style = MaterialTheme.typography.h1,
             color = MaterialTheme.colors.primary
