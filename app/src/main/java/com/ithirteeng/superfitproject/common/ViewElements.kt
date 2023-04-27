@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.text.BasicTextField
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
@@ -13,6 +14,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.input.key.onKeyEvent
+import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
@@ -28,16 +31,27 @@ fun MyTextField(
         modifier = Modifier
             .fillMaxWidth()
     ) {
+        val focusManager = LocalFocusManager.current
+
         BasicTextField(
-            modifier = Modifier.padding(horizontal = 8.dp, vertical = 3.dp),
+            modifier = Modifier
+                .padding(horizontal = 8.dp, vertical = 3.dp)
+                .onKeyEvent {
+                    if (it.nativeKeyEvent.keyCode == android.view.KeyEvent.KEYCODE_ENTER) {
+                        focusManager.clearFocus(true)
+                    }
+                    false
+                },
             value = value,
             onValueChange = { onValueChanged(it) },
-            textStyle = MaterialTheme.typography.subtitle1,
-            maxLines = 1,
             singleLine = true,
+            textStyle = MaterialTheme.typography.subtitle1,
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Email,
                 imeAction = ImeAction.Done
+            ),
+            keyboardActions = KeyboardActions(
+                onDone = { focusManager.clearFocus(true) }
             ),
             cursorBrush = SolidColor(Color.White),
             decorationBox = { innerTextField ->
