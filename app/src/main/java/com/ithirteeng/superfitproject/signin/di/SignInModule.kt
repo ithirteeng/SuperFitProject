@@ -1,11 +1,22 @@
 package com.ithirteeng.superfitproject.signin.di
 
 import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstScreenViewModel
+import com.ithirteeng.superfitproject.signin.presentation.second.SignInSecondScreenViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
+const val SIGN_IN_FIRST_VIEW_MODEL = "SIGN_IN_FIRST_VIEW_MODEL"
+const val SIGN_IN_SECOND_VIEW_MODEL = "SIGN_IN_SECOND_VIEW_MODEL"
+
 val signInModule = module {
-    viewModel {
+
+    viewModel(named(SIGN_IN_FIRST_VIEW_MODEL)) {
         SignInFirstScreenViewModel()
     }
+
+    viewModel(named(SIGN_IN_SECOND_VIEW_MODEL)) {
+        SignInSecondScreenViewModel()
+    }
+
 }

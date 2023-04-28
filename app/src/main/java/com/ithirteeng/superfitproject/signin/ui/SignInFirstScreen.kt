@@ -24,16 +24,18 @@ import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.MyTextField
 import com.ithirteeng.superfitproject.common.ui.AuthHeaderText
 import com.ithirteeng.superfitproject.common.ui.BackgroundImage
+import com.ithirteeng.superfitproject.signin.di.SIGN_IN_FIRST_VIEW_MODEL
 import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstEvent
 import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstScreenViewModel
 import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstState
 import org.koin.androidx.compose.koinViewModel
+import org.koin.core.qualifier.named
 
 class SignInFirstScreen : Screen {
 
     @Composable
     override fun Content() {
-        val viewModel: SignInFirstScreenViewModel = koinViewModel()
+        val viewModel: SignInFirstScreenViewModel = koinViewModel(named(SIGN_IN_FIRST_VIEW_MODEL))
         SignIn(viewModel = viewModel)
     }
 
