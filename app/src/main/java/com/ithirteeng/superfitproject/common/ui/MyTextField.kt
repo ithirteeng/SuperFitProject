@@ -43,7 +43,13 @@ fun MyTextField(
                     false
                 },
             value = value,
-            onValueChange = { onValueChanged(it) },
+            onValueChange = {
+                if (it.isNotEmpty() && !it.contains(" ")) {
+                    onValueChanged(it)
+                } else {
+                    onValueChanged(it.replace(" ", ""))
+                }
+            },
             singleLine = true,
             textStyle = MaterialTheme.typography.subtitle1,
             keyboardOptions = KeyboardOptions(
@@ -56,7 +62,7 @@ fun MyTextField(
             cursorBrush = SolidColor(Color.White),
             decorationBox = { innerTextField ->
                 Row(modifier = Modifier) {
-                    if (value.isEmpty()) {
+                    if (value.isEmpty() || value.isBlank()) {
                         Text(
                             text = placeHolderString,
                             style = MaterialTheme.typography.subtitle1,

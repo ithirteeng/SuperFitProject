@@ -19,7 +19,7 @@ import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
-import com.ithirteeng.superfitproject.signin.ui.SignInScreen
+import com.ithirteeng.superfitproject.signin.ui.SignInFirstScreen
 import com.ithirteeng.superfitproject.splash.presentation.SplashEvent
 import com.ithirteeng.superfitproject.splash.presentation.SplashScreenViewModel
 import com.ithirteeng.superfitproject.splash.presentation.SplashState
@@ -72,7 +72,7 @@ class SplashScreen : AndroidScreen() {
     @Composable
     private fun ObserveData(viewModel: SplashScreenViewModel) {
         when (viewModel.state.observeAsState().value) {
-            is SplashState.CompleteCheck -> LocalNavigator.currentOrThrow.replace(SignInScreen())
+            is SplashState.CompleteCheck -> LocalNavigator.currentOrThrow.replace(SignInFirstScreen())
             is SplashState.Error -> {}
             SplashState.Loading -> {}
             null -> {}

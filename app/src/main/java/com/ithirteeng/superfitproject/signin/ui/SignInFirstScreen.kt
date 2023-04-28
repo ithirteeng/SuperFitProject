@@ -1,12 +1,12 @@
 package com.ithirteeng.superfitproject.signin.ui
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -15,29 +15,31 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.MyTextField
-import com.ithirteeng.superfitproject.signin.presentation.SignInEvent
-import com.ithirteeng.superfitproject.signin.presentation.SignInScreenViewModel
-import com.ithirteeng.superfitproject.signin.presentation.SignInState
+import com.ithirteeng.superfitproject.common.ui.AuthHeaderText
+import com.ithirteeng.superfitproject.common.ui.BackgroundImage
+import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstEvent
+import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstScreenViewModel
+import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstState
 import org.koin.androidx.compose.koinViewModel
 
-class SignInScreen : Screen {
+class SignInFirstScreen : Screen {
 
     @Composable
     override fun Content() {
-        val viewModel: SignInScreenViewModel = koinViewModel()
+        val viewModel: SignInFirstScreenViewModel = koinViewModel()
         SignIn(viewModel = viewModel)
     }
 
     @Composable
-    private fun SignIn(viewModel: SignInScreenViewModel) {
-        val state = viewModel.state.observeAsState(SignInState()).value
+    private fun SignIn(viewModel: SignInFirstScreenViewModel) {
+        val state = viewModel.state.observeAsState(SignInFirstState()).value
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -45,7 +47,10 @@ class SignInScreen : Screen {
             BackgroundImage()
 
             if (state.isLoading) {
-                viewModel.accept(SignInEvent.Initialize)
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
+                    color = Color.White
+                )
             } else {
                 Column(
                     modifier = Modifier
@@ -53,42 +58,24 @@ class SignInScreen : Screen {
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
-                    Text(
-                        modifier = Modifier
-                            .padding(top = 68.dp),
-                        text = stringResource(id = R.string.super_fit),
-                        style = MaterialTheme.typography.h1,
-                        color = MaterialTheme.colors.primary
-                    )
+                    AuthHeaderText()
                     Column(modifier = Modifier.padding(horizontal = 52.dp)) {
                         MyTextField(
                             onValueChanged = {
-                                viewModel.accept(SignInEvent.ChangeTextField(it))
+                                viewModel.accept(SignInFirstEvent.ChangeTextField(it))
                             },
                             value = state.textFieldValue
                         )
                         SignInButton {
-                            viewModel.accept(SignInEvent.SignInButtonCLick)
+                            viewModel.accept(SignInFirstEvent.SignInFirstButtonCLick)
                         }
                     }
                     SignUpButton {
-                        viewModel.accept(SignInEvent.SignUpButtonClick)
+                        viewModel.accept(SignInFirstEvent.SignUpButtonClickFirst)
                     }
                 }
             }
         }
-    }
-
-    @Composable
-    private fun BackgroundImage() {
-        Image(
-            painter = painterResource(id = R.drawable.pretty_background),
-            contentDescription = stringResource(id = R.string.background_content_description),
-            modifier = Modifier
-                .fillMaxSize(),
-            alignment = Alignment.Center,
-            contentScale = ContentScale.Crop
-        )
     }
 
     @Composable
