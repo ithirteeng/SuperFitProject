@@ -12,8 +12,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -23,7 +22,9 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.MyTextField
+import com.ithirteeng.superfitproject.signin.presentation.SignInEvent
 import com.ithirteeng.superfitproject.signin.presentation.SignInScreenViewModel
+import com.ithirteeng.superfitproject.signin.presentation.SignInState
 import org.koin.androidx.compose.koinViewModel
 
 class SignInScreen : Screen {
@@ -36,26 +37,44 @@ class SignInScreen : Screen {
 
     @Composable
     private fun SignIn(viewModel: SignInScreenViewModel) {
+        val state = viewModel.state.observeAsState(SignInState()).value
         Box(
             modifier = Modifier
                 .fillMaxSize()
         ) {
             BackgroundImage()
-            Column(
-                modifier = Modifier
-                    .fillMaxSize(),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Text(
+
+            if (state.isLoading) {
+                viewModel.accept(SignInEvent.Initialize)
+            } else {
+                Column(
                     modifier = Modifier
-                        .padding(top = 68.dp),
-                    text = stringResource(id = R.string.super_fit),
-                    style = MaterialTheme.typography.h1,
-                    color = MaterialTheme.colors.primary
-                )
-                UserNameTextField(viewModel = viewModel)
-                SignUpButton(viewModel = viewModel)
+                        .fillMaxSize(),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        modifier = Modifier
+                            .padding(top = 68.dp),
+                        text = stringResource(id = R.string.super_fit),
+                        style = MaterialTheme.typography.h1,
+                        color = MaterialTheme.colors.primary
+                    )
+                    Column(modifier = Modifier.padding(horizontal = 52.dp)) {
+                        MyTextField(
+                            onValueChanged = {
+                                viewModel.accept(SignInEvent.ChangeTextField(it))
+                            },
+                            value = state.textFieldValue
+                        )
+                        SignInButton {
+                            viewModel.accept(SignInEvent.SignInButtonCLick)
+                        }
+                    }
+                    SignUpButton {
+                        viewModel.accept(SignInEvent.SignUpButtonClick)
+                    }
+                }
             }
         }
     }
@@ -73,24 +92,21 @@ class SignInScreen : Screen {
     }
 
     @Composable
-    fun UserNameTextField(viewModel: SignInScreenViewModel) {
-        val name = remember { mutableStateOf("") }
-        Column(modifier = Modifier.padding(horizontal = 52.dp)) {
-            MyTextField(
-                placeHolderString = stringResource(id = R.string.username),
-                value = name.value,
-                onValueChanged = { name.value = it }
-            )
-            SignInButton(viewModel = viewModel)
-        }
-
+    private fun MyTextField(onValueChanged: (value: String) -> Unit, value: String) {
+        MyTextField(
+            placeHolderString = stringResource(id = R.string.username),
+            value = value,
+            onValueChanged = {
+                onValueChanged(it)
+            }
+        )
     }
 
     @Composable
-    private fun SignInButton(viewModel: SignInScreenViewModel) {
+    private fun SignInButton(onButtonClick: () -> Unit) {
         TextButton(
             onClick = {
-                // todo: navigate to password screen
+                onButtonClick()
             },
             modifier = Modifier.padding(top = 12.dp),
             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp)
@@ -112,10 +128,10 @@ class SignInScreen : Screen {
     }
 
     @Composable
-    private fun SignUpButton(viewModel: SignInScreenViewModel) {
+    private fun SignUpButton(onButtonClick: () -> Unit) {
         TextButton(
             onClick = {
-                // todo: navigate to signup screen
+                onButtonClick()
             },
             modifier = Modifier
                 .padding(bottom = 34.dp)

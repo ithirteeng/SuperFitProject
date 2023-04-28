@@ -1,5 +1,7 @@
 package com.ithirteeng.superfitproject.signin.presentation
 
-sealed class SignInState {
-
-}
+data class SignInState(
+    val isLoading: Boolean = true,
+    val textFieldValue: String = "",
+    val isError: Throwable? = null,
+)
