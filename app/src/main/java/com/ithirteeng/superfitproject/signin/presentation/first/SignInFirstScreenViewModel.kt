@@ -3,6 +3,8 @@ package com.ithirteeng.superfitproject.signin.presentation.first
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ithirteeng.superfitproject.R
+import com.ithirteeng.superfitproject.common.entity.ErrorEntity
 import com.ithirteeng.superfitproject.common.token.domain.usecase.SaveCurrentUserNameUseCase
 
 class SignInFirstScreenViewModel(
@@ -17,6 +19,7 @@ class SignInFirstScreenViewModel(
             }
 
             is SignInFirstEvent.SignUpButtonClickFirst -> {}
+            else -> onDismissError()
         }
     }
 
@@ -44,13 +47,19 @@ class SignInFirstScreenViewModel(
             _state.value = _state.value?.copy(
                 isLoading = false,
             )
-//            _state.value = _state.value?.copy(
-//                error = ErrorEntity(
-//                    Exception(),
-//                    "test"
-//                )
-//            )
+            _state.value = _state.value?.copy(
+                error = ErrorEntity(
+                    Exception(),
+                    R.string.incorrect_email
+                )
+            )
         }
+    }
+
+    private fun onDismissError() {
+        _state.value = _state.value?.copy(
+            error = null
+        )
     }
 
     private fun validateUserName(userName: String): Boolean {

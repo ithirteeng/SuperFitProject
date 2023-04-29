@@ -8,4 +8,6 @@
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
     <string name="username">UserName</string>
+
+    <string name="incorrect_email">Incorrect Email!</string>
 </resources>

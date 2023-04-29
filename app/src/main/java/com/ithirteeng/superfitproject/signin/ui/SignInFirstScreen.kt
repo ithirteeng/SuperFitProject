@@ -27,6 +27,7 @@ import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.MyTextField
 import com.ithirteeng.superfitproject.common.ui.AuthHeaderText
 import com.ithirteeng.superfitproject.common.ui.BackgroundImage
+import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.signin.di.SIGN_IN_FIRST_VIEW_MODEL
 import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstEvent
 import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstScreenViewModel
@@ -58,7 +59,9 @@ class SignInFirstScreen : Screen {
                     color = Color.White
                 )
             } else if (state.error != null) {
-
+                ErrorAlertDialog(errorEntity = state.error) {
+                    viewModel.accept(SignInFirstEvent.DismissError)
+                }
             } else if (state.isCompleted) {
                 LocalNavigator.currentOrThrow.push(SignInSecondScreen(state.userName))
             } else {
