@@ -8,7 +8,10 @@ class SignInSecondScreenViewModel : ViewModel() {
 
     fun accept(signInSecondEvent: SignInSecondEvent) {
         when (signInSecondEvent) {
-            is SignInSecondEvent.NumberButtonClick -> {}
+            is SignInSecondEvent.NumberButtonClick -> {
+                onNumberClick(list = signInSecondEvent.list)
+            }
+
             else -> {}
         }
     }
@@ -16,4 +19,10 @@ class SignInSecondScreenViewModel : ViewModel() {
     private val _state = MutableLiveData(SignInSecondState(isLoading = false))
 
     val state: LiveData<SignInSecondState> = _state
+
+    private fun onNumberClick(list: List<Int>) {
+        _state.value = _state.value?.copy(
+            numbers = list.shuffled()
+        )
+    }
 }

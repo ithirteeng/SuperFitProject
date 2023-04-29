@@ -1,15 +1,28 @@
 package com.ithirteeng.superfitproject.signin.ui
 
+import androidx.compose.animation.core.tween
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyGridItemScope
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
@@ -24,11 +37,13 @@ import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.AuthHeaderText
 import com.ithirteeng.superfitproject.common.ui.BackgroundImage
 import com.ithirteeng.superfitproject.signin.di.SIGN_IN_SECOND_VIEW_MODEL
+import com.ithirteeng.superfitproject.signin.presentation.second.SignInSecondEvent
 import com.ithirteeng.superfitproject.signin.presentation.second.SignInSecondScreenViewModel
 import com.ithirteeng.superfitproject.signin.presentation.second.SignInSecondState
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.qualifier.named
 
+@ExperimentalFoundationApi
 class SignInSecondScreen(private val email: String) : Screen {
 
     @Composable
@@ -62,18 +77,27 @@ class SignInSecondScreen(private val email: String) : Screen {
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     AuthHeaderText()
-
-                    Text(
-                        modifier = Modifier.padding(vertical = 44.dp),
-                        text = email,
-                        style = MaterialTheme.typography.subtitle1,
-                        textAlign = TextAlign.Center
-                    )
-
-
-
-
-
+                    Column(
+                        modifier = Modifier
+                            .fillMaxHeight(),
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        verticalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        Text(
+                            modifier = Modifier.padding(top = 44.dp),
+                            text = email,
+                            style = MaterialTheme.typography.subtitle1,
+                            textAlign = TextAlign.Center
+                        )
+                        PasswordGrid(list = state.numbers) {
+                            viewModel.accept(
+                                SignInSecondEvent.NumberButtonClick(
+                                    list = state.numbers,
+                                    number = it
+                                )
+                            )
+                        }
+                    }
                 }
             }
         }
@@ -90,6 +114,60 @@ class SignInSecondScreen(private val email: String) : Screen {
                 painter = painterResource(id = R.drawable.arrow_back_icon),
                 tint = Color.White,
                 contentDescription = stringResource(id = R.string.arrow_content_description)
+            )
+        }
+    }
+
+    @Composable
+    private fun PasswordGrid(list: List<Int>, onItemClick: (number: String) -> Unit) {
+        LazyVerticalGrid(
+            modifier = Modifier
+                .padding(bottom = 50.dp, start = 16.dp, end = 16.dp, top = 20.dp)
+                .wrapContentSize(),
+            columns = GridCells.Fixed(3),
+            contentPadding = PaddingValues(10.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp),
+            horizontalArrangement = Arrangement.spacedBy(24.dp),
+            content = {
+                items(
+                    count = list.size,
+                    key = { list[it] }
+                ) { index ->
+                    NumberButton(number = list[index].toString()) {
+                        onItemClick(list[index].toString())
+                    }
+                }
+            }
+        )
+    }
+
+
+    @Composable
+    private fun LazyGridItemScope.NumberButton(
+        number: String,
+        onButtonClick: () -> Unit,
+    ) {
+        TextButton(
+            modifier = Modifier
+                .background(Color.Transparent)
+                .size(78.dp)
+                .border(
+                    width = 2.dp,
+                    color = Color.White,
+                    shape = RoundedCornerShape(10.dp)
+                )
+                .animateItemPlacement(
+                    animationSpec = tween(
+                        durationMillis = 600
+                    )
+                ),
+            contentPadding = PaddingValues(0.dp),
+            onClick = onButtonClick
+        ) {
+            Text(
+                text = number,
+                textAlign = TextAlign.Center,
+                style = MaterialTheme.typography.h2
             )
         }
     }
