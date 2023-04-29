@@ -32,7 +32,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import cafe.adriel.voyager.core.lifecycle.LifecycleEffect
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.AuthHeaderText
 import com.ithirteeng.superfitproject.common.ui.BackgroundImage
@@ -49,6 +52,9 @@ class SignInSecondScreen(private val email: String) : Screen {
     @Composable
     override fun Content() {
         val viewModel: SignInSecondScreenViewModel = koinViewModel(named(SIGN_IN_SECOND_VIEW_MODEL))
+        LifecycleEffect(
+            onDisposed = { viewModel.accept(SignInSecondEvent.BackButtonClick) }
+        )
         SignIn(viewModel = viewModel)
     }
 
@@ -61,14 +67,19 @@ class SignInSecondScreen(private val email: String) : Screen {
         ) {
             BackgroundImage()
             BackButton {
-
+                viewModel.accept(SignInSecondEvent.BackButtonClick)
             }
-
             if (state.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White
                 )
+            } else if (state.error != null) {
+                //todo show alert dialog
+            } else if (state.completionModel.isCompleted) {
+                if (state.completionModel.isBackButtonPressed) {
+                    LocalNavigator.currentOrThrow.pop()
+                }
             } else {
                 Column(
                     modifier = Modifier

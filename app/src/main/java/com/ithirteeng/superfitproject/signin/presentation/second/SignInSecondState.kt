@@ -7,4 +7,5 @@ data class SignInSecondState(
     val password: String = "",
     val numbers: List<Int> = listOf(1, 2, 3, 4, 5, 6, 7, 8, 9),
     val error: ErrorEntity? = null,
+    val completionModel: CompletionModel = CompletionModel()
 )

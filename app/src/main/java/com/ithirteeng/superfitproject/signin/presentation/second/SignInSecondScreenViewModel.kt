@@ -4,8 +4,11 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.ithirteeng.superfitproject.common.token.domain.usecase.RemoveCurrentUserNameUseCase
 
-class SignInSecondScreenViewModel : ViewModel() {
+class SignInSecondScreenViewModel(
+    private val removeCurrentUserNameUseCase: RemoveCurrentUserNameUseCase,
+) : ViewModel() {
 
     fun accept(signInSecondEvent: SignInSecondEvent) {
         when (signInSecondEvent) {
@@ -13,7 +16,8 @@ class SignInSecondScreenViewModel : ViewModel() {
                 onNumberClick(list = signInSecondEvent.list, number = signInSecondEvent.number)
             }
 
-            else -> {}
+            is SignInSecondEvent.BackButtonClick -> onBackButtonClick()
+            SignInSecondEvent.DismissError -> {}
         }
     }
 
@@ -45,5 +49,16 @@ class SignInSecondScreenViewModel : ViewModel() {
     private fun doOnPasswordFilled(password: String) {
         Log.d("PASSWORD", password)
         //todo send password // change state
+    }
+
+    private fun onBackButtonClick() {
+        removeCurrentUserNameUseCase()
+        _state.value = _state.value?.copy(
+            password = "",
+            completionModel = CompletionModel(
+                isCompleted = true,
+                isBackButtonPressed = true
+            )
+        )
     }
 }

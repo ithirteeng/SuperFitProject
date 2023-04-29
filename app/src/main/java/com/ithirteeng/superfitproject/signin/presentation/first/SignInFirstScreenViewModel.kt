@@ -19,13 +19,20 @@ class SignInFirstScreenViewModel(
             }
 
             is SignInFirstEvent.SignUpButtonClickFirst -> {}
-            else -> onDismissError()
+            SignInFirstEvent.DismissError -> {}
+            SignInFirstEvent.Initial -> initState()
         }
     }
 
-    private val _state = MutableLiveData(SignInFirstState(isLoading = false))
+    private val _state = MutableLiveData(SignInFirstState())
 
     val state: LiveData<SignInFirstState> = _state
+
+    private fun initState() {
+        _state.value = _state.value?.copy(
+            isCompleted = false
+        )
+    }
 
     private fun changeTextFieldValue(value: String) {
         _state.value = _state.value?.copy(
@@ -46,8 +53,6 @@ class SignInFirstScreenViewModel(
         } else {
             _state.value = _state.value?.copy(
                 isLoading = false,
-            )
-            _state.value = _state.value?.copy(
                 error = ErrorEntity(
                     Exception(),
                     R.string.incorrect_email

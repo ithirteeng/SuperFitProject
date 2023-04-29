@@ -40,6 +40,7 @@ class SignInFirstScreen : Screen {
     @Composable
     override fun Content() {
         val viewModel: SignInFirstScreenViewModel = koinViewModel(named(SIGN_IN_FIRST_VIEW_MODEL))
+        viewModel.accept(SignInFirstEvent.Initial)
         SignIn(viewModel = viewModel)
     }
 
