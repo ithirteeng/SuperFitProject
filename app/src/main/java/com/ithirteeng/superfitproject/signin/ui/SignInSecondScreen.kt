@@ -81,10 +81,10 @@ class SignInSecondScreen(private val email: String) : Screen {
                         modifier = Modifier
                             .fillMaxHeight(),
                         horizontalAlignment = Alignment.CenterHorizontally,
-                        verticalArrangement = Arrangement.SpaceEvenly
+                        verticalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            modifier = Modifier.padding(top = 44.dp),
+                            modifier = Modifier.padding(top = 24.dp),
                             text = email,
                             style = MaterialTheme.typography.subtitle1,
                             textAlign = TextAlign.Center
@@ -122,10 +122,9 @@ class SignInSecondScreen(private val email: String) : Screen {
     private fun PasswordGrid(list: List<Int>, onItemClick: (number: String) -> Unit) {
         LazyVerticalGrid(
             modifier = Modifier
-                .padding(bottom = 50.dp, start = 16.dp, end = 16.dp, top = 20.dp)
+                .padding(bottom = 50.dp, start = 40.dp, end = 40.dp, top = 44.dp)
                 .wrapContentSize(),
             columns = GridCells.Fixed(3),
-            contentPadding = PaddingValues(10.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp),
             horizontalArrangement = Arrangement.spacedBy(24.dp),
             content = {
