@@ -4,12 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ithirteeng.superfitproject.splash.presentation.model.CompletionModel
+import com.ithirteeng.superfitproject.splash.presentation.model.SplashNextScreenType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class SplashScreenViewModel : ViewModel() {
 
-    private val _state = MutableLiveData<SplashState>()
+    private val _state = MutableLiveData(SplashState())
 
     val state: LiveData<SplashState> = _state
 
@@ -21,10 +23,17 @@ class SplashScreenViewModel : ViewModel() {
     }
 
     private fun checkUserData() {
-        _state.postValue(SplashState.Loading)
+        _state.value = _state.value?.copy(
+            isLoading = false
+        )
         viewModelScope.launch {
             delay(1000)
-            _state.postValue(SplashState.CompleteCheck)
+            _state.value = _state.value?.copy(
+                completionModel = CompletionModel(
+                    true,
+                    SplashNextScreenType.LOGIN
+                )
+            )
         }
 
     }
