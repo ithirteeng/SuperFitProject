@@ -7,8 +7,11 @@ import com.ithirteeng.superfitproject.common.token.data.repository.TokenReposito
 import com.ithirteeng.superfitproject.common.token.data.storage.TokenStorage
 import com.ithirteeng.superfitproject.common.token.domain.repository.TokenRepository
 import com.ithirteeng.superfitproject.common.token.domain.usecase.GetAccessTokenUseCase
+import com.ithirteeng.superfitproject.common.token.domain.usecase.GetCurrentUserNameUseCase
 import com.ithirteeng.superfitproject.common.token.domain.usecase.GetRefreshTokenUseCase
 import com.ithirteeng.superfitproject.common.token.domain.usecase.GetTokenFromLocalStorageUseCase
+import com.ithirteeng.superfitproject.common.token.domain.usecase.RemoveCurrentUserNameUseCase
+import com.ithirteeng.superfitproject.common.token.domain.usecase.SaveCurrentUserNameUseCase
 import com.ithirteeng.superfitproject.common.token.domain.usecase.SaveTokenLocallyUseCase
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
@@ -23,4 +26,7 @@ val tokenModule = module {
     factory { GetRefreshTokenUseCase(repository = get()) }
     factory { GetTokenFromLocalStorageUseCase(repository = get()) }
     factory { SaveTokenLocallyUseCase(repository = get()) }
+    factory { SaveCurrentUserNameUseCase(repository = get()) }
+    factory { GetCurrentUserNameUseCase(repository = get()) }
+    factory { RemoveCurrentUserNameUseCase(repository = get()) }
 }

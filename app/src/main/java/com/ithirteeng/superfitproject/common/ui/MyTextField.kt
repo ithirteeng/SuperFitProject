@@ -44,10 +44,11 @@ fun MyTextField(
                 },
             value = value,
             onValueChange = {
-                if (it.isNotEmpty() && !it.contains(" ")) {
+                if (it.isNotEmpty() && !it.contains(" ") && !it.contains("\n")) {
                     onValueChanged(it)
                 } else {
-                    onValueChanged(it.replace(" ", ""))
+                    val string = it.replace(" ", "")
+                    onValueChanged(string.replace("\n", ""))
                 }
             },
             singleLine = true,

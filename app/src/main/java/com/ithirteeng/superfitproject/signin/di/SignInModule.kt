@@ -12,7 +12,9 @@ const val SIGN_IN_SECOND_VIEW_MODEL = "SIGN_IN_SECOND_VIEW_MODEL"
 val signInModule = module {
 
     viewModel(named(SIGN_IN_FIRST_VIEW_MODEL)) {
-        SignInFirstScreenViewModel()
+        SignInFirstScreenViewModel(
+            saveCurrentUserNameUseCase = get()
+        )
     }
 
     viewModel(named(SIGN_IN_SECOND_VIEW_MODEL)) {

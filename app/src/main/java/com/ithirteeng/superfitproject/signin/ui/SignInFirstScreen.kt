@@ -1,5 +1,6 @@
 package com.ithirteeng.superfitproject.signin.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -20,6 +21,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.MyTextField
 import com.ithirteeng.superfitproject.common.ui.AuthHeaderText
@@ -39,6 +42,7 @@ class SignInFirstScreen : Screen {
         SignIn(viewModel = viewModel)
     }
 
+    @OptIn(ExperimentalFoundationApi::class)
     @Composable
     private fun SignIn(viewModel: SignInFirstScreenViewModel) {
         val state = viewModel.state.observeAsState(SignInFirstState()).value
@@ -53,6 +57,10 @@ class SignInFirstScreen : Screen {
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White
                 )
+            } else if (state.error != null) {
+
+            } else if (state.isCompleted) {
+                LocalNavigator.currentOrThrow.push(SignInSecondScreen(state.userName))
             } else {
                 Column(
                     modifier = Modifier
@@ -66,10 +74,10 @@ class SignInFirstScreen : Screen {
                             onValueChanged = {
                                 viewModel.accept(SignInFirstEvent.ChangeTextField(it))
                             },
-                            value = state.textFieldValue
+                            value = state.userName
                         )
                         SignInButton {
-                            viewModel.accept(SignInFirstEvent.SignInFirstButtonCLick)
+                            viewModel.accept(SignInFirstEvent.SignInFirstButtonCLick(state.userName))
                         }
                     }
                     SignUpButton {

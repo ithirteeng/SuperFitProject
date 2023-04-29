@@ -29,5 +29,17 @@ class TokenRepositoryImpl(
         return storage.getTokenEntity()
     }
 
+    override fun getCurrentUserName(): String? {
+        return storage.getCurrentUserName()
+    }
+
+    override fun saveCurrentUserName(userName: String) {
+        storage.saveCurrentUserName(userName = userName)
+    }
+
+    override fun removeCurrentUserName() {
+        storage.removeCurrentUserName()
+    }
+
 
 }

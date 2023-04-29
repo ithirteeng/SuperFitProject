@@ -1,5 +1,8 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.ithirteeng.superfitproject.splash.ui
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -19,7 +22,7 @@ import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
-import com.ithirteeng.superfitproject.signin.ui.SignInSecondScreen
+import com.ithirteeng.superfitproject.signin.ui.SignInFirstScreen
 import com.ithirteeng.superfitproject.splash.presentation.SplashEvent
 import com.ithirteeng.superfitproject.splash.presentation.SplashScreenViewModel
 import com.ithirteeng.superfitproject.splash.presentation.SplashState
@@ -73,9 +76,7 @@ class SplashScreen : AndroidScreen() {
     private fun ObserveData(viewModel: SplashScreenViewModel) {
         when (viewModel.state.observeAsState().value) {
             is SplashState.CompleteCheck -> LocalNavigator.currentOrThrow.replace(
-                SignInSecondScreen(
-                    "hui@hui.hui"
-                )
+                SignInFirstScreen()
             )
 
             is SplashState.Error -> {}

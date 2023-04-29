@@ -15,4 +15,10 @@ interface TokenRepository {
     fun saveToken(tokenEntity: TokenEntity)
 
     fun getToken(): TokenEntity
+
+    fun getCurrentUserName(): String?
+
+    fun saveCurrentUserName(userName: String)
+
+    fun removeCurrentUserName()
 }

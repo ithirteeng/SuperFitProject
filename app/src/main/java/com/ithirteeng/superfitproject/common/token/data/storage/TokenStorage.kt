@@ -14,6 +14,7 @@ class TokenStorage(
         const val REFRESH_TOKEN_KEY = "refresh_token_key"
         const val USERNAME_KEY = "refresh_token_key"
         const val PASSWORD_KEY = "refresh_token_key"
+        const val CURRENT_USER_NAME_KEY = "CURRENT_USER_NAME_KEY"
     }
 
     private val masterKeyAlias = MasterKeys.getOrCreate(MasterKeys.AES256_GCM_SPEC)
@@ -43,4 +44,14 @@ class TokenStorage(
             refreshToken = sharedPreferences.getString(REFRESH_TOKEN_KEY, null).toString()
         )
     }
+
+    fun saveCurrentUserName(userName: String) =
+        sharedPreferences.edit().putString(CURRENT_USER_NAME_KEY, userName).apply()
+
+
+    fun getCurrentUserName(): String? =
+        sharedPreferences.getString(CURRENT_USER_NAME_KEY, null)
+
+    fun removeCurrentUserName() =
+        sharedPreferences.edit().remove(CURRENT_USER_NAME_KEY).apply()
 }
