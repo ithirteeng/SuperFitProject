@@ -1,5 +1,7 @@
 package com.ithirteeng.superfitproject.common.network.di
 
+import com.ithirteeng.superfitproject.common.network.service.authenticator.TokenAuthenticator
+import com.ithirteeng.superfitproject.common.network.service.interceptor.AuthInterceptor
 import com.ithirteeng.superfitproject.common.network.service.okhttp.setupOkHttpClient
 import com.ithirteeng.superfitproject.common.network.service.okhttp.setupTokenOkHttpClient
 import com.ithirteeng.superfitproject.common.network.service.provideLoggingInterceptor
@@ -33,8 +35,22 @@ val networkModule = module {
         setupTokenOkHttpClient(
             loggingInterceptor = get(),
             networkConnectionInterceptor = get(),
-//            authInterceptor = get(),
-//            tokenAuthenticator = get()
+            authInterceptor = get(),
+            tokenAuthenticator = get()
+        )
+    }
+
+    factory {
+        TokenAuthenticator(
+            getTokenFromLocalStorageUseCase = get(),
+            saveTokenLocallyUseCase = get(),
+            refreshTokenUseCase = get()
+        )
+    }
+
+    factory {
+        AuthInterceptor(
+            getTokenFromLocalStorageUseCase = get()
         )
     }
 }
