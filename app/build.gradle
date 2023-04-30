@@ -18,6 +18,8 @@ android {
         vectorDrawables {
             useSupportLibrary true
         }
+
+        buildConfigField "String", "BASE_URL", "\"http://fitness.wsmob.xyz:22169/api/\""
     }
 
     buildTypes {
@@ -78,5 +80,14 @@ dependencies {
 
     //livedata
     implementation "androidx.compose.runtime:runtime-livedata:$compose_ui_version"
+
+    //network
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
+    implementation "com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11"
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation "com.squareup.okhttp3:okhttp:5.0.0-alpha.2"
+
+    //encrypted shared preferences
+    implementation("androidx.security:security-crypto:1.0.0")
 
 }

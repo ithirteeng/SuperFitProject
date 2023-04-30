@@ -1,10 +1,12 @@
 package com.ithirteeng.superfitproject.splash.presentation
 
 import com.ithirteeng.superfitproject.common.entity.ErrorEntity
+import com.ithirteeng.superfitproject.splash.presentation.model.CompletionModel
 
-sealed class SplashState {
-    object Loading : SplashState()
-    object CompleteCheck : SplashState()
-    class Error(errorEntity: ErrorEntity) : SplashState()
-    object CompleteLoading : SplashState()
-}
+data class SplashState(
+    val isLoading: Boolean = true,
+    val completionModel: CompletionModel = CompletionModel(),
+    val userEmail: String? = null,
+    val error: ErrorEntity? = null,
+)
+

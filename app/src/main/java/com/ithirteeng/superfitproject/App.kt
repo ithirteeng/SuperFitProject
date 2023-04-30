@@ -1,6 +1,9 @@
 package com.ithirteeng.superfitproject
 
 import android.app.Application
+import com.ithirteeng.superfitproject.common.network.di.networkModule
+import com.ithirteeng.superfitproject.common.token.di.tokenModule
+import com.ithirteeng.superfitproject.signin.di.signInModule
 import com.ithirteeng.superfitproject.splash.di.splashModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -12,11 +15,14 @@ class App : Application() {
         super.onCreate()
 
         startKoin {
-            androidLogger(level = Level.DEBUG)
+            androidLogger(level = Level.ERROR)
             androidContext(this@App)
 
             modules(
-                splashModule
+                tokenModule,
+                networkModule,
+                splashModule,
+                signInModule
             )
         }
     }

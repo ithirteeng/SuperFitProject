@@ -1,5 +1,16 @@
 <resources>
     <string name="app_name">SuperFitProject</string>
     <string name="background_content_description">this is background</string>
+    <string name="arrow_content_description">this is arrow</string>
+
     <string name="super_fit">SuperFit</string>
+
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="username">UserName</string>
+
+    <string name="incorrect_email">Incorrect Email!</string>
+    <string name="no_connectivity_exception">No Internet Connection!</string>
+    <string name="incorrect_password_or_email">Incorrect password or Email!</string>
+    <string name="error">Error!</string>
 </resources>

@@ -4,12 +4,17 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.ithirteeng.superfitproject.common.token.domain.usecase.GetCurrentUserNameUseCase
+import com.ithirteeng.superfitproject.splash.presentation.model.CompletionModel
+import com.ithirteeng.superfitproject.splash.presentation.model.SplashNextScreenType
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class SplashScreenViewModel : ViewModel() {
+class SplashScreenViewModel(
+    private val getCurrentUserNameUseCase: GetCurrentUserNameUseCase,
+) : ViewModel() {
 
-    private val _state = MutableLiveData<SplashState>()
+    private val _state = MutableLiveData(SplashState())
 
     val state: LiveData<SplashState> = _state
 
@@ -21,14 +26,29 @@ class SplashScreenViewModel : ViewModel() {
     }
 
     private fun checkUserData() {
-        _state.postValue(SplashState.CompleteCheck)
-    }
-
-    private fun testLoading() {
-        _state.postValue(SplashState.Loading)
+        _state.value = _state.value?.copy(
+            isLoading = false
+        )
         viewModelScope.launch {
-            delay(5000)
-            _state.postValue(SplashState.CompleteLoading)
+            delay(1000)
+            val userName = getCurrentUserNameUseCase()
+            if (userName == null) {
+                _state.value = _state.value?.copy(
+                    completionModel = CompletionModel(
+                        true,
+                        SplashNextScreenType.LOGIN
+                    )
+                )
+            } else {
+                _state.value = _state.value?.copy(
+                    completionModel = CompletionModel(
+                        true,
+                        SplashNextScreenType.LOGIN2
+                    ),
+                    userEmail = userName
+                )
+            }
         }
+
     }
 }

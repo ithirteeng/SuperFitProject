@@ -1,6 +1,7 @@
 package com.ithirteeng.superfitproject.common.theme
 
 import androidx.compose.material.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
@@ -38,7 +39,8 @@ val Typography = Typography(
     subtitle1 = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight(400),
-        fontSize = 18.sp
+        fontSize = 18.sp,
+        color = Color.White
     ),
     subtitle2 = TextStyle(
         fontFamily = Montserrat,
