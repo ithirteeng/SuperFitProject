@@ -6,6 +6,6 @@ import com.ithirteeng.superfitproject.common.token.domain.repository.TokenReposi
 class GetTokenFromLocalStorageUseCase(
     private val repository: TokenRepository,
 ) {
-    operator fun invoke(): TokenEntity =
+    operator fun invoke(): TokenEntity? =
         repository.getToken()
 }

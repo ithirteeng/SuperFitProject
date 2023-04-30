@@ -7,7 +7,10 @@ import org.koin.dsl.module
 val splashModule = module {
     viewModel {
         SplashScreenViewModel(
-            getCurrentUserNameUseCase = get()
+            getCurrentUserNameUseCase = get(),
+            getTokenFromLocalStorageUseCase = get(),
+            getUserEntryFlagUseCase = get(),
+            setUserEntryFlagUseCase = get()
         )
     }
 }

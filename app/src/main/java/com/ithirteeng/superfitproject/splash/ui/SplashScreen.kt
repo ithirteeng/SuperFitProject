@@ -59,13 +59,25 @@ class SplashScreen : AndroidScreen() {
                 //todo alert dialog
             } else if (state.completionModel.isCompleted) {
                 when (state.completionModel.nextScreenType) {
-                    SplashNextScreenType.REGISTRATION -> {}
+                    SplashNextScreenType.REGISTRATION -> {
+                        LocalNavigator.currentOrThrow.replace(
+                            SignInFirstScreen()
+                        )
+                    } // todo: navigate to registration screen
+
                     SplashNextScreenType.LOGIN -> LocalNavigator.currentOrThrow.replace(
                         SignInFirstScreen()
                     )
-                    else -> LocalNavigator.currentOrThrow.replace(
+
+                    SplashNextScreenType.LOGIN2 -> LocalNavigator.currentOrThrow.replace(
                         SignInSecondScreen(state.userEmail.toString())
                     )
+
+                    SplashNextScreenType.MAIN -> {
+                        LocalNavigator.currentOrThrow.replace(
+                            SignInFirstScreen()
+                        )
+                    } // todo: navigate to main screen
                 }
             }
         }

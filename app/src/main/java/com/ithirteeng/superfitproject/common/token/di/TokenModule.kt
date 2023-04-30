@@ -10,9 +10,11 @@ import com.ithirteeng.superfitproject.common.token.domain.usecase.GetAccessToken
 import com.ithirteeng.superfitproject.common.token.domain.usecase.GetCurrentUserNameUseCase
 import com.ithirteeng.superfitproject.common.token.domain.usecase.GetRefreshTokenUseCase
 import com.ithirteeng.superfitproject.common.token.domain.usecase.GetTokenFromLocalStorageUseCase
+import com.ithirteeng.superfitproject.common.token.domain.usecase.GetUserEntryFlagUseCase
 import com.ithirteeng.superfitproject.common.token.domain.usecase.RemoveCurrentUserNameUseCase
 import com.ithirteeng.superfitproject.common.token.domain.usecase.SaveCurrentUserNameUseCase
 import com.ithirteeng.superfitproject.common.token.domain.usecase.SaveTokenLocallyUseCase
+import com.ithirteeng.superfitproject.common.token.domain.usecase.SetUserEntryFlagUseCase
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
@@ -29,4 +31,6 @@ val tokenModule = module {
     factory { SaveCurrentUserNameUseCase(repository = get()) }
     factory { GetCurrentUserNameUseCase(repository = get()) }
     factory { RemoveCurrentUserNameUseCase(repository = get()) }
+    factory { GetUserEntryFlagUseCase(repository = get()) }
+    factory { SetUserEntryFlagUseCase(repository = get()) }
 }
