@@ -25,7 +25,7 @@ class TokenRepositoryImpl(
         storage.saveTokenEntity(tokenEntity)
     }
 
-    override fun getToken(): TokenEntity {
+    override fun getToken(): TokenEntity? {
         return storage.getTokenEntity()
     }
 
@@ -39,6 +39,14 @@ class TokenRepositoryImpl(
 
     override fun removeCurrentUserName() {
         storage.removeCurrentUserName()
+    }
+
+    override fun getUserEntryFlag(): Boolean {
+        return storage.getUserEntryFlag()
+    }
+
+    override fun setUserEntryFlag(flag: Boolean) {
+        storage.setUserEntryFlag(flag = flag)
     }
 
 
