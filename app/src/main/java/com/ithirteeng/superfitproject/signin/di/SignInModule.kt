@@ -19,7 +19,10 @@ val signInModule = module {
 
     viewModel(named(SIGN_IN_SECOND_VIEW_MODEL)) {
         SignInSecondScreenViewModel(
-            removeCurrentUserNameUseCase = get()
+            removeCurrentUserNameUseCase = get(),
+            getAccessTokenUseCase = get(),
+            getRefreshTokenUseCase = get(),
+            saveTokenLocallyUseCase = get()
         )
     }
 

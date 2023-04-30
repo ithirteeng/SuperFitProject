@@ -10,4 +10,7 @@
     <string name="username">UserName</string>
 
     <string name="incorrect_email">Incorrect Email!</string>
+    <string name="no_connectivity_exception">No Internet Connection!</string>
+    <string name="incorrect_password_or_email">Incorrect password or Email!</string>
+    <string name="error">Error!</string>
 </resources>

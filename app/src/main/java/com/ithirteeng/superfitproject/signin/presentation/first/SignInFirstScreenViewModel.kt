@@ -19,7 +19,7 @@ class SignInFirstScreenViewModel(
             }
 
             is SignInFirstEvent.SignUpButtonClickFirst -> {}
-            SignInFirstEvent.DismissError -> {}
+            SignInFirstEvent.DismissError -> onDismissError()
             SignInFirstEvent.Initial -> initState()
         }
     }

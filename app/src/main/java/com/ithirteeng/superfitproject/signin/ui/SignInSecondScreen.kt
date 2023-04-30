@@ -39,6 +39,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.AuthHeaderText
 import com.ithirteeng.superfitproject.common.ui.BackgroundImage
+import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.signin.di.SIGN_IN_SECOND_VIEW_MODEL
 import com.ithirteeng.superfitproject.signin.presentation.second.SignInSecondEvent
 import com.ithirteeng.superfitproject.signin.presentation.second.SignInSecondScreenViewModel
@@ -53,8 +54,11 @@ class SignInSecondScreen(private val email: String) : Screen {
     override fun Content() {
         val viewModel: SignInSecondScreenViewModel = koinViewModel(named(SIGN_IN_SECOND_VIEW_MODEL))
         LifecycleEffect(
-            onDisposed = { viewModel.accept(SignInSecondEvent.BackButtonClick) }
+            onDisposed = {
+                viewModel.accept(SignInSecondEvent.BackButtonClick)
+            }
         )
+        viewModel.accept(SignInSecondEvent.Initial(email))
         SignIn(viewModel = viewModel)
     }
 
@@ -75,10 +79,19 @@ class SignInSecondScreen(private val email: String) : Screen {
                     color = Color.White
                 )
             } else if (state.error != null) {
-                //todo show alert dialog
+                ErrorAlertDialog(errorEntity = state.error) {
+                    viewModel.accept(SignInSecondEvent.DismissError)
+                }
             } else if (state.completionModel.isCompleted) {
                 if (state.completionModel.isBackButtonPressed) {
-                    LocalNavigator.currentOrThrow.pop()
+                    if (LocalNavigator.currentOrThrow.canPop) {
+                        LocalNavigator.currentOrThrow.pop()
+                    } else {
+                        LocalNavigator.currentOrThrow.replace(SignInFirstScreen())
+                    }
+                } else {
+                   //LocalNavigator.currentOrThrow.replaceAll(TestScreen())
+                    //todo navigate to main screens
                 }
             } else {
                 Column(
