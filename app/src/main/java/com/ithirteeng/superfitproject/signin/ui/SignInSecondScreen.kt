@@ -88,7 +88,6 @@ class SignInSecondScreen(private val email: String) : Screen {
                         LocalNavigator.currentOrThrow.replace(SignInFirstScreen())
                     }
                 } else {
-                    //LocalNavigator.currentOrThrow.replaceAll(TestScreen())
                     //todo navigate to main screens
                 }
             } else {

@@ -18,7 +18,7 @@ class AuthInterceptor(
             getTokenFromLocalStorageUseCase().let {
                 builder.addHeader(
                     AUTHORIZATION_HEADER,
-                    "$BEARER ${it.accessToken}"
+                    "$BEARER ${it?.accessToken}"
                 )
             }
         }

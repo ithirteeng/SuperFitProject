@@ -82,7 +82,7 @@ class SignInSecondScreenViewModel(
                     password = password
                 )
             ).onSuccess {
-                getAccessToken(refreshToken = it.refreshToken)
+                getAccessToken(refreshToken = it.refreshToken, password)
             }.onFailure {
                 _state.value = _state.value?.copy(
                     error = ErrorHelper.setupErrorEntity(it, R.string.incorrect_password_or_email),
@@ -99,14 +99,14 @@ class SignInSecondScreenViewModel(
         )
     }
 
-    private fun getAccessToken(refreshToken: String) {
+    private fun getAccessToken(refreshToken: String, password: String) {
         viewModelScope.launch {
             getAccessTokenUseCase(refreshToken = refreshToken)
                 .onSuccess {
                     saveTokenLocallyUseCase(
                         TokenEntity(
                             userName = _state.value?.userName.toString(),
-                            password = _state.value?.password.toString(),
+                            password = password,
                             refreshToken = refreshToken,
                             accessToken = it.accessToken
                         )

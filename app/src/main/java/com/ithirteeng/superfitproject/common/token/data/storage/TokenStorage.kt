@@ -10,10 +10,10 @@ class TokenStorage(
 ) {
     companion object {
         const val TOKEN_STORAGE_NAME = "token storage name"
-        const val ACCESS_TOKEN_KEY = "access_token_key"
-        const val REFRESH_TOKEN_KEY = "refresh_token_key"
-        const val USERNAME_KEY = "refresh_token_key"
-        const val PASSWORD_KEY = "refresh_token_key"
+        const val ACCESS_TOKEN_KEY = "ACCESS_TOKEN_KEY"
+        const val REFRESH_TOKEN_KEY = "REFRESH_TOKEN_KEY"
+        const val USERNAME_KEY = "USERNAME_KEY"
+        const val PASSWORD_KEY = "PASSWORD_KEY"
         const val CURRENT_USER_NAME_KEY = "CURRENT_USER_NAME_KEY"
         const val USER_ENTRY_FLAG_KEY = "USER_ENTRY_FLAG_KEY"
     }

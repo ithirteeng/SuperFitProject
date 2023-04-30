@@ -3,6 +3,7 @@ package com.ithirteeng.superfitproject.common.network.service.authenticator
 import com.ithirteeng.superfitproject.common.network.utils.AUTHORIZATION_HEADER
 import com.ithirteeng.superfitproject.common.network.utils.BEARER
 import com.ithirteeng.superfitproject.common.token.domain.entity.LoginEntity
+import com.ithirteeng.superfitproject.common.token.domain.entity.TokenEntity
 import com.ithirteeng.superfitproject.common.token.domain.usecase.GetTokenFromLocalStorageUseCase
 import com.ithirteeng.superfitproject.common.token.domain.usecase.RefreshTokenUseCase
 import com.ithirteeng.superfitproject.common.token.domain.usecase.SaveTokenLocallyUseCase
@@ -24,18 +25,26 @@ class TokenAuthenticator(
         if (response.responseCount <= 10) {
             try {
                 val accessToken = runBlocking {
-                    refreshTokenUseCase(LoginEntity(localToken.userName, localToken.password))
+                    refreshTokenUseCase(
+                        LoginEntity(
+                            localToken?.userName.toString(),
+                            localToken?.password.toString()
+                        )
+                    )
                 }
 
                 saveTokenLocallyUseCase(
-                    localToken.copy(
-                        accessToken = accessToken
+                    TokenEntity(
+                        userName = localToken?.userName.toString(),
+                        password = localToken?.password.toString(),
+                        accessToken = accessToken,
+                        refreshToken = null
                     )
                 )
 
             } catch (e: java.lang.Exception) {
                 response.request.newBuilder()
-                    .authorizationHeader(getTokenFromLocalStorageUseCase().accessToken.toString())
+                    .authorizationHeader(getTokenFromLocalStorageUseCase()?.accessToken.toString())
                     .build()
             }
         }
@@ -44,7 +53,7 @@ class TokenAuthenticator(
             null
         } else {
             response.request.newBuilder()
-                .authorizationHeader(getTokenFromLocalStorageUseCase().accessToken.toString())
+                .authorizationHeader(getTokenFromLocalStorageUseCase()?.accessToken.toString())
                 .build()
         }
 
