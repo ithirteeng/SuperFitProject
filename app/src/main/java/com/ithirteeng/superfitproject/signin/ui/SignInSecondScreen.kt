@@ -1,5 +1,6 @@
 package com.ithirteeng.superfitproject.signin.ui
 
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -32,7 +33,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.core.lifecycle.LifecycleEffect
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
@@ -53,13 +53,11 @@ class SignInSecondScreen(private val email: String) : Screen {
     @Composable
     override fun Content() {
         val viewModel: SignInSecondScreenViewModel = koinViewModel(named(SIGN_IN_SECOND_VIEW_MODEL))
-        LifecycleEffect(
-            onDisposed = {
-                viewModel.accept(SignInSecondEvent.BackButtonClick)
-            }
-        )
         viewModel.accept(SignInSecondEvent.Initial(email))
         SignIn(viewModel = viewModel)
+        BackHandler {
+            viewModel.accept(SignInSecondEvent.BackButtonClick)
+        }
     }
 
     @Composable
@@ -90,7 +88,7 @@ class SignInSecondScreen(private val email: String) : Screen {
                         LocalNavigator.currentOrThrow.replace(SignInFirstScreen())
                     }
                 } else {
-                   //LocalNavigator.currentOrThrow.replaceAll(TestScreen())
+                    //LocalNavigator.currentOrThrow.replaceAll(TestScreen())
                     //todo navigate to main screens
                 }
             } else {
