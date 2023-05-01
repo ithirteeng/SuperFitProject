@@ -1,6 +1,6 @@
 package com.ithirteeng.superfitproject.signup.presentation.model
 
-enum class SignUpTextField {
+enum class SignUpTextFieldType {
     EMAIL,
     PASSWORD,
     REPEAT_PASSWORD,

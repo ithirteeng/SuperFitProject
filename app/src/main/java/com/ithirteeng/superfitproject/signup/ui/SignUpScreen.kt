@@ -6,18 +6,22 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
@@ -26,11 +30,12 @@ import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.AuthHeaderText
 import com.ithirteeng.superfitproject.common.ui.BackgroundImage
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
+import com.ithirteeng.superfitproject.common.ui.MyTextField
 import com.ithirteeng.superfitproject.signin.ui.SignInFirstScreen
 import com.ithirteeng.superfitproject.signup.presentation.SignUpEvent
 import com.ithirteeng.superfitproject.signup.presentation.SignUpScreenViewModel
 import com.ithirteeng.superfitproject.signup.presentation.SignUpState
-import com.ithirteeng.superfitproject.signup.presentation.model.SignUpTextField
+import com.ithirteeng.superfitproject.signup.presentation.model.SignUpTextFieldType
 import org.koin.androidx.compose.koinViewModel
 
 class SignUpScreen : Screen {
@@ -45,10 +50,11 @@ class SignUpScreen : Screen {
 
     @Composable
     private fun SignUp(viewModel: SignUpScreenViewModel) {
-        val state = viewModel.state.observeAsState(SignUpState()).value
+        val state = viewModel.state.collectAsState(SignUpState()).value
         Box(
             modifier = Modifier
                 .fillMaxSize()
+                .verticalScroll(rememberScrollState())
         ) {
             BackgroundImage()
 
@@ -81,42 +87,51 @@ class SignUpScreen : Screen {
                     ) {
                         MyTextField(
                             value = state.data.userName,
-                            placeHolder = stringResource(id = R.string.username),
-                            onValueChanged = { value ->
-                                viewModel.accept(
-                                    SignUpEvent.TextFieldChange(SignUpTextField.USER_NAME, value)
-                                )
-                            }
-                        )
-                        MyTextField(
-                            value = state.data.email,
-                            placeHolder = stringResource(id = R.string.email),
-                            onValueChanged = { value ->
-                                viewModel.accept(
-                                    SignUpEvent.TextFieldChange(SignUpTextField.EMAIL, value)
-                                )
-                            }
-                        )
-                        MyTextField(
-                            value = state.data.code,
-                            placeHolder = stringResource(id = R.string.code),
-                            onValueChanged = { value ->
-                                viewModel.accept(
-                                    SignUpEvent.TextFieldChange(SignUpTextField.PASSWORD, value)
-                                )
-                            }
-                        )
-                        MyTextField(
-                            value = state.data.repeatCode,
-                            placeHolder = stringResource(id = R.string.repeat_code),
+                            placeHolderString = stringResource(id = R.string.username),
                             onValueChanged = { value ->
                                 viewModel.accept(
                                     SignUpEvent.TextFieldChange(
-                                        SignUpTextField.REPEAT_PASSWORD,
+                                        SignUpTextFieldType.USER_NAME,
                                         value
                                     )
                                 )
-                            }
+                            },
+                            keyboardType = KeyboardType.Email
+                        )
+                        MyTextField(
+                            value = state.data.email,
+                            placeHolderString = stringResource(id = R.string.email),
+                            onValueChanged = { value ->
+                                viewModel.accept(
+                                    SignUpEvent.TextFieldChange(SignUpTextFieldType.EMAIL, value)
+                                )
+                            },
+                            keyboardType = KeyboardType.Email
+                        )
+                        MyTextField(
+                            value = state.data.code,
+                            placeHolderString = stringResource(id = R.string.code),
+                            onValueChanged = { value ->
+                                viewModel.accept(
+                                    SignUpEvent.TextFieldChange(SignUpTextFieldType.PASSWORD, value)
+                                )
+                            },
+                            visualTransformation = PasswordVisualTransformation(),
+                            keyboardType = KeyboardType.NumberPassword
+                        )
+                        MyTextField(
+                            value = state.data.repeatCode,
+                            placeHolderString = stringResource(id = R.string.repeat_code),
+                            onValueChanged = { value ->
+                                viewModel.accept(
+                                    SignUpEvent.TextFieldChange(
+                                        SignUpTextFieldType.REPEAT_PASSWORD,
+                                        value
+                                    )
+                                )
+                            },
+                            visualTransformation = PasswordVisualTransformation(),
+                            keyboardType = KeyboardType.NumberPassword
                         )
                         SignUpButton {
                             viewModel.accept(SignUpEvent.SignUpButtonClick)
@@ -131,20 +146,6 @@ class SignUpScreen : Screen {
         }
     }
 
-    @Composable
-    private fun MyTextField(
-        value: String,
-        placeHolder: String,
-        onValueChanged: (value: String) -> Unit,
-    ) {
-        com.ithirteeng.superfitproject.common.ui.MyTextField(
-            placeHolderString = placeHolder,
-            value = value,
-            onValueChanged = {
-                onValueChanged(it)
-            }
-        )
-    }
 
     @Composable
     private fun SignInButton(onButtonClick: () -> Unit) {

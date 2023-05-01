@@ -16,4 +16,6 @@
     <string name="no_connectivity_exception">No Internet Connection!</string>
     <string name="incorrect_password_or_email">Incorrect password or Email!</string>
     <string name="error">Error!</string>
+    <string name="incorrect_username">Incorrect UserName!</string>
+    <string name="code_error">Code must contain 4 digits</string>
 </resources>

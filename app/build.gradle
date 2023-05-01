@@ -63,6 +63,8 @@ dependencies {
     debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
     debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
 
+    implementation "com.google.accompanist:accompanist-insets-ui:0.24.7-alpha"
+
     //voyager
     def voyager_version = '1.0.0-rc04'
     //voyager navigator

@@ -18,6 +18,7 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.ithirteeng.superfitproject.common.theme.DividerLight
 
@@ -26,6 +27,8 @@ fun MyTextField(
     placeHolderString: String,
     value: String,
     onValueChanged: (value: String) -> Unit,
+    keyboardType: KeyboardType,
+    visualTransformation: VisualTransformation = VisualTransformation.None,
 ) {
     Column(
         modifier = Modifier
@@ -43,6 +46,7 @@ fun MyTextField(
                     }
                     false
                 },
+            visualTransformation = visualTransformation,
             value = value,
             onValueChange = {
                 if (it.isNotEmpty() && !it.contains(" ") && !it.contains("\n")) {
@@ -55,7 +59,7 @@ fun MyTextField(
             singleLine = true,
             textStyle = MaterialTheme.typography.subtitle1,
             keyboardOptions = KeyboardOptions(
-                keyboardType = KeyboardType.Email,
+                keyboardType = keyboardType,
                 imeAction = ImeAction.Done
             ),
             keyboardActions = KeyboardActions(
