@@ -18,4 +18,7 @@
     <string name="error">Error!</string>
     <string name="incorrect_username">Incorrect UserName!</string>
     <string name="code_error">Code must contain 4 digits</string>
+    <string name="repeat_code_error">Codes must be equal!</string>
+
+    <string name="user_name_exists">UserName already exists!</string>
 </resources>

@@ -6,9 +6,11 @@ import androidx.lifecycle.ViewModel
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.entity.ErrorEntity
 import com.ithirteeng.superfitproject.common.token.domain.usecase.SaveCurrentUserNameUseCase
+import com.ithirteeng.superfitproject.common.validation.usecase.ValidateEmailUseCase
 
 class SignInFirstScreenViewModel(
     private val saveCurrentUserNameUseCase: SaveCurrentUserNameUseCase,
+    private val validateEmailUseCase: ValidateEmailUseCase,
 ) : ViewModel() {
 
     fun accept(signInFirstEvent: SignInFirstEvent) {
@@ -72,6 +74,6 @@ class SignInFirstScreenViewModel(
     }
 
     private fun validateUserName(userName: String): Boolean {
-        return userName.isNotEmpty() && userName.contains("@")
+        return validateEmailUseCase(userName)
     }
 }
