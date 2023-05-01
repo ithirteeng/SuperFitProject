@@ -24,7 +24,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
-import com.ithirteeng.superfitproject.common.MyTextField
+import com.ithirteeng.superfitproject.common.ui.MyTextField
 import com.ithirteeng.superfitproject.common.ui.AuthHeaderText
 import com.ithirteeng.superfitproject.common.ui.BackgroundImage
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
@@ -32,6 +32,7 @@ import com.ithirteeng.superfitproject.signin.di.SIGN_IN_FIRST_VIEW_MODEL
 import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstEvent
 import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstScreenViewModel
 import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstState
+import com.ithirteeng.superfitproject.signup.ui.SignUpScreen
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.qualifier.named
 
@@ -65,6 +66,8 @@ class SignInFirstScreen : Screen {
                 }
             } else if (state.isCompleted) {
                 LocalNavigator.currentOrThrow.push(SignInSecondScreen(state.userName))
+            } else if (state.isSignupButtonPressed) {
+                LocalNavigator.currentOrThrow.replace(SignUpScreen())
             } else {
                 Column(
                     modifier = Modifier
@@ -135,7 +138,7 @@ class SignInFirstScreen : Screen {
                 onButtonClick()
             },
             modifier = Modifier
-                .padding(bottom = 34.dp)
+                .padding(bottom = 28.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.sign_up),

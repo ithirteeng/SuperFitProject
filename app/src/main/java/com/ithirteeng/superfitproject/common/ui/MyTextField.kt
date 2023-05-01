@@ -1,4 +1,4 @@
-package com.ithirteeng.superfitproject.common
+package com.ithirteeng.superfitproject.common.ui
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -30,6 +30,7 @@ fun MyTextField(
     Column(
         modifier = Modifier
             .fillMaxWidth()
+            .padding(top = 36.dp)
     ) {
         val focusManager = LocalFocusManager.current
 

@@ -18,7 +18,10 @@ class SignInFirstScreenViewModel(
                 handleSignInButton(signInFirstEvent.userName)
             }
 
-            is SignInFirstEvent.SignUpButtonClickFirst -> {}
+            is SignInFirstEvent.SignUpButtonClickFirst -> _state.value = _state.value?.copy(
+                isSignupButtonPressed = true
+            )
+
             SignInFirstEvent.DismissError -> onDismissError()
             SignInFirstEvent.Initial -> initState()
         }
@@ -30,7 +33,8 @@ class SignInFirstScreenViewModel(
 
     private fun initState() {
         _state.value = _state.value?.copy(
-            isCompleted = false
+            isCompleted = false,
+            isSignupButtonPressed = false
         )
     }
 

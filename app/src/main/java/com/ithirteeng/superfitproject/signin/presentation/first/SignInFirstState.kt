@@ -6,5 +6,6 @@ data class SignInFirstState(
     val isLoading: Boolean = false,
     val userName: String = "",
     val error: ErrorEntity? = null,
-    val isCompleted: Boolean = false
+    val isCompleted: Boolean = false,
+    val isSignupButtonPressed: Boolean = false,
 )

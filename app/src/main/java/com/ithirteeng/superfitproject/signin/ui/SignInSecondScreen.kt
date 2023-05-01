@@ -68,9 +68,6 @@ class SignInSecondScreen(private val email: String) : Screen {
                 .fillMaxSize()
         ) {
             BackgroundImage()
-            BackButton {
-                viewModel.accept(SignInSecondEvent.BackButtonClick)
-            }
             if (state.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
@@ -91,6 +88,9 @@ class SignInSecondScreen(private val email: String) : Screen {
                     //todo navigate to main screens
                 }
             } else {
+                BackButton {
+                    viewModel.accept(SignInSecondEvent.BackButtonClick)
+                }
                 Column(
                     modifier = Modifier
                         .fillMaxSize(),

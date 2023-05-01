@@ -26,6 +26,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.signin.ui.SignInFirstScreen
 import com.ithirteeng.superfitproject.signin.ui.SignInSecondScreen
+import com.ithirteeng.superfitproject.signup.ui.SignUpScreen
 import com.ithirteeng.superfitproject.splash.presentation.SplashEvent
 import com.ithirteeng.superfitproject.splash.presentation.SplashScreenViewModel
 import com.ithirteeng.superfitproject.splash.presentation.SplashState
@@ -61,9 +62,9 @@ class SplashScreen : AndroidScreen() {
                 when (state.completionModel.nextScreenType) {
                     SplashNextScreenType.REGISTRATION -> {
                         LocalNavigator.currentOrThrow.replace(
-                            SignInFirstScreen()
+                            SignUpScreen()
                         )
-                    } // todo: navigate to registration screen
+                    }
 
                     SplashNextScreenType.LOGIN -> LocalNavigator.currentOrThrow.replace(
                         SignInFirstScreen()

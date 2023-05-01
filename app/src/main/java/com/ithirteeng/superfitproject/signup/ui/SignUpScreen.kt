@@ -75,7 +75,10 @@ class SignUpScreen : Screen {
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
                     AuthHeaderText()
-                    Column(modifier = Modifier.padding(horizontal = 52.dp)) {
+                    Column(
+                        modifier = Modifier.padding(horizontal = 52.dp),
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
                         MyTextField(
                             value = state.data.userName,
                             placeHolder = stringResource(id = R.string.username),
@@ -134,7 +137,7 @@ class SignUpScreen : Screen {
         placeHolder: String,
         onValueChanged: (value: String) -> Unit,
     ) {
-        com.ithirteeng.superfitproject.common.MyTextField(
+        com.ithirteeng.superfitproject.common.ui.MyTextField(
             placeHolderString = placeHolder,
             value = value,
             onValueChanged = {
@@ -149,20 +152,19 @@ class SignUpScreen : Screen {
             onClick = {
                 onButtonClick()
             },
-            modifier = Modifier.padding(top = 12.dp),
+            modifier = Modifier.padding(bottom = 28.dp),
             contentPadding = PaddingValues(horizontal = 8.dp, vertical = 0.dp)
         ) {
+            Icon(
+                modifier = Modifier
+                    .padding(end = 12.dp),
+                painter = painterResource(id = R.drawable.arrow_back_icon),
+                contentDescription = stringResource(id = R.string.arrow_content_description)
+            )
             Text(
                 text = stringResource(id = R.string.sign_in),
                 style = MaterialTheme.typography.h5,
                 color = MaterialTheme.colors.primary,
-            )
-
-            Icon(
-                modifier = Modifier
-                    .padding(start = 8.dp),
-                painter = painterResource(id = R.drawable.arrow_back_icon),
-                contentDescription = stringResource(id = R.string.arrow_content_description)
             )
 
         }
@@ -175,7 +177,7 @@ class SignUpScreen : Screen {
                 onButtonClick()
             },
             modifier = Modifier
-                .padding(bottom = 34.dp)
+                .padding(bottom = 20.dp, top = 36.dp)
         ) {
             Text(
                 text = stringResource(id = R.string.sign_up),

@@ -4,6 +4,7 @@ import android.app.Application
 import com.ithirteeng.superfitproject.common.network.di.networkModule
 import com.ithirteeng.superfitproject.common.token.di.tokenModule
 import com.ithirteeng.superfitproject.signin.di.signInModule
+import com.ithirteeng.superfitproject.signup.di.signUpModule
 import com.ithirteeng.superfitproject.splash.di.splashModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -22,7 +23,8 @@ class App : Application() {
                 tokenModule,
                 networkModule,
                 splashModule,
-                signInModule
+                signInModule,
+                signUpModule
             )
         }
     }
