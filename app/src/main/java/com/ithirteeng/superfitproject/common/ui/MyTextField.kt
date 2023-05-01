@@ -52,9 +52,10 @@ fun MyTextField(
             value = value,
             onValueChange = {
                 if (it.length <= maxLength) {
-                    if (it.isNotEmpty() && !it.contains(Regex("\\s*\n*")) && !it.contains(
-                            forbiddenChars
-                        )
+                    if (
+                        it.isNotEmpty() &&
+                        !it.contains(Regex("\\s*\n*")) &&
+                        !it.contains(forbiddenChars)
                     ) {
                         onValueChanged(it)
                     } else {

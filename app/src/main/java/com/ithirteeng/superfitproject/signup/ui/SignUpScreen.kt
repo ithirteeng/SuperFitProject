@@ -34,6 +34,7 @@ import com.ithirteeng.superfitproject.signup.presentation.SignUpEvent
 import com.ithirteeng.superfitproject.signup.presentation.SignUpScreenViewModel
 import com.ithirteeng.superfitproject.signup.presentation.SignUpState
 import com.ithirteeng.superfitproject.signup.presentation.model.SignUpTextFieldType
+import com.ithirteeng.superfitproject.splash.MainScreen
 import org.koin.androidx.compose.koinViewModel
 
 class SignUpScreen : Screen {
@@ -62,7 +63,7 @@ class SignUpScreen : Screen {
                     viewModel.accept(SignUpEvent.DismissError)
                 }
             } else if (state.completionModel.isRequestCompleted) {
-                // todo navigate to main screen
+                LocalNavigator.currentOrThrow.replaceAll(MainScreen())
             } else if (state.completionModel.isValidated) {
                 //todo send event
             } else if (state.completionModel.isSignInButtonPressed) {

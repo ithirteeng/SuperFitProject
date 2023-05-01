@@ -13,7 +13,8 @@ val signInModule = module {
 
     viewModel(named(SIGN_IN_FIRST_VIEW_MODEL)) {
         SignInFirstScreenViewModel(
-            saveCurrentUserNameUseCase = get()
+            saveCurrentUserNameUseCase = get(),
+            validateEmailUseCase = get()
         )
     }
 

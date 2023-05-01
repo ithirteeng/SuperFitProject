@@ -81,6 +81,10 @@ class SignUpScreenViewModel(
 
     private fun onSignUpButtonClick() {
         if (validateFields()) {
+            _state.value = _state.value.copy(
+                error = null,
+                isLoading = true
+            )
             registerUser()
         }
     }
@@ -162,7 +166,9 @@ class SignUpScreenViewModel(
                     )
                     _state.value = _state.value.copy(
                         isLoading = false,
-                        completionModel = CompletionModel()
+                        completionModel = CompletionModel(
+                            isRequestCompleted = true
+                        )
                     )
                 }
                 .onFailure {
