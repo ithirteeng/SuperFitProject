@@ -8,6 +8,9 @@
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
     <string name="username">UserName</string>
+    <string name="email">Email</string>
+    <string name="code">Code</string>
+    <string name="repeat_code">RepeatCode</string>
 
     <string name="incorrect_email">Incorrect Email!</string>
     <string name="no_connectivity_exception">No Internet Connection!</string>
