@@ -112,7 +112,8 @@ class SignUpScreen : Screen {
                             },
                             visualTransformation = PasswordVisualTransformation(),
                             keyboardType = KeyboardType.NumberPassword,
-                            forbiddenChars = Regex("0*")
+                            forbiddenChars = Regex("0*"),
+                            maxLength = 4
                         )
                         MyTextField(
                             value = state.data.repeatCode,
@@ -127,7 +128,8 @@ class SignUpScreen : Screen {
                             },
                             visualTransformation = PasswordVisualTransformation(),
                             keyboardType = KeyboardType.NumberPassword,
-                            forbiddenChars = Regex("0*")
+                            forbiddenChars = Regex("0*"),
+                            maxLength = 4
                         )
                         SignUpButton {
                             viewModel.accept(SignUpEvent.SignUpButtonClick)

@@ -30,6 +30,7 @@ fun MyTextField(
     keyboardType: KeyboardType,
     visualTransformation: VisualTransformation = VisualTransformation.None,
     forbiddenChars: Regex = Regex(""),
+    maxLength: Int = 300,
 ) {
     Column(
         modifier = Modifier
@@ -50,11 +51,16 @@ fun MyTextField(
             visualTransformation = visualTransformation,
             value = value,
             onValueChange = {
-                if (it.isNotEmpty() && !it.contains(Regex("\\s*\n*")) && !it.contains(forbiddenChars)) {
-                    onValueChanged(it)
-                } else {
-                    val string = it.replace(Regex("\\s*\n*"), "")
-                    onValueChanged(string.replace(forbiddenChars, ""))
+                if (it.length <= maxLength) {
+                    if (it.isNotEmpty() && !it.contains(Regex("\\s*\n*")) && !it.contains(
+                            forbiddenChars
+                        )
+                    ) {
+                        onValueChanged(it)
+                    } else {
+                        val string = it.replace(Regex("\\s*\n*"), "")
+                        onValueChanged(string.replace(forbiddenChars, ""))
+                    }
                 }
             },
             singleLine = true,
