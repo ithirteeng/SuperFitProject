@@ -20,7 +20,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
-import com.ithirteeng.superfitproject.common.theme.DividerLight
+import com.ithirteeng.superfitproject.common.ui.theme.DividerLight
 
 @Composable
 fun MyTextField(

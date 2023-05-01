@@ -1,4 +1,4 @@
-package com.ithirteeng.superfitproject.splash
+package com.ithirteeng.superfitproject
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text

@@ -36,6 +36,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.ithirteeng.superfitproject.MainScreen
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.AuthHeaderText
 import com.ithirteeng.superfitproject.common.ui.BackgroundImage
@@ -83,7 +84,7 @@ class SignInSecondScreen(private val email: String) : Screen {
                         LocalNavigator.currentOrThrow.replace(SignInFirstScreen())
                     }
                 } else {
-                    //todo navigate to main screens
+                    LocalNavigator.currentOrThrow.replaceAll(MainScreen())
                 }
             } else {
                 BackButton {

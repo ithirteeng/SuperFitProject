@@ -1,4 +1,4 @@
-package com.ithirteeng.superfitproject.common.theme
+package com.ithirteeng.superfitproject.common.ui.theme
 
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Shapes

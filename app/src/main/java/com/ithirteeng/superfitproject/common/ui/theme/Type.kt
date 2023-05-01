@@ -1,4 +1,4 @@
-package com.ithirteeng.superfitproject.common.theme
+package com.ithirteeng.superfitproject.common.ui.theme
 
 import androidx.compose.material.Typography
 import androidx.compose.ui.graphics.Color

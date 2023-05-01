@@ -23,6 +23,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
+import com.ithirteeng.superfitproject.MainScreen
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.signin.ui.SignInFirstScreen
 import com.ithirteeng.superfitproject.signin.ui.SignInSecondScreen
@@ -75,10 +76,8 @@ class SplashScreen : AndroidScreen() {
                     )
 
                     SplashNextScreenType.MAIN -> {
-                        LocalNavigator.currentOrThrow.replace(
-                            SignInFirstScreen()
-                        )
-                    } // todo: navigate to main screen
+                        LocalNavigator.currentOrThrow.replace(MainScreen())
+                    }
                 }
             }
         }
