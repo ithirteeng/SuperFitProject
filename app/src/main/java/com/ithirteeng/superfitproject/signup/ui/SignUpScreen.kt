@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
@@ -51,11 +49,7 @@ class SignUpScreen : Screen {
     @Composable
     private fun SignUp(viewModel: SignUpScreenViewModel) {
         val state = viewModel.state.collectAsState(SignUpState()).value
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .verticalScroll(rememberScrollState())
-        ) {
+        Box(modifier = Modifier.fillMaxSize()) {
             BackgroundImage()
 
             if (state.isLoading) {
@@ -106,7 +100,7 @@ class SignUpScreen : Screen {
                                     SignUpEvent.TextFieldChange(SignUpTextFieldType.EMAIL, value)
                                 )
                             },
-                            keyboardType = KeyboardType.Email
+                            keyboardType = KeyboardType.Email,
                         )
                         MyTextField(
                             value = state.data.code,
@@ -117,7 +111,8 @@ class SignUpScreen : Screen {
                                 )
                             },
                             visualTransformation = PasswordVisualTransformation(),
-                            keyboardType = KeyboardType.NumberPassword
+                            keyboardType = KeyboardType.NumberPassword,
+                            forbiddenChars = Regex("0*")
                         )
                         MyTextField(
                             value = state.data.repeatCode,
@@ -131,7 +126,8 @@ class SignUpScreen : Screen {
                                 )
                             },
                             visualTransformation = PasswordVisualTransformation(),
-                            keyboardType = KeyboardType.NumberPassword
+                            keyboardType = KeyboardType.NumberPassword,
+                            forbiddenChars = Regex("0*")
                         )
                         SignUpButton {
                             viewModel.accept(SignUpEvent.SignUpButtonClick)

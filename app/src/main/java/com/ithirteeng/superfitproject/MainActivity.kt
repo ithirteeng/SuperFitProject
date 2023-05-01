@@ -1,7 +1,6 @@
 package com.ithirteeng.superfitproject
 
 import android.os.Bundle
-import android.view.WindowManager
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,11 +13,9 @@ import cafe.adriel.voyager.navigator.Navigator
 import com.ithirteeng.superfitproject.common.theme.SuperFitProjectTheme
 import com.ithirteeng.superfitproject.splash.ui.SplashScreen
 
-@Suppress("DEPRECATION")
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
             SuperFitProjectTheme {
