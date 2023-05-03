@@ -1,3 +1,11 @@
 package com.ithirteeng.superfitproject.main.presentation
 
-sealed class MainScreenIntent
+import com.ithirteeng.superfitproject.common.entity.ExerciseEntity
+
+sealed class MainScreenIntent {
+    object Initial : MainScreenIntent()
+    object SignOutButtonClick : MainScreenIntent()
+    object DetailsButtonClick : MainScreenIntent()
+    object SeeAllButtonClick : MainScreenIntent()
+    class ExerciseButtonClick(exerciseEntity: ExerciseEntity) : MainScreenIntent()
+}

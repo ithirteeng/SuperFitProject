@@ -36,7 +36,7 @@ class SplashScreenViewModel(
             isLoading = false
         )
         viewModelScope.launch {
-            delay(6000)
+            delay(1000)
             if (getUserEntryFlagUseCase()) {
                 onRepeatEntry(getCurrentUserNameUseCase())
             } else {
