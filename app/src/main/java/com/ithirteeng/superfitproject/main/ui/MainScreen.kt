@@ -3,6 +3,7 @@ package com.ithirteeng.superfitproject.main.ui
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -14,7 +15,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import com.ithirteeng.superfitproject.R
+import com.ithirteeng.superfitproject.common.entity.ExerciseEntity
+import com.ithirteeng.superfitproject.common.model.ExerciseType
 import com.ithirteeng.superfitproject.common.ui.BaseCard
+import com.ithirteeng.superfitproject.common.ui.ExerciseCard
 import com.ithirteeng.superfitproject.common.ui.ImageHeader
 import com.ithirteeng.superfitproject.main.presentation.MainScreenIntent
 import com.ithirteeng.superfitproject.main.presentation.MainScreenState
@@ -40,8 +44,50 @@ class MainScreen : Screen {
                 modifier = Modifier.fillMaxSize(),
                 color = Color.White,
             ) {
-                MyBody(state = state)
+                LazyColumn {
+                    item {
+                        MyBody(state = state)
+                    }
+                    item { 
+                        LastExercises(state = state)
+                    }
 
+                    item {
+                        ExerciseCard(imageId = R.drawable.exercise_image, exerciseEntity = ExerciseEntity(
+                            name = ExerciseType.SQUATS.type,
+                            descriptionId = R.string.squats_description,
+                            type = ExerciseType.SQUATS
+                        ))
+                    }
+                    item {
+                        ExerciseCard(imageId = R.drawable.exercise_image, exerciseEntity = ExerciseEntity(
+                            name = ExerciseType.SQUATS.type,
+                            descriptionId = R.string.squats_description,
+                            type = ExerciseType.SQUATS
+                        ))
+                    }
+                    item {
+                        ExerciseCard(imageId = R.drawable.exercise_image, exerciseEntity = ExerciseEntity(
+                            name = ExerciseType.SQUATS.type,
+                            descriptionId = R.string.squats_description,
+                            type = ExerciseType.SQUATS
+                        ))
+                    }
+                    item {
+                        ExerciseCard(imageId = R.drawable.exercise_image, exerciseEntity = ExerciseEntity(
+                            name = ExerciseType.SQUATS.type,
+                            descriptionId = R.string.squats_description,
+                            type = ExerciseType.SQUATS
+                        ))
+                    }
+                    item {
+                        ExerciseCard(imageId = R.drawable.exercise_image, exerciseEntity = ExerciseEntity(
+                            name = ExerciseType.SQUATS.type,
+                            descriptionId = R.string.squats_description,
+                            type = ExerciseType.SQUATS
+                        ))
+                    }
+                }
             }
         }
     }
@@ -63,6 +109,17 @@ class MainScreen : Screen {
                     Text(text = "huisdfsgfjsdkfghlsdkfjhgskjfghdksjfhgskjfhgskjfhglksfhglsfglksdfhglsdkjfghdsklfghsdlkfjghsdlkfjghksdljfghsdkjfghsdkjfghdsklfjghdslkfjghsldkfjghlsdkfjghsdklfjghsdkfghldskfghsdljkfghdslkfghsdfgs2")
                 }
             }
+        }
+    }
+
+    @Composable
+    private fun LastExercises(state: MainScreenState) {
+        Column {
+            Text(
+                modifier = Modifier.padding(horizontal = 16.dp),
+                text = stringResource(id = R.string.last_exercises),
+                style = MaterialTheme.typography.h5
+            )
         }
     }
 }
