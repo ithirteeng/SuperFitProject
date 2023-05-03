@@ -36,13 +36,13 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.ithirteeng.superfitproject.MainScreen
+import com.ithirteeng.superfitproject.main.ui.MainScreen
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.AuthHeaderText
 import com.ithirteeng.superfitproject.common.ui.BackgroundImage
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.signin.di.SIGN_IN_SECOND_VIEW_MODEL
-import com.ithirteeng.superfitproject.signin.presentation.second.SignInSecondEvent
+import com.ithirteeng.superfitproject.signin.presentation.second.SignInSecondIntent
 import com.ithirteeng.superfitproject.signin.presentation.second.SignInSecondScreenViewModel
 import com.ithirteeng.superfitproject.signin.presentation.second.SignInSecondState
 import org.koin.androidx.compose.koinViewModel
@@ -54,10 +54,10 @@ class SignInSecondScreen(private val email: String) : Screen {
     @Composable
     override fun Content() {
         val viewModel: SignInSecondScreenViewModel = koinViewModel(named(SIGN_IN_SECOND_VIEW_MODEL))
-        viewModel.accept(SignInSecondEvent.Initial(email))
+        viewModel.accept(SignInSecondIntent.Initial(email))
         SignIn(viewModel = viewModel)
         BackHandler {
-            viewModel.accept(SignInSecondEvent.BackButtonClick)
+            viewModel.accept(SignInSecondIntent.BackButtonClick)
         }
     }
 
@@ -74,7 +74,7 @@ class SignInSecondScreen(private val email: String) : Screen {
                 )
             } else if (state.error != null) {
                 ErrorAlertDialog(errorEntity = state.error) {
-                    viewModel.accept(SignInSecondEvent.DismissError)
+                    viewModel.accept(SignInSecondIntent.DismissError)
                 }
             } else if (state.completionModel.isCompleted) {
                 if (state.completionModel.isBackButtonPressed) {
@@ -88,7 +88,7 @@ class SignInSecondScreen(private val email: String) : Screen {
                 }
             } else {
                 BackButton {
-                    viewModel.accept(SignInSecondEvent.BackButtonClick)
+                    viewModel.accept(SignInSecondIntent.BackButtonClick)
                 }
                 Column(
                     modifier = Modifier
@@ -111,7 +111,7 @@ class SignInSecondScreen(private val email: String) : Screen {
                         )
                         PasswordGrid(list = state.numbers) {
                             viewModel.accept(
-                                SignInSecondEvent.NumberButtonClick(
+                                SignInSecondIntent.NumberButtonClick(
                                     list = state.numbers,
                                     number = it
                                 )

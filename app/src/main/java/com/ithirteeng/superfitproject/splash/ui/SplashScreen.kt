@@ -23,12 +23,12 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.ithirteeng.superfitproject.MainScreen
+import com.ithirteeng.superfitproject.main.ui.MainScreen
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.signin.ui.SignInFirstScreen
 import com.ithirteeng.superfitproject.signin.ui.SignInSecondScreen
 import com.ithirteeng.superfitproject.signup.ui.SignUpScreen
-import com.ithirteeng.superfitproject.splash.presentation.SplashEvent
+import com.ithirteeng.superfitproject.splash.presentation.SplashScreenIntent
 import com.ithirteeng.superfitproject.splash.presentation.SplashScreenViewModel
 import com.ithirteeng.superfitproject.splash.presentation.SplashState
 import com.ithirteeng.superfitproject.splash.presentation.model.SplashNextScreenType
@@ -44,7 +44,7 @@ class SplashScreen : AndroidScreen() {
 
     @Composable
     private fun Screen(viewModel: SplashScreenViewModel) {
-        viewModel.accept(SplashEvent.CheckDataEvent)
+        viewModel.accept(SplashScreenIntent.CheckDataScreenIntent)
         val state = viewModel.state.observeAsState(SplashState()).value
         Box(
             modifier = Modifier

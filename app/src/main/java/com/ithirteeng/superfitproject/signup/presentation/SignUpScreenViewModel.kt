@@ -33,16 +33,16 @@ class SignUpScreenViewModel(
     private val registerUseCase: RegisterUseCase,
 ) : ViewModel() {
 
-    fun accept(signUpEvent: SignUpEvent) {
-        when (signUpEvent) {
-            is SignUpEvent.DismissError -> _state.value = _state.value.copy(error = null)
-            is SignUpEvent.Initial -> initState()
-            is SignUpEvent.SignInButtonClick -> _state.value = _state.value.copy(
+    fun accept(signUpIntent: SignUpIntent) {
+        when (signUpIntent) {
+            is SignUpIntent.DismissError -> _state.value = _state.value.copy(error = null)
+            is SignUpIntent.Initial -> initState()
+            is SignUpIntent.SignInButtonClick -> _state.value = _state.value.copy(
                 completionModel = CompletionModel(isSignInButtonPressed = true)
             )
 
-            is SignUpEvent.SignUpButtonClick -> onSignUpButtonClick()
-            is SignUpEvent.TextFieldChange -> onTextFieldChange(signUpEvent.type, signUpEvent.value)
+            is SignUpIntent.SignUpButtonClick -> onSignUpButtonClick()
+            is SignUpIntent.TextFieldChange -> onTextFieldChange(signUpIntent.type, signUpIntent.value)
         }
     }
 

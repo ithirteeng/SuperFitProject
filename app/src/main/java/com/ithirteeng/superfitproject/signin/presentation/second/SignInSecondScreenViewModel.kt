@@ -21,16 +21,16 @@ class SignInSecondScreenViewModel(
     private val saveTokenLocallyUseCase: SaveTokenLocallyUseCase,
 ) : ViewModel() {
 
-    fun accept(signInSecondEvent: SignInSecondEvent) {
-        when (signInSecondEvent) {
-            is SignInSecondEvent.NumberButtonClick -> onNumberClick(
-                list = signInSecondEvent.list,
-                number = signInSecondEvent.number
+    fun accept(signInSecondIntent: SignInSecondIntent) {
+        when (signInSecondIntent) {
+            is SignInSecondIntent.NumberButtonClick -> onNumberClick(
+                list = signInSecondIntent.list,
+                number = signInSecondIntent.number
             )
 
-            is SignInSecondEvent.BackButtonClick -> onBackButtonClick()
-            SignInSecondEvent.DismissError -> dismissError()
-            is SignInSecondEvent.Initial -> initState(signInSecondEvent.userName)
+            is SignInSecondIntent.BackButtonClick -> onBackButtonClick()
+            SignInSecondIntent.DismissError -> dismissError()
+            is SignInSecondIntent.Initial -> initState(signInSecondIntent.userName)
         }
     }
 

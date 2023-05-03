@@ -30,7 +30,7 @@ import com.ithirteeng.superfitproject.common.ui.AuthHeaderText
 import com.ithirteeng.superfitproject.common.ui.BackgroundImage
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.signin.di.SIGN_IN_FIRST_VIEW_MODEL
-import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstEvent
+import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstIntent
 import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstScreenViewModel
 import com.ithirteeng.superfitproject.signin.presentation.first.SignInFirstState
 import com.ithirteeng.superfitproject.signup.ui.SignUpScreen
@@ -42,7 +42,7 @@ class SignInFirstScreen : Screen {
     @Composable
     override fun Content() {
         val viewModel: SignInFirstScreenViewModel = koinViewModel(named(SIGN_IN_FIRST_VIEW_MODEL))
-        viewModel.accept(SignInFirstEvent.Initial)
+        viewModel.accept(SignInFirstIntent.Initial)
         SignIn(viewModel = viewModel)
     }
 
@@ -63,7 +63,7 @@ class SignInFirstScreen : Screen {
                 )
             } else if (state.error != null) {
                 ErrorAlertDialog(errorEntity = state.error) {
-                    viewModel.accept(SignInFirstEvent.DismissError)
+                    viewModel.accept(SignInFirstIntent.DismissError)
                 }
             } else if (state.isCompleted) {
                 LocalNavigator.currentOrThrow.push(SignInSecondScreen(state.userName))
@@ -80,16 +80,16 @@ class SignInFirstScreen : Screen {
                     Column(modifier = Modifier.padding(horizontal = 52.dp)) {
                         MyTextField(
                             onValueChanged = {
-                                viewModel.accept(SignInFirstEvent.ChangeTextField(it))
+                                viewModel.accept(SignInFirstIntent.ChangeTextField(it))
                             },
                             value = state.userName
                         )
                         SignInButton {
-                            viewModel.accept(SignInFirstEvent.SignInFirstButtonCLick(state.userName))
+                            viewModel.accept(SignInFirstIntent.SignInFirstButtonCLick(state.userName))
                         }
                     }
                     SignUpButton {
-                        viewModel.accept(SignInFirstEvent.SignUpButtonClickFirst)
+                        viewModel.accept(SignInFirstIntent.SignUpButtonClickFirst)
                     }
                 }
             }

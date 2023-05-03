@@ -30,11 +30,11 @@ import com.ithirteeng.superfitproject.common.ui.BackgroundImage
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.common.ui.MyTextField
 import com.ithirteeng.superfitproject.signin.ui.SignInFirstScreen
-import com.ithirteeng.superfitproject.signup.presentation.SignUpEvent
+import com.ithirteeng.superfitproject.signup.presentation.SignUpIntent
 import com.ithirteeng.superfitproject.signup.presentation.SignUpScreenViewModel
 import com.ithirteeng.superfitproject.signup.presentation.SignUpState
 import com.ithirteeng.superfitproject.signup.presentation.model.SignUpTextFieldType
-import com.ithirteeng.superfitproject.MainScreen
+import com.ithirteeng.superfitproject.main.ui.MainScreen
 import org.koin.androidx.compose.koinViewModel
 
 class SignUpScreen : Screen {
@@ -42,7 +42,7 @@ class SignUpScreen : Screen {
     @Composable
     override fun Content() {
         val viewModel: SignUpScreenViewModel = koinViewModel()
-        viewModel.accept(SignUpEvent.Initial)
+        viewModel.accept(SignUpIntent.Initial)
         SignUp(viewModel = viewModel)
     }
 
@@ -60,7 +60,7 @@ class SignUpScreen : Screen {
                 )
             } else if (state.error != null) {
                 ErrorAlertDialog(errorEntity = state.error) {
-                    viewModel.accept(SignUpEvent.DismissError)
+                    viewModel.accept(SignUpIntent.DismissError)
                 }
             } else if (state.completionModel.isRequestCompleted) {
                 LocalNavigator.currentOrThrow.replaceAll(MainScreen())
@@ -85,7 +85,7 @@ class SignUpScreen : Screen {
                             placeHolderString = stringResource(id = R.string.username),
                             onValueChanged = { value ->
                                 viewModel.accept(
-                                    SignUpEvent.TextFieldChange(
+                                    SignUpIntent.TextFieldChange(
                                         SignUpTextFieldType.USER_NAME,
                                         value
                                     )
@@ -98,7 +98,7 @@ class SignUpScreen : Screen {
                             placeHolderString = stringResource(id = R.string.email),
                             onValueChanged = { value ->
                                 viewModel.accept(
-                                    SignUpEvent.TextFieldChange(SignUpTextFieldType.EMAIL, value)
+                                    SignUpIntent.TextFieldChange(SignUpTextFieldType.EMAIL, value)
                                 )
                             },
                             keyboardType = KeyboardType.Email,
@@ -108,7 +108,7 @@ class SignUpScreen : Screen {
                             placeHolderString = stringResource(id = R.string.code),
                             onValueChanged = { value ->
                                 viewModel.accept(
-                                    SignUpEvent.TextFieldChange(SignUpTextFieldType.PASSWORD, value)
+                                    SignUpIntent.TextFieldChange(SignUpTextFieldType.PASSWORD, value)
                                 )
                             },
                             visualTransformation = PasswordVisualTransformation(),
@@ -121,7 +121,7 @@ class SignUpScreen : Screen {
                             placeHolderString = stringResource(id = R.string.repeat_code),
                             onValueChanged = { value ->
                                 viewModel.accept(
-                                    SignUpEvent.TextFieldChange(
+                                    SignUpIntent.TextFieldChange(
                                         SignUpTextFieldType.REPEAT_PASSWORD,
                                         value
                                     )
@@ -133,11 +133,11 @@ class SignUpScreen : Screen {
                             maxLength = 4
                         )
                         SignUpButton {
-                            viewModel.accept(SignUpEvent.SignUpButtonClick)
+                            viewModel.accept(SignUpIntent.SignUpButtonClick)
                         }
                     }
                     SignInButton {
-                        viewModel.accept(SignUpEvent.SignInButtonClick)
+                        viewModel.accept(SignUpIntent.SignInButtonClick)
                     }
 
                 }

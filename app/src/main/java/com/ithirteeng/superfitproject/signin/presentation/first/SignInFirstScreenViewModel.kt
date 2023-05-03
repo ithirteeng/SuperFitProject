@@ -13,19 +13,19 @@ class SignInFirstScreenViewModel(
     private val validateEmailUseCase: ValidateEmailUseCase,
 ) : ViewModel() {
 
-    fun accept(signInFirstEvent: SignInFirstEvent) {
-        when (signInFirstEvent) {
-            is SignInFirstEvent.ChangeTextField -> changeTextFieldValue(signInFirstEvent.value)
-            is SignInFirstEvent.SignInFirstButtonCLick -> {
-                handleSignInButton(signInFirstEvent.userName)
+    fun accept(signInFirstIntent: SignInFirstIntent) {
+        when (signInFirstIntent) {
+            is SignInFirstIntent.ChangeTextField -> changeTextFieldValue(signInFirstIntent.value)
+            is SignInFirstIntent.SignInFirstButtonCLick -> {
+                handleSignInButton(signInFirstIntent.userName)
             }
 
-            is SignInFirstEvent.SignUpButtonClickFirst -> _state.value = _state.value?.copy(
+            is SignInFirstIntent.SignUpButtonClickFirst -> _state.value = _state.value?.copy(
                 isSignupButtonPressed = true
             )
 
-            SignInFirstEvent.DismissError -> onDismissError()
-            SignInFirstEvent.Initial -> initState()
+            SignInFirstIntent.DismissError -> onDismissError()
+            SignInFirstIntent.Initial -> initState()
         }
     }
 

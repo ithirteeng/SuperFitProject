@@ -24,9 +24,9 @@ class SplashScreenViewModel(
 
     val state: LiveData<SplashState> = _state
 
-    fun accept(splashEvent: SplashEvent) {
-        when (splashEvent) {
-            is SplashEvent.CheckDataEvent -> checkUserData()
+    fun accept(splashScreenIntent: SplashScreenIntent) {
+        when (splashScreenIntent) {
+            is SplashScreenIntent.CheckDataScreenIntent -> checkUserData()
         }
 
     }
@@ -36,7 +36,7 @@ class SplashScreenViewModel(
             isLoading = false
         )
         viewModelScope.launch {
-            delay(1000)
+            delay(6000)
             if (getUserEntryFlagUseCase()) {
                 onRepeatEntry(getCurrentUserNameUseCase())
             } else {

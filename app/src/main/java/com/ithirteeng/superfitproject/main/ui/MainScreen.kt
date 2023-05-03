@@ -1,4 +1,4 @@
-package com.ithirteeng.superfitproject
+package com.ithirteeng.superfitproject.main.ui
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.Text
