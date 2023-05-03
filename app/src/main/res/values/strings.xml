@@ -7,6 +7,7 @@
 
     <string name="sign_up">Sign Up</string>
     <string name="sign_in">Sign In</string>
+    <string name="sign_out">Sign Out</string>
     <string name="username">UserName</string>
     <string name="email">Email</string>
     <string name="code">Code</string>
@@ -21,4 +22,7 @@
     <string name="repeat_code_error">Codes must be equal!</string>
 
     <string name="user_name_exists">UserName already exists!</string>
+
+    <string name="my_body">My Body</string>
+    <string name="last_exercises">Last Exercises</string>
 </resources>
