@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -33,6 +34,7 @@ import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.BaseCard
 import com.ithirteeng.superfitproject.common.ui.ExerciseCard
 import com.ithirteeng.superfitproject.common.ui.ImageHeader
+import com.ithirteeng.superfitproject.common.ui.theme.GrayMedium
 import com.ithirteeng.superfitproject.common.ui.theme.GrayWhite
 import com.ithirteeng.superfitproject.common.ui.theme.Violet
 import com.ithirteeng.superfitproject.main.presentation.MainScreenIntent
@@ -65,15 +67,19 @@ class MainScreen : Screen {
                     LazyColumn {
                         item {
                             MyBody(state = state) {
-
+                                //todo details intent
                             }
                         }
                         item {
-                            LastExercisesText()
+                            LastExercisesLine {
+                                //todo intent see all
+                            }
                         }
 
                         items(state.data.exercises) {
-                            ExerciseCard(imageId = it.imageId, exerciseEntity = it)
+                            ExerciseCard(imageId = it.imageId, exerciseEntity = it) {
+                                //todo intent to exercise
+                            }
                         }
                     }
 
@@ -161,11 +167,27 @@ class MainScreen : Screen {
     }
 
     @Composable
-    private fun LastExercisesText() {
-        Text(
-            modifier = Modifier.padding(horizontal = 16.dp),
-            text = stringResource(id = R.string.last_exercises),
-            style = MaterialTheme.typography.h5
-        )
+    private fun LastExercisesLine(onSeeAllButtonClick: () -> Unit) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = stringResource(id = R.string.last_exercises),
+                style = MaterialTheme.typography.h5
+            )
+            Text(
+                text = stringResource(id = R.string.see_all),
+                style = MaterialTheme.typography.body1,
+                color = GrayMedium,
+                modifier = Modifier.clickable {
+                    onSeeAllButtonClick()
+                }
+            )
+        }
+
     }
 }
