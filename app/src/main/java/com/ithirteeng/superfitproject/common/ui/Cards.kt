@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.exercises.domain.entity.ExerciseEntity
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
-import com.ithirteeng.superfitproject.common.ui.theme.GrayLight
+import com.ithirteeng.superfitproject.common.ui.theme.GrayWhite
 
 @Composable
 fun BaseCard(
@@ -54,7 +54,7 @@ fun BaseCard(
                     .drawWithCache {
                         val gradient = Brush.horizontalGradient(
                             colors = listOf(Color.Transparent, GrayDark),
-                            startX = size.width * 0.9f,
+                            startX = size.width * 0.7f,
                             endX = size.width
                         )
                         onDrawWithContent {
@@ -80,7 +80,7 @@ fun ExerciseCard(
                 .padding(start = 16.dp, end = 16.dp, bottom = 8.dp, top = 8.dp)
         ) {
             Text(
-                text = exerciseEntity.name,
+                text = stringResource(id = exerciseEntity.nameId),
                 style = MaterialTheme.typography.subtitle2,
                 color = Color.White
             )
@@ -89,7 +89,7 @@ fun ExerciseCard(
                 modifier = Modifier.padding(top = 4.dp),
                 text = stringResource(id = exerciseEntity.descriptionId),
                 style = MaterialTheme.typography.body1,
-                color = GrayLight
+                color = GrayWhite
             )
         }
     }

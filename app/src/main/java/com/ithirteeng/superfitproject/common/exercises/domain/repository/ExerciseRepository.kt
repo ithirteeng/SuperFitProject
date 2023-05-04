@@ -9,4 +9,8 @@ interface ExerciseRepository {
     fun getExercisesList(): List<String?>
 
     fun clearStorage()
+
+    fun setWeightAndHeight(weight: Number, height: Number)
+
+    fun getWeightAndHeight(): Pair<String?, String?>
 }

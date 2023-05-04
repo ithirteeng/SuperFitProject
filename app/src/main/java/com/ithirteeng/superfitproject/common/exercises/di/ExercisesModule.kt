@@ -6,6 +6,8 @@ import com.ithirteeng.superfitproject.common.exercises.domain.repository.Exercis
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.AddExerciseUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.ClearExerciseStorageUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.GetExercisesUseCase
+import com.ithirteeng.superfitproject.common.exercises.domain.usecase.GetWeightAndHeightUseCase
+import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetWeightAndHeightUseCase
 import org.koin.dsl.module
 
 val exercisesModule = module {
@@ -16,4 +18,6 @@ val exercisesModule = module {
     factory { GetExercisesUseCase(repository = get()) }
     factory { AddExerciseUseCase(repository = get()) }
     factory { ClearExerciseStorageUseCase(repository = get()) }
+    factory { SetWeightAndHeightUseCase(repository = get()) }
+    factory { GetWeightAndHeightUseCase(repository = get()) }
 }
