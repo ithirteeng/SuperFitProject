@@ -10,7 +10,13 @@ class MainScreenViewModel(
 ) : AndroidViewModel(application) {
 
     fun accept(mainScreenIntent: MainScreenIntent) {
-
+//        when(mainScreenIntent) {
+//            is MainScreenIntent.DetailsButtonClick -> TODO()
+//            is MainScreenIntent.ExerciseButtonClick -> TODO()
+//            is MainScreenIntent.Initial -> TODO()
+//            is MainScreenIntent.SeeAllButtonClick -> TODO()
+//            is MainScreenIntent.SignOutButtonClick -> TODO()
+//        }
     }
 
     private val _state = MutableStateFlow(MainScreenState())
