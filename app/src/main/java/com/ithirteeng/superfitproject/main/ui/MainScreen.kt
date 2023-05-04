@@ -81,6 +81,12 @@ class MainScreen : Screen {
                                 //todo intent to exercise
                             }
                         }
+
+                        item {
+                            SignOutButton {
+                                // todo intent sig out
+                            }
+                        }
                     }
 
                 }
@@ -189,5 +195,31 @@ class MainScreen : Screen {
             )
         }
 
+    }
+
+    @Composable
+    private fun SignOutButton(onButtonClick: () -> Unit) {
+        Row(
+            modifier = Modifier
+                .padding(bottom = 10.dp, top = 50.dp, start = 16.dp)
+                .clickable {
+                    onButtonClick()
+                },
+            verticalAlignment = Alignment.CenterVertically
+            ) {
+            Icon(
+                modifier = Modifier
+                    .padding(end = 8.dp),
+                painter = painterResource(id = R.drawable.arrow_back_icon),
+                contentDescription = stringResource(id = R.string.arrow_content_description),
+                tint = Color.Black
+            )
+            Text(
+                text = stringResource(id = R.string.sign_out),
+                style = MaterialTheme.typography.h5,
+                color = Color.Black
+            )
+
+        }
     }
 }
