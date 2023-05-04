@@ -25,6 +25,7 @@
 
     <string name="my_body">My Body</string>
     <string name="last_exercises">Last Exercises</string>
+    <string name="undefined">undefined</string>
 
     <string name="push_up_description">Push-ups exercise the pectoral muscles, triceps, and anterior deltoids.</string>
     <string name="plank_description">The plank strengthens the abdominals, back and shoulders. </string>

@@ -16,6 +16,9 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -38,18 +41,28 @@ fun BaseCard(
             .fillMaxWidth()
             .defaultMinSize(minHeight = 114.dp)
             .height(IntrinsicSize.Min),
-        contentColor = GrayDark,
+        backgroundColor = GrayDark,
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Image(
-                modifier = Modifier
-                    .weight(1f)
-                    .fillMaxHeight(),
                 painter = painterResource(id = imageId),
                 contentDescription = stringResource(id = R.string.background_content_description),
                 contentScale = ContentScale.Crop,
-
-                )
+                modifier = Modifier
+                    .weight(1f)
+                    .fillMaxHeight()
+                    .drawWithCache {
+                        val gradient = Brush.horizontalGradient(
+                            colors = listOf(Color.Transparent, GrayDark),
+                            startX = size.width * 0.9f,
+                            endX = size.width
+                        )
+                        onDrawWithContent {
+                            drawContent()
+                            drawRect(gradient, blendMode = BlendMode.SrcOver)
+                        }
+                    },
+            )
             SecondPart(modifier = Modifier.weight(1f))
         }
     }
@@ -64,7 +77,7 @@ fun ExerciseCard(
     BaseCard(imageId = imageId) { modifier ->
         Column(
             modifier = modifier
-                .padding(start = 16.dp, end = 16.dp, bottom = 16.dp, top = 8.dp)
+                .padding(start = 16.dp, end = 16.dp, bottom = 8.dp, top = 8.dp)
         ) {
             Text(
                 text = exerciseEntity.name,

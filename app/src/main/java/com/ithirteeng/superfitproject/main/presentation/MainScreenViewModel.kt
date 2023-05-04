@@ -1,10 +1,13 @@
 package com.ithirteeng.superfitproject.main.presentation
 
-import androidx.lifecycle.ViewModel
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class MainScreenViewModel : ViewModel() {
+class MainScreenViewModel(
+    private val application: Application,
+) : AndroidViewModel(application) {
 
     fun accept(mainScreenIntent: MainScreenIntent) {
 

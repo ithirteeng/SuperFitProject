@@ -9,4 +9,6 @@
     <color name="white">#FFFFFFFF</color>
     <color name="statusBarColor">#33000000</color>
     <color name="dividerColor">#7AFFFFFF</color>
+    <color name="gray_dark">#282828</color>
+    <color name="transparent">#00000000</color>
 </resources>
