@@ -1,4 +1,4 @@
-package com.ithirteeng.superfitproject.common.model
+package com.ithirteeng.superfitproject.common.exercises.domain.entity
 
 enum class ExerciseType(val type: String) {
     CRUNCH("CRUNCH"),

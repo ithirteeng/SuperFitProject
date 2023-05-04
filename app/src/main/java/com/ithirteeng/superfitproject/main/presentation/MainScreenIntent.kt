@@ -1,6 +1,6 @@
 package com.ithirteeng.superfitproject.main.presentation
 
-import com.ithirteeng.superfitproject.common.entity.ExerciseEntity
+import com.ithirteeng.superfitproject.common.exercises.domain.entity.ExerciseEntity
 
 sealed class MainScreenIntent {
     object Initial : MainScreenIntent()

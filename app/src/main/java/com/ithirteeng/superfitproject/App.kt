@@ -1,6 +1,7 @@
 package com.ithirteeng.superfitproject
 
 import android.app.Application
+import com.ithirteeng.superfitproject.common.exercises.di.exercisesModule
 import com.ithirteeng.superfitproject.common.network.di.networkModule
 import com.ithirteeng.superfitproject.common.token.di.tokenModule
 import com.ithirteeng.superfitproject.common.validation.di.validationModule
@@ -28,7 +29,8 @@ class App : Application() {
                 signInModule,
                 signUpModule,
                 validationModule,
-                mainModule
+                mainModule,
+                exercisesModule
             )
         }
     }
