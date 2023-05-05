@@ -11,7 +11,9 @@ val mainModule = module {
             application = get(),
             getExercisesUseCase = get(),
             addExerciseUseCase = get(),
-            getWeightAndHeightUseCase = get()
+            getWeightAndHeightUseCase = get(),
+            clearExerciseStorageUseCase = get(),
+            clearTokenStorageUseCase = get()
         )
     }
 }

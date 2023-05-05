@@ -6,6 +6,6 @@ class ClearTokenStorageUseCase(
     private val repository: TokenRepository,
 ) {
     operator fun invoke() {
-        repository.clearStorage()
+        repository.clearTokenStorage()
     }
 }

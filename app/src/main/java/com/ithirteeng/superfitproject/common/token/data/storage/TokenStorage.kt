@@ -50,8 +50,14 @@ class TokenStorage(
         }
     }
 
-    fun clearStorage() {
-        sharedPreferences.edit().clear().apply()
+    fun clearTokenStorage() {
+        sharedPreferences.edit()
+            .remove(USERNAME_KEY)
+            .remove(PASSWORD_KEY)
+            .remove(ACCESS_TOKEN_KEY)
+            .remove(REFRESH_TOKEN_KEY)
+            .remove(CURRENT_USER_NAME_KEY)
+            .apply()
     }
 
     fun saveCurrentUserName(userName: String) =

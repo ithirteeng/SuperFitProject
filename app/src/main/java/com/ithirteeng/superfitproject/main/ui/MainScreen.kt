@@ -1,9 +1,5 @@
-@file:OptIn(ExperimentalFoundationApi::class)
-
 package com.ithirteeng.superfitproject.main.ui
 
-import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.LocalOverscrollConfiguration
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -14,12 +10,12 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -30,16 +26,21 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.BaseCard
+import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.common.ui.ExerciseCard
 import com.ithirteeng.superfitproject.common.ui.ImageHeader
 import com.ithirteeng.superfitproject.common.ui.theme.GrayMedium
 import com.ithirteeng.superfitproject.common.ui.theme.GrayWhite
 import com.ithirteeng.superfitproject.common.ui.theme.Violet
+import com.ithirteeng.superfitproject.exerciseslist.ui.ExercisesScreen
 import com.ithirteeng.superfitproject.main.presentation.MainScreenIntent
 import com.ithirteeng.superfitproject.main.presentation.MainScreenState
 import com.ithirteeng.superfitproject.main.presentation.MainScreenViewModel
+import com.ithirteeng.superfitproject.signin.ui.SignInFirstScreen
 import org.koin.androidx.compose.koinViewModel
 
 class MainScreen : Screen {
@@ -54,15 +55,30 @@ class MainScreen : Screen {
     private fun MainScreenView(viewModel: MainScreenViewModel) {
         val state = viewModel.state.collectAsState().value
         Column(
-            modifier = Modifier.fillMaxSize()
+            modifier = Modifier.fillMaxSize(),
+            horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            ImageHeader()
-            Surface(
-                modifier = Modifier.fillMaxSize(),
-                color = Color.White,
-            ) {
-                CompositionLocalProvider(
-                    LocalOverscrollConfiguration provides null
+            if (state.isLoading) {
+                CircularProgressIndicator(
+                    color = Color.White
+                )
+            } else if (state.error != null) {
+                ErrorAlertDialog(errorEntity = state.error) {
+                    //todo: check if error can appear
+                }
+            } else if (state.completionModel.ifSignOutCompleted) {
+                LocalNavigator.currentOrThrow.replaceAll(SignInFirstScreen())
+            } else if (state.completionModel.ifDetailsButtonClicked) {
+                //todo: navigate to profile screen
+            } else if (state.completionModel.ifSeeAllButtonClicked) {
+                LocalNavigator.currentOrThrow.push(ExercisesScreen())
+            } else if (state.completionModel.exerciseClicked != null) {
+                // todo: navigate to exercise info screen
+            } else {
+                ImageHeader()
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = Color.White,
                 ) {
                     LazyColumn {
                         item {

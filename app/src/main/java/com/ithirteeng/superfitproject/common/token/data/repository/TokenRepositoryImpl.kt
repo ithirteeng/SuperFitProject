@@ -49,8 +49,8 @@ class TokenRepositoryImpl(
         storage.setUserEntryFlag(flag = flag)
     }
 
-    override fun clearStorage() {
-        storage.clearStorage()
+    override fun clearTokenStorage() {
+        storage.clearTokenStorage()
     }
 
 

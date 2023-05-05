@@ -47,7 +47,8 @@ class MainScreenViewModel(
                 weight = getWeightAndHeight().first,
                 height = getWeightAndHeight().second,
                 exercises = getExercisesList()
-            )
+            ),
+            completionModel = CompletionModel()
         )
     }
 
