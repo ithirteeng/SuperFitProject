@@ -6,6 +6,7 @@ import com.ithirteeng.superfitproject.common.token.data.api.TokenApi
 import com.ithirteeng.superfitproject.common.token.data.repository.TokenRepositoryImpl
 import com.ithirteeng.superfitproject.common.token.data.storage.TokenStorage
 import com.ithirteeng.superfitproject.common.token.domain.repository.TokenRepository
+import com.ithirteeng.superfitproject.common.token.domain.usecase.ClearTokenStorageUseCase
 import com.ithirteeng.superfitproject.common.token.domain.usecase.GetAccessTokenUseCase
 import com.ithirteeng.superfitproject.common.token.domain.usecase.GetCurrentUserNameUseCase
 import com.ithirteeng.superfitproject.common.token.domain.usecase.GetRefreshTokenUseCase
@@ -34,6 +35,7 @@ val tokenModule = module {
     factory { RemoveCurrentUserNameUseCase(repository = get()) }
     factory { GetUserEntryFlagUseCase(repository = get()) }
     factory { SetUserEntryFlagUseCase(repository = get()) }
+    factory { ClearTokenStorageUseCase(repository = get()) }
     factory {
         RefreshTokenUseCase(
             getRefreshTokenUseCase = get(),

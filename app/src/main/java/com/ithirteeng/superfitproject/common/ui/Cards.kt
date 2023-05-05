@@ -77,7 +77,7 @@ fun BaseCard(
 fun ExerciseCard(
     imageId: Int,
     exerciseEntity: ExerciseEntity,
-    onClick: () -> Unit,
+    onClick: (exerciseEntity: ExerciseEntity) -> Unit,
 ) {
     Card(
         modifier = Modifier
@@ -87,7 +87,9 @@ fun ExerciseCard(
             .defaultMinSize(minHeight = 114.dp)
             .height(IntrinsicSize.Min),
         backgroundColor = GrayDark,
-        onClick = onClick
+        onClick = {
+            onClick(exerciseEntity)
+        }
     ) {
         Row(modifier = Modifier.fillMaxWidth()) {
             Image(

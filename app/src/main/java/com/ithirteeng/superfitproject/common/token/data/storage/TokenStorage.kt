@@ -50,6 +50,10 @@ class TokenStorage(
         }
     }
 
+    fun clearStorage() {
+        sharedPreferences.edit().clear().apply()
+    }
+
     fun saveCurrentUserName(userName: String) =
         sharedPreferences.edit().putString(CURRENT_USER_NAME_KEY, userName).apply()
 

@@ -7,5 +7,5 @@ sealed class MainScreenIntent {
     object SignOutButtonClick : MainScreenIntent()
     object DetailsButtonClick : MainScreenIntent()
     object SeeAllButtonClick : MainScreenIntent()
-    class ExerciseButtonClick(exerciseEntity: ExerciseEntity) : MainScreenIntent()
+    class ExerciseButtonClick(val exerciseEntity: ExerciseEntity) : MainScreenIntent()
 }

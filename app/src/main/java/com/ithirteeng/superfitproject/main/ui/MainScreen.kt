@@ -67,24 +67,24 @@ class MainScreen : Screen {
                     LazyColumn {
                         item {
                             MyBody(state = state) {
-                                //todo details intent
+                                viewModel.accept(MainScreenIntent.DetailsButtonClick)
                             }
                         }
                         item {
                             LastExercisesLine {
-                                //todo intent see all
+                                viewModel.accept(MainScreenIntent.SeeAllButtonClick)
                             }
                         }
 
                         items(state.data.exercises) {
-                            ExerciseCard(imageId = it.imageId, exerciseEntity = it) {
-                                //todo intent to exercise
+                            ExerciseCard(imageId = it.imageId, exerciseEntity = it) { entity ->
+                                viewModel.accept(MainScreenIntent.ExerciseButtonClick(entity))
                             }
                         }
 
                         item {
                             SignOutButton {
-                                // todo intent sig out
+                                viewModel.accept(MainScreenIntent.SignOutButtonClick)
                             }
                         }
                     }
@@ -206,7 +206,7 @@ class MainScreen : Screen {
                     onButtonClick()
                 },
             verticalAlignment = Alignment.CenterVertically
-            ) {
+        ) {
             Icon(
                 modifier = Modifier
                     .padding(end = 8.dp),

@@ -25,4 +25,6 @@ interface TokenRepository {
     fun getUserEntryFlag(): Boolean
 
     fun setUserEntryFlag(flag: Boolean)
+
+    fun clearStorage()
 }
