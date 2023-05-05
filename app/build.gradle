@@ -73,6 +73,8 @@ dependencies {
     implementation("cafe.adriel.voyager:voyager-tab-navigator:$voyager_version")
     // Android ViewModel integration
     implementation("cafe.adriel.voyager:voyager-androidx:$voyager_version")
+    //transitions
+    implementation("cafe.adriel.voyager:voyager-transitions:$voyager_version")
 
     //koin
     def koin_version = '3.4.0'

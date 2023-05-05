@@ -66,14 +66,6 @@ class MainScreen : Screen {
                 ErrorAlertDialog(errorEntity = state.error) {
                     //todo: check if error can appear
                 }
-            } else if (state.completionModel.ifSignOutCompleted) {
-                LocalNavigator.currentOrThrow.replaceAll(SignInFirstScreen())
-            } else if (state.completionModel.ifDetailsButtonClicked) {
-                //todo: navigate to profile screen
-            } else if (state.completionModel.ifSeeAllButtonClicked) {
-                LocalNavigator.currentOrThrow.push(ExercisesScreen())
-            } else if (state.completionModel.exerciseClicked != null) {
-                // todo: navigate to exercise info screen
             } else {
                 ImageHeader()
                 Surface(
@@ -107,6 +99,15 @@ class MainScreen : Screen {
 
                 }
             }
+        }
+        if (state.completionModel.ifSignOutCompleted) {
+            LocalNavigator.currentOrThrow.replaceAll(SignInFirstScreen())
+        } else if (state.completionModel.ifDetailsButtonClicked) {
+            //todo: navigate to profile screen
+        } else if (state.completionModel.ifSeeAllButtonClicked) {
+            LocalNavigator.currentOrThrow.push(ExercisesScreen())
+        } else if (state.completionModel.exerciseClicked != null) {
+            // todo: navigate to exercise info screen
         }
     }
 

@@ -5,6 +5,7 @@ import com.ithirteeng.superfitproject.common.exercises.di.exercisesModule
 import com.ithirteeng.superfitproject.common.network.di.networkModule
 import com.ithirteeng.superfitproject.common.token.di.tokenModule
 import com.ithirteeng.superfitproject.common.validation.di.validationModule
+import com.ithirteeng.superfitproject.exerciseslist.di.exercisesScreenModule
 import com.ithirteeng.superfitproject.main.di.mainModule
 import com.ithirteeng.superfitproject.signin.di.signInModule
 import com.ithirteeng.superfitproject.signup.di.signUpModule
@@ -30,7 +31,8 @@ class App : Application() {
                 signUpModule,
                 validationModule,
                 mainModule,
-                exercisesModule
+                exercisesModule,
+                exercisesScreenModule
             )
         }
     }

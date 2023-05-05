@@ -81,7 +81,7 @@ fun ExerciseCard(
 ) {
     Card(
         modifier = Modifier
-            .padding(16.dp)
+            .padding(top = 16.dp, start = 16.dp, end = 16.dp)
             .clip(RoundedCornerShape(8.dp))
             .fillMaxWidth()
             .defaultMinSize(minHeight = 114.dp)
