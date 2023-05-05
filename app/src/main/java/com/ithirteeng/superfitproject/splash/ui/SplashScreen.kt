@@ -12,7 +12,7 @@ import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -23,14 +23,13 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.androidx.AndroidScreen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
-import com.ithirteeng.superfitproject.main.ui.MainScreen
 import com.ithirteeng.superfitproject.R
+import com.ithirteeng.superfitproject.main.ui.MainScreen
 import com.ithirteeng.superfitproject.signin.ui.SignInFirstScreen
 import com.ithirteeng.superfitproject.signin.ui.SignInSecondScreen
 import com.ithirteeng.superfitproject.signup.ui.SignUpScreen
 import com.ithirteeng.superfitproject.splash.presentation.SplashScreenIntent
 import com.ithirteeng.superfitproject.splash.presentation.SplashScreenViewModel
-import com.ithirteeng.superfitproject.splash.presentation.SplashState
 import com.ithirteeng.superfitproject.splash.presentation.model.SplashNextScreenType
 import org.koin.androidx.compose.koinViewModel
 
@@ -38,14 +37,14 @@ class SplashScreen : AndroidScreen() {
     @Composable
     override fun Content() {
         val viewModel: SplashScreenViewModel = koinViewModel()
+        viewModel.accept(SplashScreenIntent.CheckDataScreenIntent)
         Screen(viewModel = viewModel)
 
     }
 
     @Composable
     private fun Screen(viewModel: SplashScreenViewModel) {
-        viewModel.accept(SplashScreenIntent.CheckDataScreenIntent)
-        val state = viewModel.state.observeAsState(SplashState()).value
+        val state = viewModel.state.collectAsState().value
         Box(
             modifier = Modifier
                 .fillMaxSize()
