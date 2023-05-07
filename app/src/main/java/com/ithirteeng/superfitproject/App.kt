@@ -7,6 +7,7 @@ import com.ithirteeng.superfitproject.common.token.di.tokenModule
 import com.ithirteeng.superfitproject.common.validation.di.validationModule
 import com.ithirteeng.superfitproject.exerciseslist.di.exercisesScreenModule
 import com.ithirteeng.superfitproject.main.di.mainModule
+import com.ithirteeng.superfitproject.mybody.di.myBodyModule
 import com.ithirteeng.superfitproject.signin.di.signInModule
 import com.ithirteeng.superfitproject.signup.di.signUpModule
 import com.ithirteeng.superfitproject.splash.di.splashModule
@@ -32,7 +33,8 @@ class App : Application() {
                 validationModule,
                 mainModule,
                 exercisesModule,
-                exercisesScreenModule
+                exercisesScreenModule,
+                myBodyModule
             )
         }
     }
