@@ -13,4 +13,5 @@ data class MyBodyScreenState(
     val isRequestCompleted: Boolean = false,
     val isAlertDialogOpened: Boolean = false,
     val alertDialogType: AlertDialogType = AlertDialogType.WEIGHT,
+    val alertTextFieldValue: String = "",
 )

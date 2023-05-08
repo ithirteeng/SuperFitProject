@@ -9,4 +9,5 @@ sealed class MyBodyScreenIntent {
     object DismissError : MyBodyScreenIntent()
     object CloseAlertDialog : MyBodyScreenIntent()
     class OpenAlertDialog(val alertDialogType: AlertDialogType) : MyBodyScreenIntent()
+    class AlertTextFieldChange(val value: String): MyBodyScreenIntent()
 }

@@ -27,6 +27,7 @@ class MyBodyScreenViewModel(
             is MyBodyScreenIntent.Initial -> initState()
             is MyBodyScreenIntent.CloseAlertDialog -> closeAlertDialog()
             is MyBodyScreenIntent.OpenAlertDialog -> openAlertDialog(myBodyScreenIntent.alertDialogType)
+            is MyBodyScreenIntent.AlertTextFieldChange -> onTextFieldChange(myBodyScreenIntent.value)
         }
     }
 
@@ -50,6 +51,12 @@ class MyBodyScreenViewModel(
         return Pair(first, second)
     }
 
+    private fun onTextFieldChange(value: String) {
+        _state.value = _state.value.copy(
+            alertTextFieldValue = value
+        )
+    }
+
     private fun openAlertDialog(alertDialogType: AlertDialogType) {
         _state.value = _state.value.copy(
             isAlertDialogOpened = true,
@@ -59,6 +66,7 @@ class MyBodyScreenViewModel(
 
     private fun closeAlertDialog() {
         _state.value = _state.value.copy(
+            alertTextFieldValue = "",
             isAlertDialogOpened = false
         )
     }
