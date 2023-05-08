@@ -34,10 +34,15 @@ class ExerciseStorage(context: Context) {
         )
     }
 
-    fun setWeightAndHeight(weight: Number, height: Number) {
+    fun setWeight(weight: Number) {
         sharedPreferences.edit()
-            .putString(WEIGHT_KEY, weight.toString() + "kg")
-            .putString(HEIGHT_KEY, height.toString() + "cm")
+            .putString(WEIGHT_KEY, "$weight kg")
+            .apply()
+    }
+
+    fun setHeight(height: Number) {
+        sharedPreferences.edit()
+            .putString(HEIGHT_KEY, "$height cm")
             .apply()
     }
 

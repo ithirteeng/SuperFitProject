@@ -10,7 +10,9 @@ interface ExerciseRepository {
 
     fun clearStorage()
 
-    fun setWeightAndHeight(weight: Number, height: Number)
+    fun setWeight(weight: Number)
+
+    fun setHeight(height: Number)
 
     fun getWeightAndHeight(): Pair<String?, String?>
 }

@@ -19,8 +19,12 @@ class ExerciseRepositoryImpl(
         storage.clearStorage()
     }
 
-    override fun setWeightAndHeight(weight: Number, height: Number) {
-        storage.setWeightAndHeight(weight, height)
+    override fun setWeight(weight: Number) {
+        storage.setWeight(weight = weight)
+    }
+
+    override fun setHeight(height: Number) {
+        storage.setHeight(height = height)
     }
 
     override fun getWeightAndHeight(): Pair<String?, String?> {

@@ -10,4 +10,5 @@ data class MyBodyScreenState(
     val height: String = "",
     val exitModel: ExitModel = ExitModel(),
     val isRequestCompleted: Boolean = false,
+    val isAlertDialogOpened: Boolean = false,
 )
