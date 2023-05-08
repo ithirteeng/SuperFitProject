@@ -7,6 +7,7 @@ import com.ithirteeng.superfitproject.common.exercises.domain.usecase.GetWeightA
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetHeightUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetWeightUseCase
 import com.ithirteeng.superfitproject.mybody.domain.usecase.UpdateBodyParamsUseCase
+import com.ithirteeng.superfitproject.mybody.presentation.model.AlertDialogType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
@@ -25,7 +26,7 @@ class MyBodyScreenViewModel(
             is MyBodyScreenIntent.DismissError -> {}
             is MyBodyScreenIntent.Initial -> initState()
             is MyBodyScreenIntent.CloseAlertDialog -> closeAlertDialog()
-            is MyBodyScreenIntent.OpenAlertDialog -> openAlertDialog()
+            is MyBodyScreenIntent.OpenAlertDialog -> openAlertDialog(myBodyScreenIntent.alertDialogType)
         }
     }
 
@@ -49,9 +50,10 @@ class MyBodyScreenViewModel(
         return Pair(first, second)
     }
 
-    private fun openAlertDialog() {
+    private fun openAlertDialog(alertDialogType: AlertDialogType) {
         _state.value = _state.value.copy(
-            isAlertDialogOpened = true
+            isAlertDialogOpened = true,
+            alertDialogType = alertDialogType
         )
     }
 

@@ -22,9 +22,10 @@ val myBodyModule = module {
     viewModel {
         MyBodyScreenViewModel(
             application = get(),
-            setWeightAndHeightUseCase = get(),
             getWeightAndHeightUseCase = get(),
-            updateBodyParamsUseCase = get()
+            updateBodyParamsUseCase = get(),
+            setHeightUseCase = get(),
+            setWeightUseCase = get()
         )
     }
 }

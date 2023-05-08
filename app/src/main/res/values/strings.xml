@@ -34,6 +34,12 @@
     <string name="details">Details</string>
     <string name="see_all">See all</string>
     <string name="exercises">Exercises</string>
+    <string name="weight">Weight</string>
+    <string name="height">Height</string>
+    <string name="new_value">New value</string>
+    <string name="change">Change</string>
+    <string name="cancel">Cancel</string>
+    <string name="change_your">Change your </string>
 
 
     <string name="crunch">Crunch</string>
