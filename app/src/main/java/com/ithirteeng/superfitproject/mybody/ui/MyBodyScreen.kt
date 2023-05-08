@@ -104,7 +104,11 @@ class MyBodyScreen : Screen {
                     viewModel.accept(MyBodyScreenIntent.CloseAlertDialog)
                 },
                 onChangeButtonClick = {
-
+                    if (state.alertDialogType == AlertDialogType.WEIGHT) {
+                        viewModel.accept(MyBodyScreenIntent.ChangeWeight)
+                    } else {
+                        viewModel.accept(MyBodyScreenIntent.ChangeHeight)
+                    }
                 },
                 header = state.alertDialogType.type,
                 textFieldLabel = label,

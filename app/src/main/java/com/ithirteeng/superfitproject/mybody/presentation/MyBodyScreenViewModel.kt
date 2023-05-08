@@ -21,8 +21,8 @@ class MyBodyScreenViewModel(
 
     fun accept(myBodyScreenIntent: MyBodyScreenIntent) {
         when (myBodyScreenIntent) {
-            is MyBodyScreenIntent.ChangeHeight -> changeHeight(myBodyScreenIntent.height)
-            is MyBodyScreenIntent.ChangeWeight -> changeWeight(myBodyScreenIntent.weight)
+            is MyBodyScreenIntent.ChangeHeight -> changeHeight()
+            is MyBodyScreenIntent.ChangeWeight -> changeWeight()
             is MyBodyScreenIntent.DismissError -> {}
             is MyBodyScreenIntent.Initial -> initState()
             is MyBodyScreenIntent.CloseAlertDialog -> closeAlertDialog()
@@ -71,21 +71,23 @@ class MyBodyScreenViewModel(
         )
     }
 
-    private fun changeWeight(weight: Number) {
-        setWeightUseCase(weight = weight)
+    private fun changeWeight() {
+        setWeightUseCase(weight = _state.value.alertTextFieldValue.toInt())
         _state.value = _state.value.copy(
             weight = getWeightAndHeight().first,
             // todo isLoading = true
-            isAlertDialogOpened = false
+            isAlertDialogOpened = false,
+            alertTextFieldValue = ""
         )
     }
 
-    private fun changeHeight(height: Number) {
-        setHeightUseCase(height = height)
+    private fun changeHeight() {
+        setHeightUseCase(height = _state.value.alertTextFieldValue.toInt())
         _state.value = _state.value.copy(
-            weight = getWeightAndHeight().second,
+            height = getWeightAndHeight().second,
             // todo isLoading = true
-            isAlertDialogOpened = false
+            isAlertDialogOpened = false,
+            alertTextFieldValue = ""
         )
     }
 
