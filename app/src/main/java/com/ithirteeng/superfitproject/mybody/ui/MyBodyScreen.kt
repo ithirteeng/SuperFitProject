@@ -1,12 +1,110 @@
 package com.ithirteeng.superfitproject.mybody.ui
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import com.ithirteeng.superfitproject.R
+import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
+import com.ithirteeng.superfitproject.common.ui.theme.GrayWhite
+import com.ithirteeng.superfitproject.mybody.presentation.MyBodyScreenIntent
+import com.ithirteeng.superfitproject.mybody.presentation.MyBodyScreenViewModel
+import org.koin.androidx.compose.koinViewModel
 
 class MyBodyScreen : Screen {
 
     @Composable
     override fun Content() {
-        TODO("Not yet implemented")
+        val viewModel: MyBodyScreenViewModel = koinViewModel()
+        viewModel.accept(MyBodyScreenIntent.Initial)
+        MyBodyScreenView(viewModel = viewModel)
+    }
+
+    @Composable
+    fun MyBodyScreenView(viewModel: MyBodyScreenViewModel) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(GrayDark),
+            contentAlignment = Alignment.TopCenter
+        ) {
+            LazyColumn(
+                modifier = Modifier
+                    .padding(horizontal = 16.dp, vertical = 24.dp)
+                    .statusBarsPadding()
+            ) {
+                item { HeaderText(text = stringResource(id = R.string.my_body)) }
+                item {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 24.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ) {
+                        ParamView(text = "weight") {
+
+                        }
+                        ParamView(text = "height") {
+
+                        }
+                    }
+                }
+                item { HeaderText(text = stringResource(id = R.string.my_progress)) }
+
+            }
+        }
+    }
+
+    @Composable
+    private fun HeaderText(text: String) {
+        Text(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 24.dp),
+            text = text,
+            style = MaterialTheme.typography.h5,
+            textAlign = TextAlign.Start,
+            color = Color.White
+        )
+    }
+
+    @Composable
+    private fun ParamView(text: String, onEditButtonClick: () -> Unit) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = text,
+                style = MaterialTheme.typography.h4,
+                color = Color.White
+            )
+            TextButton(
+                modifier = Modifier.padding(top = 4.dp),
+                onClick = onEditButtonClick
+            ) {
+                Text(
+                    text = stringResource(id = R.string.edit),
+                    style = MaterialTheme.typography.body1,
+                    color = GrayWhite
+                )
+            }
+        }
     }
 }

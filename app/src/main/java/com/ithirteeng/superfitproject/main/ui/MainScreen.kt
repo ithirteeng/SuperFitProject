@@ -40,6 +40,7 @@ import com.ithirteeng.superfitproject.exerciseslist.ui.ExercisesScreen
 import com.ithirteeng.superfitproject.main.presentation.MainScreenIntent
 import com.ithirteeng.superfitproject.main.presentation.MainScreenState
 import com.ithirteeng.superfitproject.main.presentation.MainScreenViewModel
+import com.ithirteeng.superfitproject.mybody.ui.MyBodyScreen
 import com.ithirteeng.superfitproject.signin.ui.SignInFirstScreen
 import org.koin.androidx.compose.koinViewModel
 
@@ -103,7 +104,7 @@ class MainScreen : Screen {
         if (state.completionModel.ifSignOutCompleted) {
             LocalNavigator.currentOrThrow.replaceAll(SignInFirstScreen())
         } else if (state.completionModel.ifDetailsButtonClicked) {
-            //todo: navigate to profile screen
+            LocalNavigator.currentOrThrow.push(MyBodyScreen())
         } else if (state.completionModel.ifSeeAllButtonClicked) {
             LocalNavigator.currentOrThrow.push(ExercisesScreen())
         } else if (state.completionModel.exerciseClicked != null) {

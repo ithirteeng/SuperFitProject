@@ -25,6 +25,10 @@
     <string name="user_name_exists">UserName already exists!</string>
 
     <string name="my_body">My Body</string>
+    <string name="my_progress">My Progress</string>
+    <string name="train_progress">Train Progress</string>
+    <string name="edit">Edit</string>
+    <string name="statistics">Statistics</string>
     <string name="last_exercises">Last Exercises</string>
     <string name="undefined">undefined</string>
     <string name="details">Details</string>
