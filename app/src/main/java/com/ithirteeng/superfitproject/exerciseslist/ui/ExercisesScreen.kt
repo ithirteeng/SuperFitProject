@@ -21,11 +21,13 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
+import com.ithirteeng.superfitproject.common.exercises.domain.entity.ExerciseType
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.common.ui.ExerciseCard
 import com.ithirteeng.superfitproject.common.ui.ImageHeader
 import com.ithirteeng.superfitproject.common.ui.theme.BackButton
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
+import com.ithirteeng.superfitproject.crunch.ui.CrunchScreen
 import com.ithirteeng.superfitproject.exerciseslist.presentation.ExercisesScreenIntent
 import com.ithirteeng.superfitproject.exerciseslist.presentation.ExercisesScreenViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -83,7 +85,27 @@ class ExercisesScreen : Screen {
         if (state.completionModel.ifBackButtonClicked) {
             LocalNavigator.currentOrThrow.pop()
         } else if (state.completionModel.exerciseClicked != null) {
-            // todo: navigate to exercise screen
+            when (state.completionModel.exerciseClicked.type) {
+                ExerciseType.CRUNCH -> {
+                    LocalNavigator.currentOrThrow.push(CrunchScreen())
+                }
+
+                ExerciseType.SQUATS -> {
+
+                }
+
+                ExerciseType.PUSH_UP -> {
+
+                }
+
+                ExerciseType.PLANK -> {
+
+                }
+
+                ExerciseType.RUNNING -> {
+
+                }
+            }
         }
     }
 
