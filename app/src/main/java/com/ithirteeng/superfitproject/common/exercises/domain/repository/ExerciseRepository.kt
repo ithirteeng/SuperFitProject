@@ -1,6 +1,7 @@
 package com.ithirteeng.superfitproject.common.exercises.domain.repository
 
 import com.ithirteeng.superfitproject.common.exercises.domain.entity.ExerciseType
+import com.ithirteeng.superfitproject.common.exercises.domain.entity.TrainingEntity
 
 interface ExerciseRepository {
 
@@ -35,4 +36,8 @@ interface ExerciseRepository {
     fun setRunningAmount(amount: Int)
 
     fun getRunningAmount(): Int
+
+    suspend fun saveTraining(trainingEntity: TrainingEntity)
+
+    suspend fun getTrainings(): List<TrainingEntity>
 }

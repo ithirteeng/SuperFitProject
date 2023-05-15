@@ -1,11 +1,14 @@
 package com.ithirteeng.superfitproject.common.exercises.data.repository
 
+import com.ithirteeng.superfitproject.common.exercises.data.api.ExerciseApi
 import com.ithirteeng.superfitproject.common.exercises.data.storage.ExerciseStorage
 import com.ithirteeng.superfitproject.common.exercises.domain.entity.ExerciseType
+import com.ithirteeng.superfitproject.common.exercises.domain.entity.TrainingEntity
 import com.ithirteeng.superfitproject.common.exercises.domain.repository.ExerciseRepository
 
 class ExerciseRepositoryImpl(
     private val storage: ExerciseStorage,
+    private val api: ExerciseApi,
 ) : ExerciseRepository {
     override fun addExercise(exerciseType: ExerciseType) {
         storage.addExercise(exerciseType = exerciseType)
@@ -69,5 +72,13 @@ class ExerciseRepositoryImpl(
 
     override fun getRunningAmount(): Int {
         return storage.getRunningAmount()
+    }
+
+    override suspend fun saveTraining(trainingEntity: TrainingEntity) {
+        api.saveTraining(trainingEntity = trainingEntity)
+    }
+
+    override suspend fun getTrainings(): List<TrainingEntity> {
+        return api.getTrainings()
     }
 }

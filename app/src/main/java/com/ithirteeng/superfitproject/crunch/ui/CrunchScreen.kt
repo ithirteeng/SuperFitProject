@@ -2,6 +2,7 @@ package com.ithirteeng.superfitproject.crunch.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -11,6 +12,7 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -25,6 +27,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
+import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.common.ui.ExerciseView
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.common.ui.theme.Violet
@@ -43,36 +46,48 @@ class CrunchScreen : Screen {
     @Composable
     private fun CrunchScreenView(viewModel: CrunchScreenViewModel) {
         val state = viewModel.state.collectAsState().value
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(GrayDark),
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.SpaceBetween
-        ) {
-            Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                Text(
-                    modifier = Modifier
-                        .padding(top = 56.dp, bottom = 64.dp)
-                        .statusBarsPadding(),
-                    text = stringResource(id = R.string.crunch),
-                    textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.h1,
+        Box(modifier = Modifier.fillMaxSize()) {
+            if (state.isFinished) {
+                LocalNavigator.currentOrThrow.pop()
+            } else if (state.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier.align(Alignment.Center),
                     color = Color.White
                 )
-                ExerciseView(
-                    amount = state.crunchesAmount,
-                    textBelow = stringResource(id = R.string.need_to_do)
-                )
+            } else if (state.error != null) {
+                ErrorAlertDialog(errorEntity = state.error) {
+                    viewModel.accept(CrunchScreenIntent.DismissErrorDialog)
+                }
             }
-            FinishButton {
-                viewModel.accept(CrunchScreenIntent.FinishButtonClick)
+
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .background(GrayDark),
+                horizontalAlignment = Alignment.CenterHorizontally,
+                verticalArrangement = Arrangement.SpaceBetween
+            ) {
+                Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Text(
+                        modifier = Modifier
+                            .padding(top = 56.dp, bottom = 64.dp)
+                            .statusBarsPadding(),
+                        text = stringResource(id = R.string.crunch),
+                        textAlign = TextAlign.Center,
+                        style = MaterialTheme.typography.h1,
+                        color = Color.White
+                    )
+                    ExerciseView(
+                        amount = state.crunchesAmount,
+                        textBelow = stringResource(id = R.string.need_to_do)
+                    )
+                }
+                FinishButton {
+                    viewModel.accept(CrunchScreenIntent.FinishButtonClick)
+                }
             }
         }
 
-        if (state.isFinished) {
-            LocalNavigator.currentOrThrow.pop()
-        }
     }
 
     @Composable

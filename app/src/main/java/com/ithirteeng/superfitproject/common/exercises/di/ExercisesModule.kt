@@ -1,5 +1,6 @@
 package com.ithirteeng.superfitproject.common.exercises.di
 
+import com.ithirteeng.superfitproject.common.exercises.data.api.ExerciseApi
 import com.ithirteeng.superfitproject.common.exercises.data.repository.ExerciseRepositoryImpl
 import com.ithirteeng.superfitproject.common.exercises.data.storage.ExerciseStorage
 import com.ithirteeng.superfitproject.common.exercises.domain.repository.ExerciseRepository
@@ -11,7 +12,9 @@ import com.ithirteeng.superfitproject.common.exercises.domain.usecase.GetPlankAm
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.GetPushUpsAmountUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.GetRunningAmountUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.GetSquatsAmountUseCase
+import com.ithirteeng.superfitproject.common.exercises.domain.usecase.GetTrainingsUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.GetWeightAndHeightUseCase
+import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SaveTrainingUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetCrunchesAmountUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetHeightUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetPlankAmountUseCase
@@ -19,12 +22,21 @@ import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetPushUps
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetRunningAmountUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetSquatsAmountUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetWeightUseCase
+import com.ithirteeng.superfitproject.common.network.utils.TOKEN_NETWORK_TOOLS
+import com.ithirteeng.superfitproject.common.network.utils.createRetrofitService
+import org.koin.core.qualifier.named
 import org.koin.dsl.module
 
 val exercisesModule = module {
     single { ExerciseStorage(context = get()) }
+    single { createRetrofitService<ExerciseApi>(retrofit = get(named(TOKEN_NETWORK_TOOLS))) }
 
-    factory<ExerciseRepository> { ExerciseRepositoryImpl(storage = get()) }
+    factory<ExerciseRepository> {
+        ExerciseRepositoryImpl(
+            storage = get(),
+            api = get()
+        )
+    }
 
     factory { GetExercisesUseCase(repository = get()) }
     factory { AddExerciseUseCase(repository = get()) }
@@ -32,6 +44,8 @@ val exercisesModule = module {
     factory { GetWeightAndHeightUseCase(repository = get()) }
     factory { SetHeightUseCase(repository = get()) }
     factory { SetWeightUseCase(repository = get()) }
+    factory { GetTrainingsUseCase(repository = get()) }
+    factory { SaveTrainingUseCase(repository = get()) }
 
     factory { GetPlankAmountUseCase(repository = get()) }
     factory { SetPlankAmountUseCase(repository = get()) }
