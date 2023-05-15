@@ -15,4 +15,24 @@ interface ExerciseRepository {
     fun setHeight(height: Number)
 
     fun getWeightAndHeight(): Pair<String?, String?>
+
+    fun setCrunchesAmount(amount: Int)
+
+    fun getCrunchesAmount(): Int
+
+    fun setPlankAmount(amount: Int)
+
+    fun getPlankAmount(): Int
+
+    fun setSquatsAmount(amount: Int)
+
+    fun getSquatsAmount(): Int
+
+    fun setPushUpsAmount(amount: Int)
+
+    fun getPushUpsAmount(): Int
+
+    fun setRunningAmount(amount: Int)
+
+    fun getRunningAmount(): Int
 }

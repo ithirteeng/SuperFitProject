@@ -30,4 +30,44 @@ class ExerciseRepositoryImpl(
     override fun getWeightAndHeight(): Pair<String?, String?> {
         return storage.getWeightAndHeight()
     }
+
+    override fun setCrunchesAmount(amount: Int) {
+        storage.setCrunchesAmount(amount)
+    }
+
+    override fun getCrunchesAmount(): Int {
+        return storage.getCrunchesAmount()
+    }
+
+    override fun setPlankAmount(amount: Int) {
+        storage.setPlankAmount(amount)
+    }
+
+    override fun getPlankAmount(): Int {
+        return storage.getPlankAmount()
+    }
+
+    override fun setSquatsAmount(amount: Int) {
+        storage.setSquatsAmount(amount)
+    }
+
+    override fun getSquatsAmount(): Int {
+        return storage.getSquatsAmount()
+    }
+
+    override fun setPushUpsAmount(amount: Int) {
+        storage.setPushUpsAmount(amount)
+    }
+
+    override fun getPushUpsAmount(): Int {
+        return storage.getPushUpsAmount()
+    }
+
+    override fun setRunningAmount(amount: Int) {
+        storage.setRunningAmount(amount)
+    }
+
+    override fun getRunningAmount(): Int {
+        return storage.getRunningAmount()
+    }
 }

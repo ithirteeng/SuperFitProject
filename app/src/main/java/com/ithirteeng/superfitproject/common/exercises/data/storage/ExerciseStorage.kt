@@ -11,6 +11,12 @@ class ExerciseStorage(context: Context) {
         const val SECOND_EXERCISE_KEY = "SECOND_EXERCISE_KEY"
         const val WEIGHT_KEY = "WEIGHT_KEY"
         const val HEIGHT_KEY = "HEIGHT_KEY"
+
+        const val CRUNCH_AMOUNT_KEY = "CRUNCH_AMOUNT_KEY"
+        const val SQUATS_AMOUNT_KEY = "SQUATS_AMOUNT_KEY"
+        const val PLANK_AMOUNT_KEY = "PLANK_AMOUNT_KEY"
+        const val PUSH_UPS_AMOUNT_KEY = "PUSH_UPS_AMOUNT_KEY"
+        const val RUNNING_AMOUNT_KEY = "RUNNING_AMOUNT_KEY"
     }
 
     private val sharedPreferences = context.getSharedPreferences(STORAGE_NAME, Context.MODE_PRIVATE)
@@ -52,5 +58,61 @@ class ExerciseStorage(context: Context) {
             sharedPreferences.getString(HEIGHT_KEY, null)
         )
     }
+
+
+    fun setCrunchesAmount(crunchesAmount: Int) {
+        sharedPreferences.edit()
+            .putInt(CRUNCH_AMOUNT_KEY, crunchesAmount)
+            .apply()
+    }
+
+    fun getCrunchesAmount(): Int {
+        return sharedPreferences.getInt(CRUNCH_AMOUNT_KEY, 10)
+    }
+
+
+    fun setPlankAmount(plankAmount: Int) {
+        sharedPreferences.edit()
+            .putInt(PLANK_AMOUNT_KEY, plankAmount)
+            .apply()
+    }
+
+    fun getPlankAmount(): Int {
+        return sharedPreferences.getInt(PLANK_AMOUNT_KEY, 0)
+    }
+
+
+    fun setSquatsAmount(squatsAmount: Int) {
+        sharedPreferences.edit()
+            .putInt(SQUATS_AMOUNT_KEY, squatsAmount)
+            .apply()
+    }
+
+    fun getSquatsAmount(): Int {
+        return sharedPreferences.getInt(SQUATS_AMOUNT_KEY, 10)
+    }
+
+
+    fun setPushUpsAmount(pushUpsAmount: Int) {
+        sharedPreferences.edit()
+            .putInt(PUSH_UPS_AMOUNT_KEY, pushUpsAmount)
+            .apply()
+    }
+
+    fun getPushUpsAmount(): Int {
+        return sharedPreferences.getInt(PUSH_UPS_AMOUNT_KEY, 10)
+    }
+
+
+    fun setRunningAmount(runningAmount: Int) {
+        sharedPreferences.edit()
+            .putInt(RUNNING_AMOUNT_KEY, runningAmount)
+            .apply()
+    }
+
+    fun getRunningAmount(): Int {
+        return sharedPreferences.getInt(RUNNING_AMOUNT_KEY, 100)
+    }
+
 
 }
