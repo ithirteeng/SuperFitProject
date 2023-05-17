@@ -1,7 +1,6 @@
 package com.ithirteeng.superfitproject.common.ui
 
 import androidx.compose.foundation.Canvas
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -20,12 +19,11 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.common.ui.theme.Montserrat
 import com.ithirteeng.superfitproject.common.ui.theme.Violet
 
 @Composable
-fun ExerciseView(
+fun ExerciseCircleView(
     amount: Int,
     textBelow: String,
 ) {
@@ -73,3 +71,5 @@ fun ExerciseView(
     }
 
 }
+
+

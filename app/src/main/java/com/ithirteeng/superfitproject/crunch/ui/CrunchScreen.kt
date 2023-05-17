@@ -4,14 +4,9 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -29,9 +24,9 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.BackButton
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
-import com.ithirteeng.superfitproject.common.ui.ExerciseView
+import com.ithirteeng.superfitproject.common.ui.ExerciseCircleView
+import com.ithirteeng.superfitproject.common.ui.FinishExerciseButton
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
-import com.ithirteeng.superfitproject.common.ui.theme.Violet
 import com.ithirteeng.superfitproject.crunch.presentation.CrunchScreenIntent
 import com.ithirteeng.superfitproject.crunch.presentation.CrunchScreenViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -78,12 +73,12 @@ class CrunchScreen : Screen {
                         style = MaterialTheme.typography.h1,
                         color = Color.White
                     )
-                    ExerciseView(
+                    ExerciseCircleView(
                         amount = state.crunchesAmount,
                         textBelow = stringResource(id = R.string.need_to_do)
                     )
                 }
-                FinishButton {
+                FinishExerciseButton {
                     viewModel.accept(CrunchScreenIntent.FinishButtonClick)
                 }
             }
@@ -94,24 +89,5 @@ class CrunchScreen : Screen {
 
     }
 
-    @Composable
-    private fun FinishButton(onButtonClick: () -> Unit) {
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .wrapContentHeight()
-                .padding(16.dp),
-            colors = ButtonDefaults.buttonColors(backgroundColor = Violet),
-            onClick = {
-                onButtonClick()
-            },
-            contentPadding = PaddingValues(vertical = 13.dp)
-        ) {
-            Text(
-                text = stringResource(id = R.string.finish),
-                style = MaterialTheme.typography.h5,
-                color = Color.White
-            )
-        }
-    }
+
 }

@@ -22,10 +22,10 @@ import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.exercises.domain.entity.ExerciseType
+import com.ithirteeng.superfitproject.common.ui.BackButton
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.common.ui.ExerciseCard
 import com.ithirteeng.superfitproject.common.ui.ImageHeader
-import com.ithirteeng.superfitproject.common.ui.theme.BackButton
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.crunch.ui.CrunchScreen
 import com.ithirteeng.superfitproject.exerciseslist.presentation.ExercisesScreenIntent
