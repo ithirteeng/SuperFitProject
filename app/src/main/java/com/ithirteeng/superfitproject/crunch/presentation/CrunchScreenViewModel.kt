@@ -28,6 +28,10 @@ class CrunchScreenViewModel(
             CrunchScreenIntent.DismissErrorDialog -> {
                 _state.value = _state.value.copy(error = null)
             }
+
+            CrunchScreenIntent.BackButtonClick -> {
+                _state.value = _state.value.copy(isFinished = true)
+            }
         }
     }
 

@@ -27,6 +27,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
+import com.ithirteeng.superfitproject.common.ui.BackButton
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.common.ui.ExerciseView
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
@@ -85,6 +86,9 @@ class CrunchScreen : Screen {
                 FinishButton {
                     viewModel.accept(CrunchScreenIntent.FinishButtonClick)
                 }
+            }
+            BackButton {
+                viewModel.accept(CrunchScreenIntent.BackButtonClick)
             }
         }
 

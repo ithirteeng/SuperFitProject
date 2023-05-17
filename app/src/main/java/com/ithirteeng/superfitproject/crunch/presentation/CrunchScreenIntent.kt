@@ -7,4 +7,6 @@ sealed class CrunchScreenIntent {
     object FinishButtonClick : CrunchScreenIntent()
 
     object DismissErrorDialog : CrunchScreenIntent()
+
+    object BackButtonClick : CrunchScreenIntent()
 }
