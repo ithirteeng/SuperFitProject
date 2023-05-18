@@ -76,7 +76,6 @@ class PlankScreen : Screen {
                 if (state.isFinishedUnsuccessfully) {
                     LocalNavigator.currentOrThrow.pop()
                 } else if (state.isFinishedSuccessfully) {
-                    Log.i("PLANK_SCREEN", "finished successfully")
                     LocalNavigator.currentOrThrow.pop()
                 }
                 Column(

@@ -9,7 +9,8 @@ val crunchModule = module {
         CrunchScreenViewModel(
             setCrunchesAmountUseCase = get(),
             getCrunchesAmountUseCase = get(),
-            saveTrainingUseCase = get()
+            saveTrainingUseCase = get(),
+            addExerciseUseCase = get()
         )
     }
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ithirteeng.superfitproject.common.exercises.domain.entity.ExerciseType
 import com.ithirteeng.superfitproject.common.exercises.domain.entity.TrainingEntity
+import com.ithirteeng.superfitproject.common.exercises.domain.usecase.AddExerciseUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.GetCrunchesAmountUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SaveTrainingUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetCrunchesAmountUseCase
@@ -19,6 +20,7 @@ class CrunchScreenViewModel(
     private val setCrunchesAmountUseCase: SetCrunchesAmountUseCase,
     private val getCrunchesAmountUseCase: GetCrunchesAmountUseCase,
     private val saveTrainingUseCase: SaveTrainingUseCase,
+    private val addExerciseUseCase: AddExerciseUseCase
 ) : ViewModel() {
 
     fun accept(intent: CrunchScreenIntent) {
@@ -58,6 +60,7 @@ class CrunchScreenViewModel(
                     repeatCount = _state.value.crunchesAmount
                 )
             ).onSuccess {
+                addExerciseUseCase(ExerciseType.CRUNCH)
                 setCrunchesAmountUseCase(_state.value.crunchesAmount + 5)
                 _state.value = _state.value.copy(
                     isFinished = true,

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ithirteeng.superfitproject.common.exercises.domain.entity.ExerciseType
 import com.ithirteeng.superfitproject.common.exercises.domain.entity.TrainingEntity
+import com.ithirteeng.superfitproject.common.exercises.domain.usecase.AddExerciseUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.GetPlankAmountUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SaveTrainingUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetPlankAmountUseCase
@@ -19,6 +20,7 @@ class PlankScreenViewModel(
     private val getPlankAmountUseCase: GetPlankAmountUseCase,
     private val setPlankAmountUseCase: SetPlankAmountUseCase,
     private val saveTrainingUseCase: SaveTrainingUseCase,
+    private val addExerciseUseCase: AddExerciseUseCase,
 ) : ViewModel() {
 
     fun accept(intent: PlankIntent) {
@@ -61,6 +63,7 @@ class PlankScreenViewModel(
                     repeatCount = _state.value.totalTime
                 )
             ).onSuccess {
+                addExerciseUseCase(ExerciseType.PLANK)
                 setPlankAmountUseCase(_state.value.totalTime + 5)
                 _state.value = _state.value.copy(
                     isLoading = false,

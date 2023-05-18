@@ -9,7 +9,8 @@ val plankModule = module {
         PlankScreenViewModel(
             getPlankAmountUseCase = get(),
             setPlankAmountUseCase = get(),
-            saveTrainingUseCase = get()
+            saveTrainingUseCase = get(),
+            addExerciseUseCase = get()
         )
     }
 }
