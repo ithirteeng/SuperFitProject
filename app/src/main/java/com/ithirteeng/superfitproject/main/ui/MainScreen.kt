@@ -45,6 +45,7 @@ import com.ithirteeng.superfitproject.main.presentation.MainScreenViewModel
 import com.ithirteeng.superfitproject.mybody.ui.MyBodyScreen
 import com.ithirteeng.superfitproject.plank.ui.PlankScreen
 import com.ithirteeng.superfitproject.signin.ui.SignInFirstScreen
+import com.ithirteeng.superfitproject.squats.ui.SquatsScreen
 import org.koin.androidx.compose.koinViewModel
 
 class MainScreen : Screen {
@@ -117,7 +118,7 @@ class MainScreen : Screen {
                 }
 
                 ExerciseType.SQUATS -> {
-
+                    LocalNavigator.currentOrThrow.push(SquatsScreen())
                 }
 
                 ExerciseType.PUSH_UP -> {

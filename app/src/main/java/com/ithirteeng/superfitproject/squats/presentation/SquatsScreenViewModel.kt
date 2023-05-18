@@ -28,6 +28,7 @@ class SquatsScreenViewModel(
             SquatsIntent.ActionIntent -> onAction()
             SquatsIntent.BackButtonClick -> exitFromScreen()
             SquatsIntent.Initial -> initState()
+            SquatsIntent.DismissErrorDialog -> dismissError()
         }
     }
 
@@ -38,6 +39,13 @@ class SquatsScreenViewModel(
     private fun initState() {
         _state.value = SquatsState(
             currentAmount = getExercisesAmount()
+        )
+    }
+
+    private fun dismissError() {
+        _state.value = _state.value.copy(
+            error = null,
+            isLoading = false
         )
     }
 
@@ -89,7 +97,10 @@ class SquatsScreenViewModel(
                     isFinishedSuccessfully = true
                 )
             }.onFailure {
-                _state.value = _state.value.copy(error = ErrorHelper.setupErrorEntity(it))
+                _state.value = _state.value.copy(
+                    error = ErrorHelper.setupErrorEntity(it),
+                    isLoading = false
+                )
             }
         }
     }
