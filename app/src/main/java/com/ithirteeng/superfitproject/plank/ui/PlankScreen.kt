@@ -75,6 +75,9 @@ class PlankScreen : Screen {
             } else {
                 if (state.isFinishedUnsuccessfully) {
                     LocalNavigator.currentOrThrow.pop()
+                } else if (state.isFinishedSuccessfully) {
+                    Log.i("PLANK_SCREEN", "finished successfully")
+                    LocalNavigator.currentOrThrow.pop()
                 }
                 Column(
                     modifier = Modifier
@@ -87,7 +90,7 @@ class PlankScreen : Screen {
                             modifier = Modifier
                                 .padding(top = 56.dp, bottom = 64.dp)
                                 .statusBarsPadding(),
-                            text = stringResource(id = R.string.crunch),
+                            text = stringResource(id = R.string.plank),
                             textAlign = TextAlign.Center,
                             style = MaterialTheme.typography.h1,
                             color = Color.White
@@ -98,7 +101,7 @@ class PlankScreen : Screen {
                             totalTime = state.totalTime,
                             isTimerRunning = state.isTimerRunning
                         ) {
-                            Log.i("TIMER_TEST", "FINISHED SUCCESSFULLY")
+                            viewModel.accept(PlankIntent.FinishExercise)
                         }
 
                     }
