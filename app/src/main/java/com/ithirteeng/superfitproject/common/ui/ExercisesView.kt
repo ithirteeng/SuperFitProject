@@ -6,10 +6,17 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -21,6 +28,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ithirteeng.superfitproject.common.ui.theme.Montserrat
 import com.ithirteeng.superfitproject.common.ui.theme.Violet
+import kotlinx.coroutines.delay
 
 @Composable
 fun ExerciseCircleView(
@@ -70,6 +78,70 @@ fun ExerciseCircleView(
         }
     }
 
+}
+
+@Composable
+fun Timer(
+    text: String,
+    totalTime: Int,
+    isTimerRunning: Boolean,
+    onFinish: () -> Unit,
+) {
+
+
+    var progressValue by remember {
+        mutableStateOf(1f)
+    }
+
+    var currentTime by remember {
+        mutableStateOf(totalTime * 1000L)
+    }
+
+    LaunchedEffect(key1 = currentTime) {
+        if (isTimerRunning) {
+            if (currentTime > 0) {
+                delay(100L)
+                currentTime -= 100L
+                progressValue = currentTime / (totalTime * 1000L).toFloat()
+            } else {
+                onFinish()
+            }
+        }
+    }
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp),
+        contentAlignment = Alignment.Center
+    ) {
+
+        CircularProgressIndicator(
+            progress = progressValue,
+            modifier = Modifier
+                .size(216.dp),
+            color = Violet,
+            strokeWidth = 4.dp
+        )
+
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = (currentTime / 1000L).toString(),
+                style = MaterialTheme.typography.h1,
+                color = Color.White,
+            )
+            Text(
+                text = text,
+                style = TextStyle(
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight(700),
+                    fontFamily = Montserrat,
+                    color = Color.White
+                )
+            )
+        }
+    }
 }
 
 

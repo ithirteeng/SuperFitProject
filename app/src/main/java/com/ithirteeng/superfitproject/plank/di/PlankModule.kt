@@ -6,6 +6,9 @@ import org.koin.dsl.module
 
 val plankModule = module {
     viewModel {
-        PlankScreenViewModel()
+        PlankScreenViewModel(
+            getPlankAmountUseCase = get(),
+            setPlankAmountUseCase = get()
+        )
     }
 }

@@ -1,5 +1,6 @@
 package com.ithirteeng.superfitproject.plank.ui
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -25,6 +26,7 @@ import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.BackButton
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.common.ui.FinishExerciseButton
+import com.ithirteeng.superfitproject.common.ui.Timer
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.plank.presentation.PlankIntent
 import com.ithirteeng.superfitproject.plank.presentation.PlankScreenViewModel
@@ -42,9 +44,7 @@ class PlankScreen : Screen {
     private fun PlankScreenView(viewModel: PlankScreenViewModel) {
         val state = viewModel.state.collectAsState().value
         Box(modifier = Modifier.fillMaxSize()) {
-            if (state.isFinished) {
-                LocalNavigator.currentOrThrow.pop()
-            } else if (state.isLoading) {
+            if (state.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
                     color = Color.White
@@ -53,33 +53,44 @@ class PlankScreen : Screen {
                 ErrorAlertDialog(errorEntity = state.error) {
                     viewModel.accept(PlankIntent.DismissErrorDialog)
                 }
-            }
-
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .background(GrayDark),
-                horizontalAlignment = Alignment.CenterHorizontally,
-                verticalArrangement = Arrangement.SpaceBetween
-            ) {
-                Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                    Text(
-                        modifier = Modifier
-                            .padding(top = 56.dp, bottom = 64.dp)
-                            .statusBarsPadding(),
-                        text = stringResource(id = R.string.crunch),
-                        textAlign = TextAlign.Center,
-                        style = MaterialTheme.typography.h1,
-                        color = Color.White
-                    )
-
+            } else {
+                if (state.isFinished) {
+                    LocalNavigator.currentOrThrow.pop()
                 }
-                FinishExerciseButton {
-                    viewModel.accept(PlankIntent.FinishButtonClick)
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .background(GrayDark),
+                    horizontalAlignment = Alignment.CenterHorizontally,
+                    verticalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                        Text(
+                            modifier = Modifier
+                                .padding(top = 56.dp, bottom = 64.dp)
+                                .statusBarsPadding(),
+                            text = stringResource(id = R.string.crunch),
+                            textAlign = TextAlign.Center,
+                            style = MaterialTheme.typography.h1,
+                            color = Color.White
+                        )
+
+                        Timer(
+                            text = stringResource(id = R.string.seconds_left),
+                            totalTime = state.totalTime,
+                            isTimerRunning = state.isTimerRunning
+                        ) {
+                            Log.i("TIMER_TEST", "FINISHED SUCCESSFULLY")
+                        }
+
+                    }
+                    FinishExerciseButton {
+                        viewModel.accept(PlankIntent.FinishButtonClick)
+                    }
                 }
-            }
-            BackButton {
-                viewModel.accept(PlankIntent.BackButtonClick)
+                BackButton {
+                    viewModel.accept(PlankIntent.BackButtonClick)
+                }
             }
         }
     }
