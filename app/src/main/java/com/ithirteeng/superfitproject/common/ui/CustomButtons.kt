@@ -35,7 +35,10 @@ fun BackButton(onButtonClick: () -> Unit) {
 }
 
 @Composable
-fun FinishExerciseButton(onButtonClick: () -> Unit) {
+fun FinishExerciseButton(
+    text: String? = null,
+    onButtonClick: () -> Unit,
+) {
     Button(
         modifier = Modifier
             .fillMaxWidth()
@@ -48,7 +51,7 @@ fun FinishExerciseButton(onButtonClick: () -> Unit) {
         contentPadding = PaddingValues(vertical = 13.dp)
     ) {
         Text(
-            text = stringResource(id = R.string.finish),
+            text = text ?: stringResource(id = R.string.finish),
             style = MaterialTheme.typography.h5,
             color = Color.White
         )

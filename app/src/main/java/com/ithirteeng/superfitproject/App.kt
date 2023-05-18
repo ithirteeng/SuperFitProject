@@ -13,6 +13,7 @@ import com.ithirteeng.superfitproject.plank.di.plankModule
 import com.ithirteeng.superfitproject.signin.di.signInModule
 import com.ithirteeng.superfitproject.signup.di.signUpModule
 import com.ithirteeng.superfitproject.splash.di.splashModule
+import com.ithirteeng.superfitproject.success.di.successModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -38,7 +39,8 @@ class App : Application() {
                 exercisesScreenModule,
                 myBodyModule,
                 crunchModule,
-                plankModule
+                plankModule,
+                successModule
             )
         }
     }

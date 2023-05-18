@@ -1,6 +1,7 @@
 package com.ithirteeng.superfitproject.common.ui
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -22,10 +23,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.theme.Montserrat
 import com.ithirteeng.superfitproject.common.ui.theme.Violet
 import kotlinx.coroutines.delay
@@ -142,6 +145,38 @@ fun Timer(
             )
         }
     }
+}
+
+@Composable
+fun SuccessCircleView() {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp),
+        contentAlignment = Alignment.Center,
+
+        ) {
+        Canvas(
+            modifier = Modifier
+                .width(216.dp)
+                .height(216.dp)
+        ) {
+            val canvasWidth = size.width
+            val canvasHeight = size.height
+
+            drawCircle(
+                color = Violet,
+                center = Offset(x = canvasWidth / 2, y = canvasHeight / 2),
+                radius = size.minDimension / 2,
+                style = Stroke(10F)
+            )
+        }
+        Image(
+            painter = painterResource(id = R.drawable.big_tick_icon),
+            contentDescription = null
+        )
+    }
+
 }
 
 
