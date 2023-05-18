@@ -31,6 +31,7 @@ import com.ithirteeng.superfitproject.crunch.ui.CrunchScreen
 import com.ithirteeng.superfitproject.exerciseslist.presentation.ExercisesScreenIntent
 import com.ithirteeng.superfitproject.exerciseslist.presentation.ExercisesScreenViewModel
 import com.ithirteeng.superfitproject.plank.ui.PlankScreen
+import com.ithirteeng.superfitproject.pushups.ui.PushUpsScreen
 import com.ithirteeng.superfitproject.squats.ui.SquatsScreen
 import org.koin.androidx.compose.koinViewModel
 
@@ -97,7 +98,7 @@ class ExercisesScreen : Screen {
                 }
 
                 ExerciseType.PUSH_UP -> {
-
+                    LocalNavigator.currentOrThrow.push(PushUpsScreen())
                 }
 
                 ExerciseType.PLANK -> {
