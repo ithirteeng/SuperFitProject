@@ -97,7 +97,7 @@ fun Timer(
         mutableStateOf(totalTime * 1000L)
     }
 
-    LaunchedEffect(key1 = currentTime) {
+    LaunchedEffect(key1 = currentTime, key2 = isTimerRunning) {
         if (isTimerRunning) {
             if (currentTime > 0) {
                 delay(100L)

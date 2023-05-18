@@ -5,4 +5,6 @@ sealed class PlankIntent {
     object BackButtonClick : PlankIntent()
     object FinishButtonClick : PlankIntent()
     object DismissErrorDialog: PlankIntent()
+    object GoButtonClick: PlankIntent()
+    object LaterButtonClick: PlankIntent()
 }

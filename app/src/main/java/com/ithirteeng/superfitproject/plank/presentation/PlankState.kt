@@ -8,5 +8,7 @@ data class PlankState(
     val totalTime: Int = 20,
     val isTimerRunning: Boolean = false,
     val isLoading: Boolean = false,
-    val isFinished: Boolean = false,
+    val isFinishedSuccessfully: Boolean = false,
+    val isFinishedUnsuccessfully: Boolean = false,
+    val isStartDialogOpened: Boolean = true,
 )

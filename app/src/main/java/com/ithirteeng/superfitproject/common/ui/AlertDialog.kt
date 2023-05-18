@@ -34,6 +34,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.entity.ErrorEntity
+import com.ithirteeng.superfitproject.common.ui.theme.AlertTextColor
 import com.ithirteeng.superfitproject.common.ui.theme.GrayLight
 import com.ithirteeng.superfitproject.common.ui.theme.PlaceHolder
 import com.ithirteeng.superfitproject.common.ui.theme.Violet
@@ -95,8 +96,48 @@ fun ChangeParamsAlertDialog(
                     onTextChanged = onTextChanged
                 )
                 AlertBottomButtons(
-                    onCancelButtonClick = onDismiss,
-                    onChangeButtonClick = onChangeButtonClick
+                    firstButtonText = stringResource(id = R.string.cancel),
+                    secondButtonText = stringResource(id = R.string.change),
+                    onFirstButtonClick = onDismiss,
+                    onSecondButtonClick = onChangeButtonClick
+                )
+            }
+        },
+        title = {
+            AlertHeaderText(text = header)
+        }
+    )
+}
+
+@Composable
+fun TextAlertDialog(
+    onLaterButtonClick: () -> Unit,
+    onGoButtonClick: () -> Unit,
+    header: String,
+    text: String
+) {
+    AlertDialog(
+        backgroundColor = GrayLight,
+        onDismissRequest = {
+            onLaterButtonClick()
+        },
+        buttons = {
+            Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                Text(
+                    modifier = Modifier
+                        .padding(horizontal = 24.dp, vertical = 12.dp),
+                    text = text,
+                    style = TextStyle(
+                        fontWeight = FontWeight(400),
+                        fontSize = 16.sp,
+                        color = AlertTextColor
+                    )
+                )
+                AlertBottomButtons(
+                    firstButtonText = stringResource(id = R.string.later),
+                    secondButtonText = stringResource(id = R.string.go),
+                    onFirstButtonClick = onLaterButtonClick,
+                    onSecondButtonClick = onGoButtonClick
                 )
             }
         },
@@ -162,18 +203,20 @@ private fun AlertTextField(
 
 @Composable
 private fun AlertBottomButtons(
-    onCancelButtonClick: () -> Unit,
-    onChangeButtonClick: () -> Unit,
+    firstButtonText: String,
+    secondButtonText: String,
+    onFirstButtonClick: () -> Unit,
+    onSecondButtonClick: () -> Unit,
 ) {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.End
     ) {
-        AlertDialogTextButton(text = stringResource(id = R.string.cancel).uppercase()) {
-            onCancelButtonClick()
+        AlertDialogTextButton(text = firstButtonText.uppercase()) {
+            onFirstButtonClick()
         }
-        AlertDialogTextButton(text = stringResource(id = R.string.change).uppercase()) {
-            onChangeButtonClick()
+        AlertDialogTextButton(text = secondButtonText.uppercase()) {
+            onSecondButtonClick()
         }
     }
 }
@@ -202,6 +245,6 @@ private fun AlertHeaderText(text: String) {
             fontWeight = FontWeight(500),
             color = Color.White
         ),
-        modifier = Modifier.padding(start = 24.dp, end = 24.dp, top = 20.dp, bottom = 12.dp)
+        modifier = Modifier.padding(top = 20.dp, bottom = 12.dp)
     )
 }

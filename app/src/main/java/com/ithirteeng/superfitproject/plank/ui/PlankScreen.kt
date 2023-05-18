@@ -26,6 +26,7 @@ import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.BackButton
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.common.ui.FinishExerciseButton
+import com.ithirteeng.superfitproject.common.ui.TextAlertDialog
 import com.ithirteeng.superfitproject.common.ui.Timer
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.plank.presentation.PlankIntent
@@ -43,7 +44,11 @@ class PlankScreen : Screen {
     @Composable
     private fun PlankScreenView(viewModel: PlankScreenViewModel) {
         val state = viewModel.state.collectAsState().value
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(GrayDark)
+        ) {
             if (state.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
@@ -53,14 +58,27 @@ class PlankScreen : Screen {
                 ErrorAlertDialog(errorEntity = state.error) {
                     viewModel.accept(PlankIntent.DismissErrorDialog)
                 }
+            } else if (state.isStartDialogOpened) {
+                TextAlertDialog(
+                    onLaterButtonClick = {
+                        viewModel.accept(PlankIntent.LaterButtonClick)
+                    },
+                    onGoButtonClick = {
+                        viewModel.accept(PlankIntent.GoButtonClick)
+                    },
+                    header = stringResource(id = R.string.start_the_training),
+                    text = stringResource(id = R.string.you_need_to_repeat).replace(
+                        "%d",
+                        state.totalTime.toString()
+                    )
+                )
             } else {
-                if (state.isFinished) {
+                if (state.isFinishedUnsuccessfully) {
                     LocalNavigator.currentOrThrow.pop()
                 }
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(GrayDark),
+                        .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
