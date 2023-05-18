@@ -1,5 +1,7 @@
 package com.ithirteeng.superfitproject.squats.ui
 
+import android.content.Context.SENSOR_SERVICE
+import android.hardware.SensorManager
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -28,21 +31,32 @@ import com.ithirteeng.superfitproject.common.ui.ExerciseCircleView
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.squats.presentation.SquatsIntent
 import com.ithirteeng.superfitproject.squats.presentation.SquatsScreenViewModel
+import com.ithirteeng.superfitproject.squats.utils.ExerciseHelper
 import org.koin.androidx.compose.koinViewModel
 
 class SquatsScreen : Screen {
+
     @Composable
     override fun Content() {
         val viewModel: SquatsScreenViewModel = koinViewModel()
         viewModel.accept(SquatsIntent.Initial)
-        SquatsScreenView(viewModel = viewModel)
+
+        val sensorManager = LocalContext.current.getSystemService(SENSOR_SERVICE) as SensorManager
+        val exerciseHelper = ExerciseHelper(sensorManager) {
+            viewModel.accept(SquatsIntent.ActionIntent)
+        }
+
+        SquatsScreenView(viewModel = viewModel, exerciseHelper)
     }
 
     @Composable
-    private fun SquatsScreenView(viewModel: SquatsScreenViewModel) {
+    private fun SquatsScreenView(viewModel: SquatsScreenViewModel, exerciseHelper: ExerciseHelper) {
         val state = viewModel.state.collectAsState().value
-
-        Box(modifier = Modifier.fillMaxSize()) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(GrayDark)
+        ) {
             if (state.isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.align(Alignment.Center),
@@ -56,14 +70,15 @@ class SquatsScreen : Screen {
 
                 if (state.isFinishedUnsuccessfully) {
                     LocalNavigator.currentOrThrow.pop()
+                    exerciseHelper.unregisterSensorListener()
                 } else if (state.isFinishedSuccessfully) {
-
+                    LocalNavigator.currentOrThrow.pop()
+                    exerciseHelper.unregisterSensorListener()
                 }
 
                 Column(
                     modifier = Modifier
-                        .fillMaxSize()
-                        .background(GrayDark),
+                        .fillMaxSize(),
                     horizontalAlignment = Alignment.CenterHorizontally,
                     verticalArrangement = Arrangement.SpaceBetween
                 ) {
