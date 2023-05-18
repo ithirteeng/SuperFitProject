@@ -29,6 +29,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
+import com.ithirteeng.superfitproject.common.exercises.domain.entity.ExerciseType
 import com.ithirteeng.superfitproject.common.ui.BaseCard
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.common.ui.ExerciseCard
@@ -36,11 +37,13 @@ import com.ithirteeng.superfitproject.common.ui.ImageHeader
 import com.ithirteeng.superfitproject.common.ui.theme.GrayMedium
 import com.ithirteeng.superfitproject.common.ui.theme.GrayWhite
 import com.ithirteeng.superfitproject.common.ui.theme.Violet
+import com.ithirteeng.superfitproject.crunch.ui.CrunchScreen
 import com.ithirteeng.superfitproject.exerciseslist.ui.ExercisesScreen
 import com.ithirteeng.superfitproject.main.presentation.MainScreenIntent
 import com.ithirteeng.superfitproject.main.presentation.MainScreenState
 import com.ithirteeng.superfitproject.main.presentation.MainScreenViewModel
 import com.ithirteeng.superfitproject.mybody.ui.MyBodyScreen
+import com.ithirteeng.superfitproject.plank.ui.PlankScreen
 import com.ithirteeng.superfitproject.signin.ui.SignInFirstScreen
 import org.koin.androidx.compose.koinViewModel
 
@@ -108,7 +111,27 @@ class MainScreen : Screen {
         } else if (state.completionModel.ifSeeAllButtonClicked) {
             LocalNavigator.currentOrThrow.push(ExercisesScreen())
         } else if (state.completionModel.exerciseClicked != null) {
-            // todo: navigate to exercise info screen
+            when (state.completionModel.exerciseClicked.type) {
+                ExerciseType.CRUNCH -> {
+                    LocalNavigator.currentOrThrow.push(CrunchScreen())
+                }
+
+                ExerciseType.SQUATS -> {
+
+                }
+
+                ExerciseType.PUSH_UP -> {
+
+                }
+
+                ExerciseType.PLANK -> {
+                    LocalNavigator.currentOrThrow.push(PlankScreen())
+                }
+
+                ExerciseType.RUNNING -> {
+
+                }
+            }
         }
     }
 
