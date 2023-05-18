@@ -31,7 +31,7 @@ import com.ithirteeng.superfitproject.common.ui.ExerciseCircleView
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.squats.presentation.SquatsIntent
 import com.ithirteeng.superfitproject.squats.presentation.SquatsScreenViewModel
-import com.ithirteeng.superfitproject.squats.utils.ExerciseHelper
+import com.ithirteeng.superfitproject.squats.utils.SquatsExerciseHelper
 import org.koin.androidx.compose.koinViewModel
 
 class SquatsScreen : Screen {
@@ -42,15 +42,15 @@ class SquatsScreen : Screen {
         viewModel.accept(SquatsIntent.Initial)
 
         val sensorManager = LocalContext.current.getSystemService(SENSOR_SERVICE) as SensorManager
-        val exerciseHelper = ExerciseHelper(sensorManager) {
+        val squatsExerciseHelper = SquatsExerciseHelper(sensorManager) {
             viewModel.accept(SquatsIntent.ActionIntent)
         }
 
-        SquatsScreenView(viewModel = viewModel, exerciseHelper)
+        SquatsScreenView(viewModel = viewModel, squatsExerciseHelper)
     }
 
     @Composable
-    private fun SquatsScreenView(viewModel: SquatsScreenViewModel, exerciseHelper: ExerciseHelper) {
+    private fun SquatsScreenView(viewModel: SquatsScreenViewModel, squatsExerciseHelper: SquatsExerciseHelper) {
         val state = viewModel.state.collectAsState().value
         Box(
             modifier = Modifier
@@ -70,10 +70,10 @@ class SquatsScreen : Screen {
 
                 if (state.isFinishedUnsuccessfully) {
                     LocalNavigator.currentOrThrow.pop()
-                    exerciseHelper.unregisterSensorListener()
+                    squatsExerciseHelper.unregisterSensorListener()
                 } else if (state.isFinishedSuccessfully) {
                     LocalNavigator.currentOrThrow.pop()
-                    exerciseHelper.unregisterSensorListener()
+                    squatsExerciseHelper.unregisterSensorListener()
                 }
 
                 Column(

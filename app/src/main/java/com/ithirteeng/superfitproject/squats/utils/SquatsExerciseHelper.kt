@@ -9,7 +9,7 @@ import kotlin.math.atan2
 import kotlin.math.pow
 import kotlin.math.sqrt
 
-class ExerciseHelper(
+class SquatsExerciseHelper(
     private val sensorManager: SensorManager,
     private val onAction: () -> Unit,
 ) : SensorEventListener {
