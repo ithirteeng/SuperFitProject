@@ -47,6 +47,9 @@ class SquatsScreenViewModel(
             error = null,
             isLoading = false
         )
+        if (_state.value.currentAmount <= 0) {
+            onExercisesDone()
+        }
     }
 
     private fun getExercisesAmount(): Int {
@@ -82,6 +85,9 @@ class SquatsScreenViewModel(
 
     @SuppressLint("SimpleDateFormat")
     private fun onExercisesDone() {
+        _state.value = _state.value.copy(
+            isLoading = true,
+        )
         viewModelScope.launch {
             saveTrainingUseCase(
                 TrainingEntity(

@@ -29,8 +29,8 @@ class CrunchScreenViewModel(
             CrunchScreenIntent.Initial -> initState()
             CrunchScreenIntent.DismissErrorDialog -> {
                 _state.value = _state.value.copy(error = null)
+                onFinishButtonClick()
             }
-
             CrunchScreenIntent.BackButtonClick -> {
                 _state.value = _state.value.copy(isFinished = true)
             }

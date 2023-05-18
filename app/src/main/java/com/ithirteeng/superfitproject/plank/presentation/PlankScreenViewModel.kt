@@ -96,6 +96,7 @@ class PlankScreenViewModel(
         _state.value = _state.value.copy(
             error = null
         )
+        finishExercise()
     }
 
     private fun startExercise() {
