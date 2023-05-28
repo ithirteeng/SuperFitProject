@@ -85,7 +85,11 @@ class MyBodyScreen : Screen {
                 }
                 item { HeaderText(text = stringResource(id = R.string.my_progress)) }
 
-                item { MyBodyImages(firstImage = null, secondImage = null) }
+                item {
+                    MyBodyImages(firstImage = null, secondImage = null) {
+
+                    }
+                }
 
             }
 

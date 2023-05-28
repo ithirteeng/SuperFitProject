@@ -8,8 +8,10 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -22,6 +24,7 @@ import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.photos.domain.model.ImageModel
@@ -29,24 +32,50 @@ import com.ithirteeng.superfitproject.common.ui.theme.Violet
 
 
 @Composable
-fun MyBodyImages(firstImage: ImageModel?, secondImage: ImageModel?) {
-    Row(modifier = Modifier.padding(vertical = 16.dp)) {
-        MyBodyImage(
-            imageModel = firstImage,
-            shape = RoundedCornerShape(topStart = 20.dp, bottomStart = 20.dp),
-            modifier = Modifier.weight(0.5f)
-        )
-        Spacer(
+fun MyBodyImages(firstImage: ImageModel?, secondImage: ImageModel?, onAddButtonClick: () -> Unit) {
+    Box(modifier = Modifier.padding(vertical = 16.dp)) {
+        Row {
+            MyBodyImage(
+                imageModel = firstImage,
+                shape = RoundedCornerShape(topStart = 10.dp, bottomStart = 10.dp),
+                modifier = Modifier.weight(0.5f)
+            )
+            Spacer(
+                modifier = Modifier
+                    .background(Violet)
+                    .width(4.dp)
+            )
+            MyBodyImage(
+                imageModel = secondImage,
+                shape = RoundedCornerShape(topEnd = 10.dp, bottomEnd = 10.dp),
+                modifier = Modifier.weight(0.5f)
+            )
+        }
+        AddImageButton(
             modifier = Modifier
-                .background(Violet)
-                .width(4.dp)
-        )
-        MyBodyImage(
-            imageModel = secondImage,
-            shape = RoundedCornerShape(topEnd = 20.dp, bottomEnd = 20.dp),
-            modifier = Modifier.weight(0.5f)
-        )
+                .align(Alignment.BottomEnd)
+                .padding(8.dp)
+        ) {
+            onAddButtonClick()
+        }
     }
+}
+
+@Composable
+private fun AddImageButton(modifier: Modifier, onClick: () -> Unit) {
+    IconButton(onClick = onClick, modifier = modifier.size(24.dp)) {
+        Box(
+            modifier = Modifier.background(Color.White, RoundedCornerShape(100.dp))
+        ) {
+            Image(
+                modifier = Modifier
+                    .padding(6.dp),
+                painter = painterResource(id = R.drawable.add_image_icon),
+                contentDescription = null
+            )
+        }
+    }
+
 }
 
 @Composable
