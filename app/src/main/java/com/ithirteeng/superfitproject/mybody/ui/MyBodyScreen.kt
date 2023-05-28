@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
@@ -26,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.ChangeParamsAlertDialog
+import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.common.ui.theme.GrayWhite
 import com.ithirteeng.superfitproject.mybody.presentation.MyBodyScreenIntent
@@ -45,78 +47,80 @@ class MyBodyScreen : Screen {
     @Composable
     fun MyBodyScreenView(viewModel: MyBodyScreenViewModel) {
         val state = viewModel.state.collectAsState().value
-        if (state.isLoading) {
-            CircularProgressIndicator(
-                color = Color.White
-            )
-        } else {
-            Box(
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(GrayDark),
+            contentAlignment = Alignment.TopCenter
+        ) {
+            LazyColumn(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .background(GrayDark),
-                contentAlignment = Alignment.TopCenter
+                    .padding(horizontal = 16.dp, vertical = 24.dp)
+                    .statusBarsPadding()
             ) {
-                LazyColumn(
-                    modifier = Modifier
-                        .padding(horizontal = 16.dp, vertical = 24.dp)
-                        .statusBarsPadding()
-                ) {
-                    item { HeaderText(text = stringResource(id = R.string.my_body)) }
-                    item {
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 24.dp),
-                            horizontalArrangement = Arrangement.spacedBy(48.dp)
-                        ) {
-                            ParamView(text = state.weight) {
-                                viewModel.accept(
-                                    MyBodyScreenIntent.OpenAlertDialog(
-                                        AlertDialogType.WEIGHT
-                                    )
+                item { HeaderText(text = stringResource(id = R.string.my_body)) }
+                item {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 24.dp),
+                        horizontalArrangement = Arrangement.spacedBy(48.dp)
+                    ) {
+                        ParamView(text = state.weight) {
+                            viewModel.accept(
+                                MyBodyScreenIntent.OpenAlertDialog(
+                                    AlertDialogType.WEIGHT
                                 )
-                            }
-                            ParamView(text = state.height) {
-                                viewModel.accept(
-                                    MyBodyScreenIntent.OpenAlertDialog(
-                                        AlertDialogType.HEIGHT
-                                    )
+                            )
+                        }
+                        ParamView(text = state.height) {
+                            viewModel.accept(
+                                MyBodyScreenIntent.OpenAlertDialog(
+                                    AlertDialogType.HEIGHT
                                 )
-                            }
+                            )
                         }
                     }
-                    item { HeaderText(text = stringResource(id = R.string.my_progress)) }
-
                 }
-            }
-        }
+                item { HeaderText(text = stringResource(id = R.string.my_progress)) }
 
-        if (state.error != null) {
-            //todo show error
-        } else if (state.isAlertDialogOpened) {
-            val label = if (state.alertDialogType == AlertDialogType.WEIGHT) {
-                stringResource(id = R.string.weight)
-            } else {
-                stringResource(id = R.string.height)
             }
-            ChangeParamsAlertDialog(
-                onDismiss = {
-                    viewModel.accept(MyBodyScreenIntent.CloseAlertDialog)
-                },
-                onChangeButtonClick = {
-                    if (state.alertDialogType == AlertDialogType.WEIGHT) {
-                        viewModel.accept(MyBodyScreenIntent.ChangeWeight)
-                    } else {
-                        viewModel.accept(MyBodyScreenIntent.ChangeHeight)
-                    }
-                },
-                header = state.alertDialogType.type,
-                textFieldLabel = label,
-                textFieldPlaceHolder = stringResource(id = R.string.new_value),
-                textFieldValue = state.alertTextFieldValue,
-                onTextChanged = { viewModel.accept(MyBodyScreenIntent.AlertTextFieldChange(it)) }
-            )
 
+            if (state.error != null) {
+                ErrorAlertDialog(errorEntity = state.error) {
+                    viewModel.accept(MyBodyScreenIntent.DismissError)
+                }
+            } else if (state.isAlertDialogOpened) {
+                val label = if (state.alertDialogType == AlertDialogType.WEIGHT) {
+                    stringResource(id = R.string.weight)
+                } else {
+                    stringResource(id = R.string.height)
+                }
+                ChangeParamsAlertDialog(
+                    onDismiss = {
+                        viewModel.accept(MyBodyScreenIntent.CloseAlertDialog)
+                    },
+                    onChangeButtonClick = {
+                        if (state.alertDialogType == AlertDialogType.WEIGHT) {
+                            viewModel.accept(MyBodyScreenIntent.ChangeWeight)
+                        } else {
+                            viewModel.accept(MyBodyScreenIntent.ChangeHeight)
+                        }
+                    },
+                    header = state.alertDialogType.type,
+                    textFieldLabel = label,
+                    textFieldPlaceHolder = stringResource(id = R.string.new_value),
+                    textFieldValue = state.alertTextFieldValue,
+                    onTextChanged = { viewModel.accept(MyBodyScreenIntent.AlertTextFieldChange(it)) }
+                )
+            } else if (state.isLoading) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                        .wrapContentSize(),
+                    color = Color.White
+                )
+            }
         }
 
     }
