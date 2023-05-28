@@ -28,6 +28,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.ChangeParamsAlertDialog
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
+import com.ithirteeng.superfitproject.common.ui.MyBodyImages
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.common.ui.theme.GrayWhite
 import com.ithirteeng.superfitproject.mybody.presentation.MyBodyScreenIntent
@@ -83,6 +84,8 @@ class MyBodyScreen : Screen {
                     }
                 }
                 item { HeaderText(text = stringResource(id = R.string.my_progress)) }
+
+                item { MyBodyImages(firstImage = null, secondImage = null) }
 
             }
 
