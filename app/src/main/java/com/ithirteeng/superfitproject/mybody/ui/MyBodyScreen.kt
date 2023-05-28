@@ -28,6 +28,7 @@ import cafe.adriel.voyager.core.screen.Screen
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.ChangeParamsAlertDialog
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
+import com.ithirteeng.superfitproject.common.ui.MyBodyButton
 import com.ithirteeng.superfitproject.common.ui.MyBodyImages
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.common.ui.theme.GrayWhite
@@ -87,10 +88,21 @@ class MyBodyScreen : Screen {
 
                 item {
                     MyBodyImages(firstImage = null, secondImage = null) {
-
+                        //todo pn add button click
                     }
                 }
 
+                item {
+                    MyBodyButton(text = stringResource(id = R.string.train_progress)) {
+                        //todo on train button click
+                    }
+                }
+
+                item {
+                    MyBodyButton(text = stringResource(id = R.string.statistics)) {
+                        //todo on statistics button click
+                    }
+                }
             }
 
             if (state.error != null) {

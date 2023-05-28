@@ -10,6 +10,7 @@ import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -55,5 +56,28 @@ fun FinishExerciseButton(
             style = MaterialTheme.typography.h5,
             color = Color.White
         )
+    }
+}
+
+@Composable
+fun MyBodyButton(text: String, onClick: () -> Unit) {
+    TextButton(
+        onClick = onClick,
+        modifier = Modifier
+            .padding(bottom = 16.dp, top = 6.dp)
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.h5,
+            color = MaterialTheme.colors.primary
+        )
+
+        Icon(
+            modifier = Modifier
+                .padding(start = 8.dp),
+            painter = painterResource(id = R.drawable.arrow_right_icon),
+            contentDescription = stringResource(id = R.string.arrow_content_description)
+        )
+
     }
 }
