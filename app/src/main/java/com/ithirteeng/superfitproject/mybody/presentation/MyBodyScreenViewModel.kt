@@ -2,13 +2,15 @@ package com.ithirteeng.superfitproject.mybody.presentation
 
 import android.annotation.SuppressLint
 import android.app.Application
-import android.util.Log
+import android.graphics.BitmapFactory
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.GetWeightAndHeightUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetHeightUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetWeightUseCase
+import com.ithirteeng.superfitproject.common.photos.domain.model.ImageModel
+import com.ithirteeng.superfitproject.common.photos.domain.usecase.UploadPhotoUseCase
 import com.ithirteeng.superfitproject.common.utils.ErrorHelper
 import com.ithirteeng.superfitproject.mybody.domain.entity.BodyParamsEntity
 import com.ithirteeng.superfitproject.mybody.domain.usecase.UpdateBodyParamsUseCase
@@ -25,6 +27,7 @@ class MyBodyScreenViewModel(
     private val updateBodyParamsUseCase: UpdateBodyParamsUseCase,
     private val setWeightUseCase: SetWeightUseCase,
     private val setHeightUseCase: SetHeightUseCase,
+    private val uploadPhotoUseCase: UploadPhotoUseCase,
 ) : AndroidViewModel(application) {
 
     fun accept(intent: MyBodyScreenIntent) {
@@ -61,10 +64,38 @@ class MyBodyScreenViewModel(
     }
 
     private fun uploadPhoto(image: ByteArray?) {
-        Log.d("TTTTT", image?.size.toString())
-        _state.value = _state.value.copy(
-            isLoading = true
-        )
+        if (image != null) {
+            _state.value = _state.value.copy(
+                isLoading = true
+            )
+            viewModelScope.launch {
+                uploadPhotoUseCase(image = image)
+                    .onSuccess {
+                        _state.value = _state.value.copy(
+                            isLoading = false,
+                            isPhotoPickerDialogOpened = false,
+                            firstImage = ImageModel(
+                                date = it.uploadTime.toString(),
+                                id = it.id,
+                                bitmap = BitmapFactory.decodeByteArray(
+                                    image, 0, image.size
+                                )
+                            )
+                        )
+                    }
+                    .onFailure {
+                        _state.value = _state.value.copy(
+                            isLoading = false,
+                            error = ErrorHelper.setupErrorEntity(
+                                it,
+                                R.string.uploading_params_error
+                            ),
+                            alertTextFieldValue = "",
+                            isPhotoPickerDialogOpened = false
+                        )
+                    }
+            }
+        }
     }
 
     private fun onAddPictureButtonClick() {

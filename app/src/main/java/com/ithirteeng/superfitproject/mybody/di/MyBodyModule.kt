@@ -25,7 +25,8 @@ val myBodyModule = module {
             getWeightAndHeightUseCase = get(),
             updateBodyParamsUseCase = get(),
             setHeightUseCase = get(),
-            setWeightUseCase = get()
+            setWeightUseCase = get(),
+            uploadPhotoUseCase = get()
         )
     }
 }
