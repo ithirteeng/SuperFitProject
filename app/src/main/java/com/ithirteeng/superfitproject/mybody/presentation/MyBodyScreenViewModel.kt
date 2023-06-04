@@ -2,6 +2,7 @@ package com.ithirteeng.superfitproject.mybody.presentation
 
 import android.annotation.SuppressLint
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.ithirteeng.superfitproject.R
@@ -26,15 +27,18 @@ class MyBodyScreenViewModel(
     private val setHeightUseCase: SetHeightUseCase,
 ) : AndroidViewModel(application) {
 
-    fun accept(myBodyScreenIntent: MyBodyScreenIntent) {
-        when (myBodyScreenIntent) {
+    fun accept(intent: MyBodyScreenIntent) {
+        when (intent) {
             is MyBodyScreenIntent.ChangeHeight -> changeHeight()
             is MyBodyScreenIntent.ChangeWeight -> changeWeight()
             is MyBodyScreenIntent.DismissError -> dismissError()
             is MyBodyScreenIntent.Initial -> initState()
             is MyBodyScreenIntent.CloseAlertDialog -> closeAlertDialog()
-            is MyBodyScreenIntent.OpenAlertDialog -> openAlertDialog(myBodyScreenIntent.alertDialogType)
-            is MyBodyScreenIntent.AlertTextFieldChange -> onTextFieldChange(myBodyScreenIntent.value)
+            is MyBodyScreenIntent.OpenAlertDialog -> openAlertDialog(intent.alertDialogType)
+            is MyBodyScreenIntent.AlertTextFieldChange -> onTextFieldChange(intent.value)
+            is MyBodyScreenIntent.AddPictureButtonClick -> onAddPictureButtonClick()
+            is MyBodyScreenIntent.ClosePickImageDialog -> closePickPictureDialog()
+            is MyBodyScreenIntent.PickPhoto -> uploadPhoto(intent.image)
         }
     }
 
@@ -53,6 +57,25 @@ class MyBodyScreenViewModel(
         _state.value = MyBodyScreenState(
             weight = getWeightAndHeight().first,
             height = getWeightAndHeight().second
+        )
+    }
+
+    private fun uploadPhoto(image: ByteArray?) {
+        Log.d("TTTTT", image?.size.toString())
+        _state.value = _state.value.copy(
+            isLoading = true
+        )
+    }
+
+    private fun onAddPictureButtonClick() {
+        _state.value = _state.value.copy(
+            isPhotoPickerDialogOpened = true
+        )
+    }
+
+    private fun closePickPictureDialog() {
+        _state.value = _state.value.copy(
+            isPhotoPickerDialogOpened = false
         )
     }
 

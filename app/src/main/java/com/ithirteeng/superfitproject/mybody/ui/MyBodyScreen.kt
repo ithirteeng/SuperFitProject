@@ -1,5 +1,10 @@
 package com.ithirteeng.superfitproject.mybody.ui
 
+import android.content.Context
+import android.net.Uri
+import androidx.activity.compose.ManagedActivityResultLauncher
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,21 +26,26 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import androidx.core.content.FileProvider.getUriForFile
 import cafe.adriel.voyager.core.screen.Screen
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.ChangeParamsAlertDialog
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.common.ui.MyBodyButton
 import com.ithirteeng.superfitproject.common.ui.MyBodyImages
+import com.ithirteeng.superfitproject.common.ui.PickImageDialog
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.common.ui.theme.GrayWhite
 import com.ithirteeng.superfitproject.mybody.presentation.MyBodyScreenIntent
 import com.ithirteeng.superfitproject.mybody.presentation.MyBodyScreenViewModel
 import com.ithirteeng.superfitproject.mybody.presentation.model.AlertDialogType
 import org.koin.androidx.compose.koinViewModel
+import java.io.File
+
 
 class MyBodyScreen : Screen {
 
@@ -43,11 +53,39 @@ class MyBodyScreen : Screen {
     override fun Content() {
         val viewModel: MyBodyScreenViewModel = koinViewModel()
         viewModel.accept(MyBodyScreenIntent.Initial)
-        MyBodyScreenView(viewModel = viewModel)
+        val context = LocalContext.current
+        val galleryLauncher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.GetContent(),
+            onResult = {
+                it?.let { uri ->
+                    val inputStream = context.contentResolver.openInputStream(uri)
+                    val image = inputStream?.readBytes()
+                    inputStream?.close()
+                    viewModel.accept(MyBodyScreenIntent.PickPhoto(image))
+                }
+            }
+        )
+        val uri = getImageUri(context)
+        val cameraLauncher = rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.TakePicture(),
+            onResult = {
+                if (it) {
+                    val inputStream = context.contentResolver.openInputStream(uri)
+                    val image = inputStream?.readBytes()
+                    inputStream?.close()
+                    viewModel.accept(MyBodyScreenIntent.PickPhoto(image))
+                }
+            })
+        MyBodyScreenView(viewModel = viewModel, galleryLauncher, cameraLauncher, uri)
     }
 
     @Composable
-    fun MyBodyScreenView(viewModel: MyBodyScreenViewModel) {
+    fun MyBodyScreenView(
+        viewModel: MyBodyScreenViewModel,
+        galleryLauncher: ManagedActivityResultLauncher<String, Uri?>,
+        cameraLauncher: ManagedActivityResultLauncher<Uri, Boolean>,
+        uri: Uri,
+    ) {
         val state = viewModel.state.collectAsState().value
         Box(
             modifier = Modifier
@@ -87,8 +125,8 @@ class MyBodyScreen : Screen {
                 item { HeaderText(text = stringResource(id = R.string.my_progress)) }
 
                 item {
-                    MyBodyImages(firstImage = null, secondImage = null) {
-                        //todo pn add button click
+                    MyBodyImages(firstImage = state.firstImage, secondImage = state.secondImage) {
+                        viewModel.accept(MyBodyScreenIntent.AddPictureButtonClick)
                     }
                 }
 
@@ -139,9 +177,33 @@ class MyBodyScreen : Screen {
                         .wrapContentSize(),
                     color = Color.White
                 )
+            } else if (state.isPhotoPickerDialogOpened) {
+                PickImageDialog(
+                    onPhotoButtonClick = {
+                        cameraLauncher.launch(uri)
+                    },
+                    onGalleryButtonClick = {
+                        galleryLauncher.launch("image/*")
+                    },
+                    onCancelButtonClick = {
+                        viewModel.accept(MyBodyScreenIntent.ClosePickImageDialog)
+                    }
+                )
             }
         }
 
+    }
+
+    private fun getImageUri(context: Context): Uri {
+        val directory = File(context.cacheDir, "images")
+        directory.mkdirs()
+        val file = File.createTempFile(
+            "selected_image",
+            ".jpg",
+            directory,
+        )
+        val authority = context.packageName + ".provider"
+        return getUriForFile(context, authority, file)
     }
 
     @Composable

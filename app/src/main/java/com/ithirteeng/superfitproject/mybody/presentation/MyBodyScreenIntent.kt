@@ -9,5 +9,8 @@ sealed class MyBodyScreenIntent {
     object DismissError : MyBodyScreenIntent()
     object CloseAlertDialog : MyBodyScreenIntent()
     class OpenAlertDialog(val alertDialogType: AlertDialogType) : MyBodyScreenIntent()
-    class AlertTextFieldChange(val value: String): MyBodyScreenIntent()
+    class AlertTextFieldChange(val value: String) : MyBodyScreenIntent()
+    object AddPictureButtonClick : MyBodyScreenIntent()
+    object ClosePickImageDialog : MyBodyScreenIntent()
+    class PickPhoto(val image: ByteArray?) : MyBodyScreenIntent()
 }

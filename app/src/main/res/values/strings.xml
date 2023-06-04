@@ -66,4 +66,8 @@
 
     <string name="go_home">Go Home</string>
 
+    <string name="choose_image_source">Choose image source</string>
+    <string name="photo">Photo</string>
+    <string name="gallery">Gallery</string>
+
 </resources>

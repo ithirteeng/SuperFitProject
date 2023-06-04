@@ -12,8 +12,10 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.AlertDialog
+import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.runtime.Composable
@@ -22,8 +24,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -114,7 +118,7 @@ fun TextAlertDialog(
     onLaterButtonClick: () -> Unit,
     onGoButtonClick: () -> Unit,
     header: String,
-    text: String
+    text: String,
 ) {
     AlertDialog(
         backgroundColor = GrayLight,
@@ -247,4 +251,78 @@ private fun AlertHeaderText(text: String) {
         ),
         modifier = Modifier.padding(top = 20.dp, bottom = 12.dp)
     )
+}
+
+@Composable
+fun PickImageDialog(
+    onPhotoButtonClick: () -> Unit,
+    onGalleryButtonClick: () -> Unit,
+    onCancelButtonClick: () -> Unit,
+) {
+    AlertDialog(
+        backgroundColor = GrayLight,
+        onDismissRequest = onCancelButtonClick,
+        title = {
+            Column {
+                AlertHeaderText(text = stringResource(id = R.string.choose_image_source))
+                PickImageButtons(
+                    onPhotoButtonClick = onPhotoButtonClick,
+                    onGalleryButtonClick = onGalleryButtonClick
+                )
+            }
+        },
+        buttons = {
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.End
+            ) {
+                AlertDialogTextButton(text = stringResource(id = R.string.cancel)) {
+                    onCancelButtonClick()
+                }
+            }
+        }
+    )
+}
+
+@Composable
+private fun PickImageButtons(
+    onPhotoButtonClick: () -> Unit,
+    onGalleryButtonClick: () -> Unit,
+) {
+    Column(modifier = Modifier.padding(bottom = 16.dp)) {
+        PickImageButton(
+            painterResource = painterResource(id = R.drawable.photo_icon),
+            text = stringResource(id = R.string.photo)
+        ) {
+            onPhotoButtonClick()
+        }
+        PickImageButton(
+            painterResource = painterResource(id = R.drawable.gallery_icon),
+            text = stringResource(id = R.string.gallery)
+        ) {
+            onGalleryButtonClick()
+        }
+    }
+
+}
+
+@Composable
+private fun PickImageButton(painterResource: Painter, text: String, onClick: () -> Unit) {
+    TextButton(
+        onClick = onClick,
+        modifier = Modifier.padding(top = 16.dp)
+    ) {
+        Icon(
+            modifier = Modifier
+                .padding(end = 8.dp),
+            painter = painterResource,
+            contentDescription = null
+        )
+        Text(
+            text = text,
+            style = MaterialTheme.typography.subtitle1,
+            color = MaterialTheme.colors.primary
+        )
+
+    }
 }
