@@ -9,7 +9,10 @@ import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.GetWeightAndHeightUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetHeightUseCase
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.SetWeightUseCase
+import com.ithirteeng.superfitproject.common.photos.domain.entity.ImageEntity
 import com.ithirteeng.superfitproject.common.photos.domain.model.ImageModel
+import com.ithirteeng.superfitproject.common.photos.domain.usecase.DownloadPhotoUseCase
+import com.ithirteeng.superfitproject.common.photos.domain.usecase.GetPhotosListUseCase
 import com.ithirteeng.superfitproject.common.photos.domain.usecase.UploadPhotoUseCase
 import com.ithirteeng.superfitproject.common.utils.ErrorHelper
 import com.ithirteeng.superfitproject.mybody.domain.entity.BodyParamsEntity
@@ -28,6 +31,8 @@ class MyBodyScreenViewModel(
     private val setWeightUseCase: SetWeightUseCase,
     private val setHeightUseCase: SetHeightUseCase,
     private val uploadPhotoUseCase: UploadPhotoUseCase,
+    private val getPhotosListUseCase: GetPhotosListUseCase,
+    private val downloadPhotoUseCase: DownloadPhotoUseCase,
 ) : AndroidViewModel(application) {
 
     fun accept(intent: MyBodyScreenIntent) {
@@ -61,8 +66,63 @@ class MyBodyScreenViewModel(
             weight = getWeightAndHeight().first,
             height = getWeightAndHeight().second
         )
+        setPhotos()
     }
 
+    private fun setPhotos() {
+        _state.value = _state.value.copy(
+            isLoading = true
+        )
+        viewModelScope.launch {
+            getPhotosListUseCase()
+                .onSuccess {
+                    if (it.isEmpty()) {
+                        _state.value = _state.value.copy(
+                            firstImage = null,
+                            secondImage = null
+                        )
+                    } else if (it.size == 1) {
+                        _state.value = _state.value.copy(
+                            firstImage = downloadPhoto(it[0]),
+                            secondImage = null
+                        )
+                    } else {
+                        _state.value = _state.value.copy(
+                            firstImage = downloadPhoto(it.first()),
+                            secondImage = downloadPhoto(it.last())
+                        )
+                    }
+                    _state.value = _state.value.copy(
+                        isLoading = false
+                    )
+                }
+                .onFailure {
+                    _state.value = _state.value.copy(
+                        isLoading = false,
+                        error = ErrorHelper.setupErrorEntity(it),
+                        isPhotoPickerDialogOpened = false
+                    )
+                }
+        }
+    }
+
+    private suspend fun downloadPhoto(imageEntity: ImageEntity): ImageModel? {
+        var result: ImageModel? = null
+        downloadPhotoUseCase(imageEntity = imageEntity)
+            .onSuccess {
+                result = it
+            }
+            .onFailure {
+                _state.value = _state.value.copy(
+                    isLoading = false,
+                    error = ErrorHelper.setupErrorEntity(it),
+                    isPhotoPickerDialogOpened = false
+                )
+            }
+        return result
+    }
+
+    @SuppressLint("SimpleDateFormat")
     private fun uploadPhoto(image: ByteArray?) {
         if (image != null) {
             _state.value = _state.value.copy(
@@ -71,11 +131,13 @@ class MyBodyScreenViewModel(
             viewModelScope.launch {
                 uploadPhotoUseCase(image = image)
                     .onSuccess {
+                        val simpleDateFormat = SimpleDateFormat("dd.MM.yyyy")
+                        val date = Date(it.uploadTime.toLong() * 1000)
                         _state.value = _state.value.copy(
                             isLoading = false,
                             isPhotoPickerDialogOpened = false,
-                            firstImage = ImageModel(
-                                date = it.uploadTime.toString(),
+                            secondImage = ImageModel(
+                                date = simpleDateFormat.format(date),
                                 id = it.id,
                                 bitmap = BitmapFactory.decodeByteArray(
                                     image, 0, image.size
@@ -86,11 +148,7 @@ class MyBodyScreenViewModel(
                     .onFailure {
                         _state.value = _state.value.copy(
                             isLoading = false,
-                            error = ErrorHelper.setupErrorEntity(
-                                it,
-                                R.string.uploading_params_error
-                            ),
-                            alertTextFieldValue = "",
+                            error = ErrorHelper.setupErrorEntity(it),
                             isPhotoPickerDialogOpened = false
                         )
                     }
