@@ -92,7 +92,7 @@ class SquatsScreenViewModel(
             saveTrainingUseCase(
                 TrainingEntity(
                     date = SimpleDateFormat("yyyy-MM-dd").format(Date()),
-                    exercise = ExerciseType.PLANK.type,
+                    exercise = ExerciseType.SQUATS.type,
                     repeatCount = getSquatsAmountUseCase()
                 )
             ).onSuccess {

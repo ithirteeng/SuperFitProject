@@ -83,7 +83,7 @@ class PushUpsScreenViewModel(
                 saveTrainingUseCase(
                     TrainingEntity(
                         date = SimpleDateFormat("yyyy-MM-dd").format(Date()),
-                        exercise = ExerciseType.PLANK.type,
+                        exercise = ExerciseType.PUSH_UP.type,
                         repeatCount = _state.value.totalAmount - _state.value.currentAmount
                     )
                 ).onSuccess {
