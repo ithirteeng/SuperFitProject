@@ -70,4 +70,7 @@
     <string name="photo">Photo</string>
     <string name="gallery">Gallery</string>
 
+    <string name="last_train">Last train:</string>
+    <string name="progress">Progress:</string>
+
 </resources>

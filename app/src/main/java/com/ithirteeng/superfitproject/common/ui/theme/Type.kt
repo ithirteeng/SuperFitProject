@@ -45,7 +45,8 @@ val Typography = Typography(
     subtitle2 = TextStyle(
         fontFamily = Montserrat,
         fontWeight = FontWeight(700),
-        fontSize = 14.sp
+        fontSize = 14.sp,
+        color = Color.White
     ),
     body1 = TextStyle(
         fontFamily = Montserrat,
