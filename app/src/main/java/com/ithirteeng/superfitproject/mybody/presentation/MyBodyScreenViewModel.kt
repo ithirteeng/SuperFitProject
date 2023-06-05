@@ -18,6 +18,7 @@ import com.ithirteeng.superfitproject.common.utils.ErrorHelper
 import com.ithirteeng.superfitproject.mybody.domain.entity.BodyParamsEntity
 import com.ithirteeng.superfitproject.mybody.domain.usecase.UpdateBodyParamsUseCase
 import com.ithirteeng.superfitproject.mybody.presentation.model.AlertDialogType
+import com.ithirteeng.superfitproject.mybody.presentation.model.ExitModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -47,6 +48,8 @@ class MyBodyScreenViewModel(
             is MyBodyScreenIntent.AddPictureButtonClick -> onAddPictureButtonClick()
             is MyBodyScreenIntent.ClosePickImageDialog -> closePickPictureDialog()
             is MyBodyScreenIntent.PickPhoto -> uploadPhoto(intent.image)
+            MyBodyScreenIntent.StatisticsButtonClick -> onStatisticsButtonClick()
+            MyBodyScreenIntent.TrainButtonClick -> onTrainButtonClick()
         }
     }
 
@@ -67,6 +70,24 @@ class MyBodyScreenViewModel(
             height = getWeightAndHeight().second
         )
         setPhotos()
+    }
+
+    private fun onTrainButtonClick() {
+        _state.value = _state.value.copy(
+            exitModel = ExitModel(
+                isTrainButtonClick = true,
+                isStatisticsButtonClick = false
+            )
+        )
+    }
+
+    private fun onStatisticsButtonClick() {
+        _state.value = _state.value.copy(
+            exitModel = ExitModel(
+                isTrainButtonClick = false,
+                isStatisticsButtonClick = true
+            )
+        )
     }
 
     private fun setPhotos() {
@@ -137,27 +158,15 @@ class MyBodyScreenViewModel(
                             isLoading = false,
                             isPhotoPickerDialogOpened = false,
                         )
-                        if (_state.value.firstImage == null) {
-                            _state.value = _state.value.copy(
-                                firstImage = ImageModel(
-                                    date = simpleDateFormat.format(date),
-                                    id = it.id,
-                                    bitmap = BitmapFactory.decodeByteArray(
-                                        image, 0, image.size
-                                    )
+                        setImage(
+                            ImageModel(
+                                date = simpleDateFormat.format(date),
+                                id = it.id,
+                                bitmap = BitmapFactory.decodeByteArray(
+                                    image, 0, image.size
                                 )
                             )
-                        } else {
-                            _state.value = _state.value.copy(
-                                secondImage = ImageModel(
-                                    date = simpleDateFormat.format(date),
-                                    id = it.id,
-                                    bitmap = BitmapFactory.decodeByteArray(
-                                        image, 0, image.size
-                                    )
-                                )
-                            )
-                        }
+                        )
                     }
                     .onFailure {
                         _state.value = _state.value.copy(
@@ -167,6 +176,19 @@ class MyBodyScreenViewModel(
                         )
                     }
             }
+        }
+    }
+
+    private fun setImage(imageModel: ImageModel) {
+        if (_state.value.firstImage == null) {
+            _state.value = _state.value.copy(
+                firstImage = imageModel
+            )
+
+        } else {
+            _state.value = _state.value.copy(
+                secondImage = imageModel
+            )
         }
     }
 

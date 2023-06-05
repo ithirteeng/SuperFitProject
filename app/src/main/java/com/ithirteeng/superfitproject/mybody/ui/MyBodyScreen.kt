@@ -32,6 +32,8 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider.getUriForFile
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.ChangeParamsAlertDialog
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
@@ -44,6 +46,7 @@ import com.ithirteeng.superfitproject.common.ui.theme.Violet
 import com.ithirteeng.superfitproject.mybody.presentation.MyBodyScreenIntent
 import com.ithirteeng.superfitproject.mybody.presentation.MyBodyScreenViewModel
 import com.ithirteeng.superfitproject.mybody.presentation.model.AlertDialogType
+import com.ithirteeng.superfitproject.trainprogress.ui.TrainProgressScreen
 import org.koin.androidx.compose.koinViewModel
 import java.io.File
 
@@ -133,13 +136,13 @@ class MyBodyScreen : Screen {
 
                 item {
                     MyBodyButton(text = stringResource(id = R.string.train_progress)) {
-                        //todo on train button click
+                        viewModel.accept(MyBodyScreenIntent.TrainButtonClick)
                     }
                 }
 
                 item {
                     MyBodyButton(text = stringResource(id = R.string.statistics)) {
-                        //todo on statistics button click
+                        viewModel.accept(MyBodyScreenIntent.StatisticsButtonClick)
                     }
                 }
             }
@@ -190,6 +193,10 @@ class MyBodyScreen : Screen {
                         viewModel.accept(MyBodyScreenIntent.ClosePickImageDialog)
                     }
                 )
+            } else if (state.exitModel.isTrainButtonClick) {
+                LocalNavigator.currentOrThrow.push(TrainProgressScreen())
+            } else if (state.exitModel.isStatisticsButtonClick) {
+                //todo navigate to statistics screen
             }
         }
 
