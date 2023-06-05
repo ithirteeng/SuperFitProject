@@ -136,14 +136,28 @@ class MyBodyScreenViewModel(
                         _state.value = _state.value.copy(
                             isLoading = false,
                             isPhotoPickerDialogOpened = false,
-                            secondImage = ImageModel(
-                                date = simpleDateFormat.format(date),
-                                id = it.id,
-                                bitmap = BitmapFactory.decodeByteArray(
-                                    image, 0, image.size
+                        )
+                        if (_state.value.firstImage == null) {
+                            _state.value = _state.value.copy(
+                                firstImage = ImageModel(
+                                    date = simpleDateFormat.format(date),
+                                    id = it.id,
+                                    bitmap = BitmapFactory.decodeByteArray(
+                                        image, 0, image.size
+                                    )
                                 )
                             )
-                        )
+                        } else {
+                            _state.value = _state.value.copy(
+                                secondImage = ImageModel(
+                                    date = simpleDateFormat.format(date),
+                                    id = it.id,
+                                    bitmap = BitmapFactory.decodeByteArray(
+                                        image, 0, image.size
+                                    )
+                                )
+                            )
+                        }
                     }
                     .onFailure {
                         _state.value = _state.value.copy(
