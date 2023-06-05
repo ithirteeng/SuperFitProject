@@ -40,6 +40,7 @@ import com.ithirteeng.superfitproject.common.ui.MyBodyImages
 import com.ithirteeng.superfitproject.common.ui.PickImageDialog
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.common.ui.theme.GrayWhite
+import com.ithirteeng.superfitproject.common.ui.theme.Violet
 import com.ithirteeng.superfitproject.mybody.presentation.MyBodyScreenIntent
 import com.ithirteeng.superfitproject.mybody.presentation.MyBodyScreenViewModel
 import com.ithirteeng.superfitproject.mybody.presentation.model.AlertDialogType
@@ -175,7 +176,7 @@ class MyBodyScreen : Screen {
                     modifier = Modifier
                         .align(Alignment.Center)
                         .wrapContentSize(),
-                    color = Color.White
+                    color = Violet
                 )
             } else if (state.isPhotoPickerDialogOpened) {
                 PickImageDialog(
