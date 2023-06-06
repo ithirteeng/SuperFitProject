@@ -25,6 +25,7 @@ import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
 import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalDensity
@@ -38,6 +39,8 @@ import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.common.ui.theme.Violet
 import com.ithirteeng.superfitproject.trainprogress.presentation.TrainProgressIntent
 import com.ithirteeng.superfitproject.trainprogress.presentation.TrainProgressViewModel
+import com.ithirteeng.superfitproject.trainprogress.presentation.model.ProgressIndicator
+import com.ithirteeng.superfitproject.trainprogress.presentation.model.TrainStatModel
 import org.koin.androidx.compose.koinViewModel
 
 class TrainProgressScreen : Screen {
@@ -134,40 +137,35 @@ class TrainProgressScreen : Screen {
                 TrainText(
                     headerText = stringResource(id = R.string.push_ups),
                     headerCords = pushUpsHeader,
-                    train = state.value.pushUpsTrain.amount.toString(),
-                    progress = state.value.pushUpsTrain.progress.toString(),
+                    trainStat = state.value.pushUpsTrain,
                     trainInfoCords = pushUpsStats,
                     imageSize = imageSize
                 )
                 TrainText(
                     headerText = stringResource(id = R.string.plank),
                     headerCords = plankHeader,
-                    train = state.value.plankTrain.amount.toString(),
-                    progress = state.value.plankTrain.progress.toString(),
+                    trainStat = state.value.plankTrain,
                     trainInfoCords = plankStats,
                     imageSize = imageSize
                 )
                 TrainText(
                     headerText = stringResource(id = R.string.crunch),
                     headerCords = crunchHeader,
-                    train = state.value.crunchTrain.amount.toString(),
-                    progress = state.value.crunchTrain.progress.toString(),
+                    trainStat = state.value.crunchTrain,
                     trainInfoCords = crunchStats,
                     imageSize = imageSize
                 )
                 TrainText(
                     headerText = stringResource(id = R.string.squats),
                     headerCords = squatsHeader,
-                    train = state.value.squatsTrain.amount.toString(),
-                    progress = state.value.squatsTrain.progress.toString(),
+                    trainStat = state.value.squatsTrain,
                     trainInfoCords = squatsStats,
                     imageSize = imageSize
                 )
                 TrainText(
                     headerText = stringResource(id = R.string.running),
                     headerCords = runningHeader,
-                    train = state.value.runningTrain.amount.toString(),
-                    progress = state.value.runningTrain.progress.toString(),
+                    trainStat = state.value.runningTrain,
                     trainInfoCords = runningStats,
                     imageSize = imageSize
                 )
@@ -179,19 +177,17 @@ class TrainProgressScreen : Screen {
     private fun TrainText(
         headerText: String,
         headerCords: Pair<Double, Double>,
-        train: String,
-        progress: String,
+        trainStat: TrainStatModel,
         trainInfoCords: Pair<Double, Double>,
         imageSize: Pair<Int, Int>,
     ) {
         HeaderText(text = headerText, imageSize = imageSize, cords = headerCords)
-        TrainInfo(train = train, progress = progress, imageSize = imageSize, cords = trainInfoCords)
+        TrainInfo(trainStat = trainStat, imageSize = imageSize, cords = trainInfoCords)
     }
 
     @Composable
     private fun TrainInfo(
-        train: String,
-        progress: String,
+        trainStat: TrainStatModel,
         imageSize: Pair<Int, Int>,
         cords: Pair<Double, Double>,
     ) {
@@ -210,7 +206,7 @@ class TrainProgressScreen : Screen {
                     color = Color.White
                 )
                 Text(
-                    text = train,
+                    text = trainStat.amount.toString(),
                     style = MaterialTheme.typography.subtitle2,
                     color = Color.White
                 )
@@ -225,10 +221,23 @@ class TrainProgressScreen : Screen {
                     color = Color.White
                 )
                 Text(
-                    text = progress,
+                    text = trainStat.progress.toString(),
                     style = MaterialTheme.typography.subtitle2,
                     color = Color.White
                 )
+                var painter: Painter? = painterResource(id = R.drawable.descending_icon)
+                if (trainStat.indicator == ProgressIndicator.ASCENDING) {
+                    painter = painterResource(id = R.drawable.ascending_icon)
+                } else if (trainStat.indicator == ProgressIndicator.NULL) {
+                    painter = null
+                }
+                if (painter != null) {
+                    Image(
+                        modifier = Modifier.padding(horizontal = 4.dp),
+                        painter = painter,
+                        contentDescription = null
+                    )
+                }
             }
 
         }
