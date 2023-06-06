@@ -8,9 +8,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -30,8 +33,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
 import com.ithirteeng.superfitproject.R
+import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.common.ui.theme.Violet
+import com.ithirteeng.superfitproject.trainprogress.presentation.TrainProgressIntent
+import com.ithirteeng.superfitproject.trainprogress.presentation.TrainProgressViewModel
+import org.koin.androidx.compose.koinViewModel
 
 class TrainProgressScreen : Screen {
 
@@ -75,11 +82,15 @@ class TrainProgressScreen : Screen {
 
     @Composable
     override fun Content() {
-        TrainProgressView()
+        val viewModel: TrainProgressViewModel = koinViewModel()
+        viewModel.accept(TrainProgressIntent.Initial)
+        TrainProgressView(viewModel)
     }
 
     @Composable
-    private fun TrainProgressView() {
+    private fun TrainProgressView(viewModel: TrainProgressViewModel) {
+        val state = viewModel.state.collectAsState()
+
         var imageSize by remember {
             mutableStateOf(Pair(0, 0))
         }
@@ -108,43 +119,55 @@ class TrainProgressScreen : Screen {
                         drawRunning(imageSize = imageSize)
                     },
             ) {
+                if (state.value.isLoading) {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .align(Alignment.Center)
+                            .wrapContentSize(),
+                        color = Color.White
+                    )
+                } else if (state.value.error != null) {
+                    ErrorAlertDialog(errorEntity = state.value.error!!) {
+                        viewModel.accept(TrainProgressIntent.DismissError)
+                    }
+                }
                 TrainText(
                     headerText = stringResource(id = R.string.push_ups),
                     headerCords = pushUpsHeader,
-                    train = " 25 times",
-                    progress = " 12 %",
+                    train = state.value.pushUpsTrain.amount.toString(),
+                    progress = state.value.pushUpsTrain.progress.toString(),
                     trainInfoCords = pushUpsStats,
                     imageSize = imageSize
                 )
                 TrainText(
                     headerText = stringResource(id = R.string.plank),
                     headerCords = plankHeader,
-                    train = " 25 seconds",
-                    progress = " 12 %",
+                    train = state.value.plankTrain.amount.toString(),
+                    progress = state.value.plankTrain.progress.toString(),
                     trainInfoCords = plankStats,
                     imageSize = imageSize
                 )
                 TrainText(
                     headerText = stringResource(id = R.string.crunch),
                     headerCords = crunchHeader,
-                    train = " 25 times",
-                    progress = " -12 %",
+                    train = state.value.crunchTrain.amount.toString(),
+                    progress = state.value.crunchTrain.progress.toString(),
                     trainInfoCords = crunchStats,
                     imageSize = imageSize
                 )
                 TrainText(
                     headerText = stringResource(id = R.string.squats),
                     headerCords = squatsHeader,
-                    train = " 25 times",
-                    progress = " 12 %",
+                    train = state.value.squatsTrain.amount.toString(),
+                    progress = state.value.squatsTrain.progress.toString(),
                     trainInfoCords = squatsStats,
                     imageSize = imageSize
                 )
                 TrainText(
                     headerText = stringResource(id = R.string.running),
                     headerCords = runningHeader,
-                    train = " 25 times",
-                    progress = " 12 %",
+                    train = state.value.runningTrain.amount.toString(),
+                    progress = state.value.runningTrain.progress.toString(),
                     trainInfoCords = runningStats,
                     imageSize = imageSize
                 )
