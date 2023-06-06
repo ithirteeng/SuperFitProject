@@ -33,7 +33,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
+import com.ithirteeng.superfitproject.common.ui.BackButton
 import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.common.ui.theme.Violet
@@ -133,6 +136,20 @@ class TrainProgressScreen : Screen {
                     ErrorAlertDialog(errorEntity = state.value.error!!) {
                         viewModel.accept(TrainProgressIntent.DismissError)
                     }
+                } else if (state.value.ifBackButtonPressed) {
+                    LocalNavigator.currentOrThrow.pop()
+                }
+                Row(verticalAlignment = Alignment.CenterVertically) {
+                    BackButton {
+                        viewModel.accept(TrainProgressIntent.BackButtonClick)
+                    }
+                    Text(
+                        modifier = Modifier
+                            .padding(start = 10.dp, top = 40.dp),
+                        text = stringResource(id = R.string.train_progress),
+                        color = Color.White,
+                        style = MaterialTheme.typography.h5
+                    )
                 }
                 TrainText(
                     headerText = stringResource(id = R.string.push_ups),
