@@ -48,8 +48,9 @@ class MyBodyScreenViewModel(
             is MyBodyScreenIntent.AddPictureButtonClick -> onAddPictureButtonClick()
             is MyBodyScreenIntent.ClosePickImageDialog -> closePickPictureDialog()
             is MyBodyScreenIntent.PickPhoto -> uploadPhoto(intent.image)
-            MyBodyScreenIntent.StatisticsButtonClick -> onStatisticsButtonClick()
-            MyBodyScreenIntent.TrainButtonClick -> onTrainButtonClick()
+            is MyBodyScreenIntent.StatisticsButtonClick -> onStatisticsButtonClick()
+            is MyBodyScreenIntent.TrainButtonClick -> onTrainButtonClick()
+            is MyBodyScreenIntent.SeeAllButtonClick -> onSeeAllButtonClick()
         }
     }
 
@@ -72,10 +73,21 @@ class MyBodyScreenViewModel(
         setPhotos()
     }
 
+    private fun onSeeAllButtonClick() {
+        _state.value = _state.value.copy(
+            exitModel = ExitModel(
+                isSeeAllButtonClick = true,
+                isTrainButtonClick = false,
+                isStatisticsButtonClick = false
+            )
+        )
+    }
+
     private fun onTrainButtonClick() {
         _state.value = _state.value.copy(
             exitModel = ExitModel(
                 isTrainButtonClick = true,
+                isSeeAllButtonClick = false,
                 isStatisticsButtonClick = false
             )
         )
@@ -85,6 +97,7 @@ class MyBodyScreenViewModel(
         _state.value = _state.value.copy(
             exitModel = ExitModel(
                 isTrainButtonClick = false,
+                isSeeAllButtonClick = false,
                 isStatisticsButtonClick = true
             )
         )

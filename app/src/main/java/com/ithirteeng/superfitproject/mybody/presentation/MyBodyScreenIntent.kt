@@ -13,6 +13,7 @@ sealed class MyBodyScreenIntent {
     object AddPictureButtonClick : MyBodyScreenIntent()
     object ClosePickImageDialog : MyBodyScreenIntent()
     class PickPhoto(val image: ByteArray?) : MyBodyScreenIntent()
-    object TrainButtonClick: MyBodyScreenIntent()
-    object StatisticsButtonClick: MyBodyScreenIntent()
+    object TrainButtonClick : MyBodyScreenIntent()
+    object StatisticsButtonClick : MyBodyScreenIntent()
+    object SeeAllButtonClick : MyBodyScreenIntent()
 }

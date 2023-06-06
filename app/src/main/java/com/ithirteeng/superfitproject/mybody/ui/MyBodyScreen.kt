@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.CircularProgressIndicator
@@ -41,8 +42,10 @@ import com.ithirteeng.superfitproject.common.ui.MyBodyButton
 import com.ithirteeng.superfitproject.common.ui.MyBodyImages
 import com.ithirteeng.superfitproject.common.ui.PickImageDialog
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
+import com.ithirteeng.superfitproject.common.ui.theme.GrayMedium
 import com.ithirteeng.superfitproject.common.ui.theme.GrayWhite
 import com.ithirteeng.superfitproject.common.ui.theme.Violet
+import com.ithirteeng.superfitproject.imagelist.ui.ImagesListScreen
 import com.ithirteeng.superfitproject.mybody.presentation.MyBodyScreenIntent
 import com.ithirteeng.superfitproject.mybody.presentation.MyBodyScreenViewModel
 import com.ithirteeng.superfitproject.mybody.presentation.model.AlertDialogType
@@ -126,7 +129,20 @@ class MyBodyScreen : Screen {
                         }
                     }
                 }
-                item { HeaderText(text = stringResource(id = R.string.my_progress)) }
+                item {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .wrapContentHeight(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        HeaderText(text = stringResource(id = R.string.my_progress))
+                        SeeAllButton {
+                            viewModel.accept(MyBodyScreenIntent.SeeAllButtonClick)
+                        }
+                    }
+                }
 
                 item {
                     MyBodyImages(firstImage = state.firstImage, secondImage = state.secondImage) {
@@ -197,9 +213,25 @@ class MyBodyScreen : Screen {
                 LocalNavigator.currentOrThrow.push(TrainProgressScreen())
             } else if (state.exitModel.isStatisticsButtonClick) {
                 //todo navigate to statistics screen
+            } else if (state.exitModel.isSeeAllButtonClick) {
+                LocalNavigator.currentOrThrow.push(ImagesListScreen())
             }
         }
 
+    }
+
+    @Composable
+    private fun SeeAllButton(onClick: () -> Unit) {
+        Text(
+            text = stringResource(id = R.string.see_all),
+            style = MaterialTheme.typography.body1,
+            color = GrayWhite,
+            modifier = Modifier
+                .padding(top = 24.dp)
+                .clickable {
+                    onClick()
+                }
+        )
     }
 
     private fun getImageUri(context: Context): Uri {
@@ -218,7 +250,6 @@ class MyBodyScreen : Screen {
     private fun HeaderText(text: String) {
         Text(
             modifier = Modifier
-                .fillMaxWidth()
                 .padding(top = 24.dp),
             text = text,
             style = MaterialTheme.typography.h5,
