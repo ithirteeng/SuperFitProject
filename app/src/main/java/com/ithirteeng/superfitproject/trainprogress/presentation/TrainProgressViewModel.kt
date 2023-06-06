@@ -8,6 +8,7 @@ import com.ithirteeng.superfitproject.common.exercises.domain.entity.ExerciseTyp
 import com.ithirteeng.superfitproject.common.exercises.domain.entity.TrainingEntity
 import com.ithirteeng.superfitproject.common.exercises.domain.usecase.GetTrainingsUseCase
 import com.ithirteeng.superfitproject.common.utils.ErrorHelper
+import com.ithirteeng.superfitproject.common.utils.byDateOrderComparatorTrainingEntity
 import com.ithirteeng.superfitproject.trainprogress.presentation.model.ProgressIndicator
 import com.ithirteeng.superfitproject.trainprogress.presentation.model.TrainStatModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -58,7 +59,7 @@ class TrainProgressViewModel(
         viewModelScope.launch {
             getTrainingsUseCase()
                 .onSuccess { defaultList ->
-                    val list = defaultList.sortedByDescending { it.date }
+                    val list = defaultList.sortedWith(byDateOrderComparatorTrainingEntity)
                     _state.value = _state.value.copy(
                         pushUpsTrain = setupTrainStats(list, ExerciseType.PUSH_UP),
                         crunchTrain = setupTrainStats(list, ExerciseType.CRUNCH),

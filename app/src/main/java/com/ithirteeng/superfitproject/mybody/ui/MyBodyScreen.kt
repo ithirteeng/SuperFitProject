@@ -42,7 +42,6 @@ import com.ithirteeng.superfitproject.common.ui.MyBodyButton
 import com.ithirteeng.superfitproject.common.ui.MyBodyImages
 import com.ithirteeng.superfitproject.common.ui.PickImageDialog
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
-import com.ithirteeng.superfitproject.common.ui.theme.GrayMedium
 import com.ithirteeng.superfitproject.common.ui.theme.GrayWhite
 import com.ithirteeng.superfitproject.common.ui.theme.Violet
 import com.ithirteeng.superfitproject.imagelist.ui.ImagesListScreen

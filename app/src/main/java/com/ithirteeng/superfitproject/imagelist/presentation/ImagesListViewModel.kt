@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 class ImagesListViewModel(
-    private val application: Application,
+    application: Application,
     private val getPhotosListUseCase: GetPhotosListUseCase,
     private val downloadPhotoUseCase: DownloadPhotoUseCase,
 ) : AndroidViewModel(application = application) {
