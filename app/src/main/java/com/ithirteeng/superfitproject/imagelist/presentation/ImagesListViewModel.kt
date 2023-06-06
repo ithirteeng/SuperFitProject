@@ -34,7 +34,7 @@ class ImagesListViewModel(
         _state.value = ImagesListState(
             ifBackButtonClicked = false,
             error = null,
-            imageClicked = null
+            imageClicked = null,
         )
         getImagesList()
     }

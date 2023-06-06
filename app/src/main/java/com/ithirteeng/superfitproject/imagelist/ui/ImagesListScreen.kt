@@ -33,6 +33,7 @@ import com.ithirteeng.superfitproject.common.ui.ErrorAlertDialog
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.common.ui.theme.Violet
 import com.ithirteeng.superfitproject.common.utils.byDateOrderComparatorString
+import com.ithirteeng.superfitproject.image.ui.ImageScreen
 import com.ithirteeng.superfitproject.imagelist.presentation.ImagesListIntent
 import com.ithirteeng.superfitproject.imagelist.presentation.ImagesListViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -67,7 +68,7 @@ class ImagesListScreen : Screen {
             } else if (state.ifBackButtonClicked) {
                 LocalNavigator.currentOrThrow.pop()
             } else if (state.imageClicked != null) {
-                //todo navigate to image screen
+                LocalNavigator.currentOrThrow.push(ImageScreen(state.imageClicked))
             }
             Column {
                 BackButton {

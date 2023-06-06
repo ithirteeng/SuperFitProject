@@ -8,6 +8,7 @@ import com.ithirteeng.superfitproject.common.token.di.tokenModule
 import com.ithirteeng.superfitproject.common.validation.di.validationModule
 import com.ithirteeng.superfitproject.crunch.di.crunchModule
 import com.ithirteeng.superfitproject.exerciseslist.di.exercisesScreenModule
+import com.ithirteeng.superfitproject.image.di.imageModule
 import com.ithirteeng.superfitproject.imagelist.di.imageListModule
 import com.ithirteeng.superfitproject.main.di.mainModule
 import com.ithirteeng.superfitproject.mybody.di.myBodyModule
@@ -50,7 +51,8 @@ class App : Application() {
                 pushUpsModule,
                 photosModule,
                 trainProgressModule,
-                imageListModule
+                imageListModule,
+                imageModule
             )
         }
     }
