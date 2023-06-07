@@ -4,7 +4,6 @@ import android.hardware.Sensor
 import android.hardware.SensorEvent
 import android.hardware.SensorEventListener
 import android.hardware.SensorManager
-import android.util.Log
 import kotlin.math.atan2
 import kotlin.math.pow
 import kotlin.math.sqrt
@@ -16,6 +15,7 @@ class SquatsExerciseHelper(
     private companion object {
         const val THRESHOLD = 4
     }
+
     private var exerciseCount = 0
     private var isMovingDown = false
 
@@ -37,11 +37,10 @@ class SquatsExerciseHelper(
         )
         val degrees = Math.toDegrees(angle)
         if (degrees in 50.0..100.0) {
-            if (yAcceleration - SensorManager.GRAVITY_EARTH <= -THRESHOLD && !isMovingDown)  {
+            if (yAcceleration - SensorManager.GRAVITY_EARTH <= -THRESHOLD && !isMovingDown) {
                 isMovingDown = true
             } else if (yAcceleration - SensorManager.GRAVITY_EARTH >= THRESHOLD && isMovingDown) {
                 exerciseCount++
-                Log.i("ACCELERATOR", "________________MADE1_________________")
                 onAction()
                 isMovingDown = false
             }
@@ -50,7 +49,6 @@ class SquatsExerciseHelper(
                 isMovingDown = true
             } else if (zAcceleration - SensorManager.GRAVITY_EARTH >= THRESHOLD && isMovingDown) {
                 exerciseCount++
-                Log.i("ACCELERATOR", "________________MADE2_________________")
                 onAction()
                 isMovingDown = false
             }
