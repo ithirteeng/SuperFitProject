@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -26,6 +27,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.ithirteeng.superfitproject.R
@@ -184,6 +186,7 @@ fun UnSuccessCircleView(string: String) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
+            .wrapContentHeight()
             .padding(vertical = 2.dp),
         contentAlignment = Alignment.Center,
 
@@ -205,9 +208,12 @@ fun UnSuccessCircleView(string: String) {
         }
         Text(
             text = string,
-            modifier = Modifier.align(Alignment.Center).size(210.dp),
+            modifier = Modifier
+                .align(Alignment.Center)
+                .width(200.dp),
             style = MaterialTheme.typography.h5,
-            color = Color.White
+            color = Color.White,
+            textAlign = TextAlign.Center
         )
     }
 

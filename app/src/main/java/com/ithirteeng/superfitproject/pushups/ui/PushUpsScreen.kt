@@ -71,17 +71,13 @@ class PushUpsScreen : Screen {
                 }
             } else {
                 if (state.isFinishedUnsuccessfully) {
-                    if (state.totalAmount - state.currentAmount == 0) {
-                        LocalNavigator.currentOrThrow.pop()
-                    } else {
-                        val string = stringResource(id = R.string.times_missing)
-                        LocalNavigator.currentOrThrow.replace(
-                            ResultScreen(
-                                screenName = stringResource(id = R.string.push_ups),
-                                unSuccessScreenString = "${state.currentAmount} $string"
-                            )
+                    val string = stringResource(id = R.string.times_missing)
+                    LocalNavigator.currentOrThrow.replace(
+                        ResultScreen(
+                            screenName = stringResource(id = R.string.push_ups),
+                            unSuccessScreenString = "${state.currentAmount} $string"
                         )
-                    }
+                    )
                     pushUpsExerciseHelper.unregisterSensorListener()
                 } else if (state.isFinishedSuccessfully) {
                     LocalNavigator.currentOrThrow.pop()
