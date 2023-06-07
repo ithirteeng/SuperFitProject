@@ -30,7 +30,7 @@ import com.ithirteeng.superfitproject.common.ui.Timer
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.plank.presentation.PlankIntent
 import com.ithirteeng.superfitproject.plank.presentation.PlankScreenViewModel
-import com.ithirteeng.superfitproject.success.ui.SuccessScreen
+import com.ithirteeng.superfitproject.result.ui.ResultScreen
 import org.koin.androidx.compose.koinViewModel
 
 class PlankScreen : Screen {
@@ -77,7 +77,7 @@ class PlankScreen : Screen {
                     LocalNavigator.currentOrThrow.pop()
                 } else if (state.isFinishedSuccessfully) {
                     LocalNavigator.currentOrThrow.replace(
-                        SuccessScreen(stringResource(id = R.string.plank))
+                        ResultScreen(stringResource(id = R.string.plank))
                     )
                 }
                 Column(

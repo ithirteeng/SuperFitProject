@@ -1,4 +1,4 @@
-package com.ithirteeng.superfitproject.success.ui
+package com.ithirteeng.superfitproject.result.ui
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -24,23 +24,24 @@ import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.FinishExerciseButton
 import com.ithirteeng.superfitproject.common.ui.SuccessCircleView
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
-import com.ithirteeng.superfitproject.success.presentation.SuccessIntent
-import com.ithirteeng.superfitproject.success.presentation.SuccessScreenViewModel
+import com.ithirteeng.superfitproject.result.presentation.ResultIntent
+import com.ithirteeng.superfitproject.result.presentation.ResultScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
-class SuccessScreen(
+class ResultScreen(
     private val screenName: String,
+    private val unSuccessScreenString: String? = null,
 ) : Screen {
     @Composable
     override fun Content() {
-        val viewModel: SuccessScreenViewModel = koinViewModel()
-        viewModel.accept(SuccessIntent.Initial)
+        val viewModel: ResultScreenViewModel = koinViewModel()
+        viewModel.accept(ResultIntent.Initial)
         SuccessScreenView(viewModel = viewModel)
     }
 
 
     @Composable
-    private fun SuccessScreenView(viewModel: SuccessScreenViewModel) {
+    private fun SuccessScreenView(viewModel: ResultScreenViewModel) {
         val state = viewModel.state.collectAsState().value
         Box(
             modifier = Modifier
@@ -66,10 +67,14 @@ class SuccessScreen(
                         style = MaterialTheme.typography.h1,
                         color = Color.White
                     )
-                    SuccessCircleView()
+                    if (unSuccessScreenString == null) {
+                        SuccessCircleView()
+                    } else {
+                        //todo
+                    }
                 }
                 FinishExerciseButton(text = stringResource(id = R.string.go_home)) {
-                    viewModel.accept(SuccessIntent.GoHomeButtonClick)
+                    viewModel.accept(ResultIntent.GoHomeButtonClick)
                 }
             }
 

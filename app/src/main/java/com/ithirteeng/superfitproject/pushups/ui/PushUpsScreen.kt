@@ -33,6 +33,7 @@ import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.pushups.presentation.PushUpsIntent
 import com.ithirteeng.superfitproject.pushups.presentation.PushUpsScreenViewModel
 import com.ithirteeng.superfitproject.pushups.utils.PushUpsExerciseHelper
+import com.ithirteeng.superfitproject.result.ui.ResultScreen
 import org.koin.androidx.compose.koinViewModel
 
 class PushUpsScreen : Screen {
@@ -71,7 +72,13 @@ class PushUpsScreen : Screen {
             } else {
 
                 if (state.isFinishedUnsuccessfully) {
-                    LocalNavigator.currentOrThrow.pop()
+                    val string = stringResource(id = R.string.times_missing)
+                    LocalNavigator.currentOrThrow.replace(
+                        ResultScreen(
+                            screenName = stringResource(id = R.string.squats),
+                            unSuccessScreenString = "${(state.totalAmount - state.currentAmount)}${string}"
+                        )
+                    )
                     pushUpsExerciseHelper.unregisterSensorListener()
                 } else if (state.isFinishedSuccessfully) {
                     LocalNavigator.currentOrThrow.pop()

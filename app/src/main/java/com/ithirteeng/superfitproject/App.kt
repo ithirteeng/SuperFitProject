@@ -18,7 +18,7 @@ import com.ithirteeng.superfitproject.signin.di.signInModule
 import com.ithirteeng.superfitproject.signup.di.signUpModule
 import com.ithirteeng.superfitproject.splash.di.splashModule
 import com.ithirteeng.superfitproject.squats.di.squatsModule
-import com.ithirteeng.superfitproject.success.di.successModule
+import com.ithirteeng.superfitproject.result.di.resultModule
 import com.ithirteeng.superfitproject.trainprogress.di.trainProgressModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -46,7 +46,7 @@ class App : Application() {
                 myBodyModule,
                 crunchModule,
                 plankModule,
-                successModule,
+                resultModule,
                 squatsModule,
                 pushUpsModule,
                 photosModule,
