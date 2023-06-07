@@ -23,6 +23,7 @@ import cafe.adriel.voyager.navigator.currentOrThrow
 import com.ithirteeng.superfitproject.R
 import com.ithirteeng.superfitproject.common.ui.FinishExerciseButton
 import com.ithirteeng.superfitproject.common.ui.SuccessCircleView
+import com.ithirteeng.superfitproject.common.ui.UnSuccessCircleView
 import com.ithirteeng.superfitproject.common.ui.theme.GrayDark
 import com.ithirteeng.superfitproject.result.presentation.ResultIntent
 import com.ithirteeng.superfitproject.result.presentation.ResultScreenViewModel
@@ -70,7 +71,7 @@ class ResultScreen(
                     if (unSuccessScreenString == null) {
                         SuccessCircleView()
                     } else {
-                        //todo
+                        UnSuccessCircleView(string = unSuccessScreenString)
                     }
                 }
                 FinishExerciseButton(text = stringResource(id = R.string.go_home)) {

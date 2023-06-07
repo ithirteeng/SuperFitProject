@@ -179,4 +179,37 @@ fun SuccessCircleView() {
 
 }
 
+@Composable
+fun UnSuccessCircleView(string: String) {
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 2.dp),
+        contentAlignment = Alignment.Center,
+
+        ) {
+        Canvas(
+            modifier = Modifier
+                .width(216.dp)
+                .height(216.dp)
+        ) {
+            val canvasWidth = size.width
+            val canvasHeight = size.height
+
+            drawCircle(
+                color = Violet,
+                center = Offset(x = canvasWidth / 2, y = canvasHeight / 2),
+                radius = size.minDimension / 2,
+                style = Stroke(10F)
+            )
+        }
+        Text(
+            text = string,
+            modifier = Modifier.align(Alignment.Center).size(210.dp),
+            style = MaterialTheme.typography.h5,
+            color = Color.White
+        )
+    }
+
+}
 

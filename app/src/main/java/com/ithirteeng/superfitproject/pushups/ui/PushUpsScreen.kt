@@ -70,15 +70,18 @@ class PushUpsScreen : Screen {
                     viewModel.accept(PushUpsIntent.DismissErrorDialog)
                 }
             } else {
-
                 if (state.isFinishedUnsuccessfully) {
-                    val string = stringResource(id = R.string.times_missing)
-                    LocalNavigator.currentOrThrow.replace(
-                        ResultScreen(
-                            screenName = stringResource(id = R.string.squats),
-                            unSuccessScreenString = "${(state.totalAmount - state.currentAmount)}${string}"
+                    if (state.totalAmount - state.currentAmount == 0) {
+                        LocalNavigator.currentOrThrow.pop()
+                    } else {
+                        val string = stringResource(id = R.string.times_missing)
+                        LocalNavigator.currentOrThrow.replace(
+                            ResultScreen(
+                                screenName = stringResource(id = R.string.push_ups),
+                                unSuccessScreenString = "${state.currentAmount} $string"
+                            )
                         )
-                    )
+                    }
                     pushUpsExerciseHelper.unregisterSensorListener()
                 } else if (state.isFinishedSuccessfully) {
                     LocalNavigator.currentOrThrow.pop()
