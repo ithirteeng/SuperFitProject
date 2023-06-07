@@ -14,11 +14,12 @@ import com.ithirteeng.superfitproject.main.di.mainModule
 import com.ithirteeng.superfitproject.mybody.di.myBodyModule
 import com.ithirteeng.superfitproject.plank.di.plankModule
 import com.ithirteeng.superfitproject.pushups.di.pushUpsModule
+import com.ithirteeng.superfitproject.result.di.resultModule
+import com.ithirteeng.superfitproject.runnning.di.runningModule
 import com.ithirteeng.superfitproject.signin.di.signInModule
 import com.ithirteeng.superfitproject.signup.di.signUpModule
 import com.ithirteeng.superfitproject.splash.di.splashModule
 import com.ithirteeng.superfitproject.squats.di.squatsModule
-import com.ithirteeng.superfitproject.result.di.resultModule
 import com.ithirteeng.superfitproject.trainprogress.di.trainProgressModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -52,7 +53,8 @@ class App : Application() {
                 photosModule,
                 trainProgressModule,
                 imageListModule,
-                imageModule
+                imageModule,
+                runningModule
             )
         }
     }
