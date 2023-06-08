@@ -80,7 +80,11 @@ class PushUpsScreen : Screen {
                     )
                     pushUpsExerciseHelper.unregisterSensorListener()
                 } else if (state.isFinishedSuccessfully) {
-                    LocalNavigator.currentOrThrow.pop()
+                    LocalNavigator.currentOrThrow.replace(
+                        ResultScreen(
+                            screenName = stringResource(id = R.string.push_ups),
+                        )
+                    )
                     pushUpsExerciseHelper.unregisterSensorListener()
                 }
 

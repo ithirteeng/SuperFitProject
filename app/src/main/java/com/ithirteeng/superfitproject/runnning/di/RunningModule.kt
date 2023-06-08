@@ -6,6 +6,12 @@ import org.koin.dsl.module
 
 val runningModule = module {
     viewModel {
-        RunningScreenViewModel()
+        RunningScreenViewModel(
+            getRunningAmountUseCase = get(),
+            setRunningAmountUseCase = get(),
+            saveTrainingUseCase = get(),
+            addExerciseUseCase = get(),
+            getWeightAndHeightUseCase = get()
+        )
     }
 }

@@ -111,7 +111,7 @@ class ExerciseStorage(context: Context) {
     }
 
     fun getRunningAmount(): Int {
-        return sharedPreferences.getInt(RUNNING_AMOUNT_KEY, 100)
+        return sharedPreferences.getInt(RUNNING_AMOUNT_KEY, 1000)
     }
 
 

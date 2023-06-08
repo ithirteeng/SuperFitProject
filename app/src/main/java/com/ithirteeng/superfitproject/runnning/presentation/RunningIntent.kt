@@ -4,5 +4,6 @@ sealed class RunningIntent {
     object Initial : RunningIntent()
     object FinishButtonClick : RunningIntent()
     object DismissErrorDialog : RunningIntent()
-    object ActionIntent : RunningIntent()
+    class ActionIntent(val steps: Int) : RunningIntent()
+    class SetDefaultSteps(val steps: Int) : RunningIntent()
 }
