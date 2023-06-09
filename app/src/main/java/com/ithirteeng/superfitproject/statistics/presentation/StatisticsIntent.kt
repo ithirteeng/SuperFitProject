@@ -5,5 +5,6 @@ import com.ithirteeng.superfitproject.common.exercises.domain.entity.ExerciseTyp
 sealed class StatisticsIntent {
     object Initial : StatisticsIntent()
     object BackButtonClick : StatisticsIntent()
-    class TrainingTypeButtonClick(exerciseType: ExerciseType) : StatisticsIntent()
+    class TrainingTypeButtonClick(val exerciseType: ExerciseType) : StatisticsIntent()
+    object DismissError : StatisticsIntent()
 }

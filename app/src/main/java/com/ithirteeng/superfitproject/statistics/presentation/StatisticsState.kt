@@ -12,9 +12,9 @@ data class StatisticsState(
     val ifBackButtonPressed: Boolean = false,
 
     val paramsData: List<BodyParamsEntity> = listOf(),
-    val pushUpsHistory: List<TrainingEntity> = listOf(),
-    val plankHistory: List<TrainingEntity> = listOf(),
-    val crunchHistory: List<TrainingEntity> = listOf(),
-    val squatsHistory: List<TrainingEntity> = listOf(),
-    val runningHistory: List<TrainingEntity> = listOf(),
+    val pushUpsList: List<TrainingEntity> = listOf(),
+    val plankList: List<TrainingEntity> = listOf(),
+    val crunchList: List<TrainingEntity> = listOf(),
+    val squatsList: List<TrainingEntity> = listOf(),
+    val runningList: List<TrainingEntity> = listOf(),
 )
