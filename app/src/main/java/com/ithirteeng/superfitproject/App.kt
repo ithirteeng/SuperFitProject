@@ -20,6 +20,7 @@ import com.ithirteeng.superfitproject.signin.di.signInModule
 import com.ithirteeng.superfitproject.signup.di.signUpModule
 import com.ithirteeng.superfitproject.splash.di.splashModule
 import com.ithirteeng.superfitproject.squats.di.squatsModule
+import com.ithirteeng.superfitproject.statistics.di.statisticsModule
 import com.ithirteeng.superfitproject.trainprogress.di.trainProgressModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -54,7 +55,8 @@ class App : Application() {
                 trainProgressModule,
                 imageListModule,
                 imageModule,
-                runningModule
+                runningModule,
+                statisticsModule
             )
         }
     }
