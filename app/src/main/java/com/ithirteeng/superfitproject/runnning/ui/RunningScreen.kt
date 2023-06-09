@@ -85,7 +85,7 @@ class RunningScreen : Screen {
             LocalNavigator.currentOrThrow.replace(
                 ResultScreen(
                     screenName = stringResource(id = R.string.running),
-                    unSuccessScreenString = "${state.currentAmount} $string"
+                    unSuccessScreenString = "${state.totalAmount - state.currentAmount} $string"
                 )
             )
             runningExerciseHelper.unregisterSensorListener()

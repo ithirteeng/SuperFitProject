@@ -1,7 +1,6 @@
 package com.ithirteeng.superfitproject.runnning.presentation
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ithirteeng.superfitproject.common.exercises.domain.entity.ExerciseType
@@ -17,7 +16,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
-import kotlin.math.roundToInt
 
 class RunningScreenViewModel(
     private val setRunningAmountUseCase: SetRunningAmountUseCase,
@@ -30,8 +28,8 @@ class RunningScreenViewModel(
     fun accept(intent: RunningIntent) {
         when (intent) {
             is RunningIntent.ActionIntent -> onAction(intent.steps)
-            is RunningIntent.DismissErrorDialog -> TODO()
-            is RunningIntent.FinishButtonClick -> TODO()
+            is RunningIntent.DismissErrorDialog -> dismissError()
+            is RunningIntent.FinishButtonClick -> onFinishButtonClick()
             is RunningIntent.Initial -> initState()
             is RunningIntent.SetDefaultSteps -> setDefaultSteps(intent.steps)
         }
@@ -57,6 +55,17 @@ class RunningScreenViewModel(
         )
     }
 
+    private fun dismissError() {
+        _state.value = _state.value.copy(
+            error = null,
+            isLoading = false
+        )
+    }
+
+    private fun onFinishButtonClick() {
+        saveTraining()
+    }
+
     private fun onAction(steps: Int) {
         val heightString = getWeightAndHeightUseCase().second
         var height = 165
@@ -69,10 +78,8 @@ class RunningScreenViewModel(
         val passedMeters = passedSteps * stepSize
         val amount = _state.value.currentAmount - passedMeters
 
-        Log.d("TTTTT", passedMeters.toString())
-
         if (_state.value.currentAmount - passedMeters <= 0) {
-            //todo save training and exit
+            saveTraining()
         } else {
             _state.value = _state.value.copy(
                 currentAmount = amount.toInt(),
@@ -90,6 +97,9 @@ class RunningScreenViewModel(
                 isFinishedUnsuccessfully = true
             )
         } else {
+            _state.value = _state.value.copy(
+                isLoading = true
+            )
             viewModelScope.launch {
                 saveTrainingUseCase(
                     TrainingEntity(
@@ -99,6 +109,18 @@ class RunningScreenViewModel(
                     )
                 ).onSuccess {
                     addExerciseUseCase(ExerciseType.RUNNING)
+                    if (_state.value.currentAmount == 0) {
+                        setRunningAmountUseCase(_state.value.totalAmount + 100)
+                        _state.value = _state.value.copy(
+                            isLoading = false,
+                            isFinishedSuccessfully = true
+                        )
+                    } else {
+                        _state.value = _state.value.copy(
+                            isLoading = false,
+                            isFinishedUnsuccessfully = true
+                        )
+                    }
 
                 }.onFailure {
                     _state.value = _state.value.copy(
@@ -107,12 +129,6 @@ class RunningScreenViewModel(
                     )
                 }
             }
-
-
-            _state.value = _state.value.copy(
-                isLoading = false,
-                isFinishedSuccessfully = true
-            )
         }
     }
 
