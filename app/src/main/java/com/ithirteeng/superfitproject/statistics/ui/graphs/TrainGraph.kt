@@ -59,9 +59,11 @@ fun TrainGraph(
         }
 
         ExerciseType.RUNNING -> {
-            yStep = 50
+            yStep = 10
             points = runningList?.flatMap { listOf(it.repeatCount.toFloat()) } ?: listOf()
-            yValues = listOf(50, 100, 150, 200, 250, 300, 350, 400, 450, 500)
+//            yValues = listOf(50, 100, 150, 200, 250, 300, 350, 400, 450, 500)
+//            yValues = listOf(0, 20, 40, 60, 80, 100, 120, 140, 160, 180)
+            yValues = listOf(10, 20, 30, 40, 50, 60, 70, 80, 90, 100)
             xValues = runningList?.flatMap { listOf(it.date) } ?: listOf()
         }
     }
@@ -70,7 +72,7 @@ fun TrainGraph(
         modifier = Modifier
             .fillMaxWidth()
             .horizontalScroll(rememberScrollState())
-            .padding(top = 20.dp, end = 25.dp)
+            .padding(top = 20.dp, end = 25.dp, start = 20.dp)
             .height(240.dp)
             .width(points.size * 80.dp),
         xValues = xValues,

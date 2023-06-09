@@ -37,6 +37,7 @@
     <string name="exercises">Exercises</string>
     <string name="weight">Weight</string>
     <string name="height">Height</string>
+    <string name="training">Training</string>
     <string name="new_value">New value</string>
     <string name="change">Change</string>
     <string name="cancel">Cancel</string>

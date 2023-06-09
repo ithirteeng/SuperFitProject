@@ -15,12 +15,12 @@ import com.ithirteeng.superfitproject.common.ui.theme.Violet
 import com.ithirteeng.superfitproject.statistics.domain.entity.BodyParamsEntity
 
 @Composable
-fun WeightGraph(weightHistory: List<BodyParamsEntity>?) {
-    if (weightHistory != null) {
+fun WeightGraph(paramsHistoryData: List<BodyParamsEntity>?) {
+    if (paramsHistoryData != null) {
         val yStep = 20
-        val xValues = weightHistory.flatMap { listOf(it.date) }
+        val xValues = paramsHistoryData.flatMap { listOf(it.date) }
         val yValues = (0..6).map { (it + 1) * yStep }
-        val points = weightHistory.flatMap { listOf(it.weight.toFloat()) }
+        val points = paramsHistoryData.flatMap { listOf(it.weight.toFloat()) }
 
         val paddingSpace = 20.dp
 
@@ -28,7 +28,7 @@ fun WeightGraph(weightHistory: List<BodyParamsEntity>?) {
             modifier = Modifier
                 .fillMaxWidth()
                 .horizontalScroll(rememberScrollState())
-                .padding(top = 25.dp, end = 25.dp)
+                .padding(top = 25.dp, end = 25.dp, start = 20.dp)
                 .height(240.dp)
                 .width(points.size * 50.dp),
             xValues = xValues,

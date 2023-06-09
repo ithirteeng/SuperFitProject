@@ -48,6 +48,7 @@ import com.ithirteeng.superfitproject.imagelist.ui.ImagesListScreen
 import com.ithirteeng.superfitproject.mybody.presentation.MyBodyScreenIntent
 import com.ithirteeng.superfitproject.mybody.presentation.MyBodyScreenViewModel
 import com.ithirteeng.superfitproject.mybody.presentation.model.AlertDialogType
+import com.ithirteeng.superfitproject.statistics.ui.StatisticsScreen
 import com.ithirteeng.superfitproject.trainprogress.ui.TrainProgressScreen
 import org.koin.androidx.compose.koinViewModel
 import java.io.File
@@ -211,7 +212,7 @@ class MyBodyScreen : Screen {
             } else if (state.exitModel.isTrainButtonClick) {
                 LocalNavigator.currentOrThrow.push(TrainProgressScreen())
             } else if (state.exitModel.isStatisticsButtonClick) {
-                //todo navigate to statistics screen
+                LocalNavigator.currentOrThrow.push(StatisticsScreen())
             } else if (state.exitModel.isSeeAllButtonClick) {
                 LocalNavigator.currentOrThrow.push(ImagesListScreen())
             }
