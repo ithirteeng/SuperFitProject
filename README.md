@@ -17,6 +17,9 @@ Application for people, who enjoy doing sports and being in shape 🥊<br/>
 
 - Jetpack Compose
 - Coroutines
+- MVI
+- Clean Architecture
+- StateFlow
 - Room
 - Encrypted Shared Preferences
 - JUnit
