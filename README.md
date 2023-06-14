@@ -21,6 +21,8 @@ Application for people, who enjoy doing sports and being in shape 🥊<br/>
 - Clean Architecture
 - StateFlow
 - Room
+- Retrofit2
+- Okhttp3
 - Encrypted Shared Preferences
 - JUnit
 - Mockito
